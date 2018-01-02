@@ -1,0 +1,47 @@
+{
+  "name": "majifix-jurisdiction",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "grunt test",
+    "intergration": "grunt intergration"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CodeTanzania/majifix-jurisdiction.git"
+  },
+  "keywords": [
+    "open311",
+    "311",
+    "tanzania"
+  ],
+  "author": {
+    "name": "lykmapipo",
+    "email": "lallyelias87@gmail.com",
+    "url": "https://github.com/lykmapipo"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/CodeTanzania/majifix-jurisdiction/issues"
+  },
+  "homepage": "https://github.com/CodeTanzania/majifix-jurisdiction",
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "faker": "^4.1.0",
+    "grunt": "^1.0.1",
+    "grunt-contrib-jshint": "^1.1.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-mocha-test": "^0.13.3",
+    "jshint-stylish": "^2.2.1",
+    "mocha": "^4.1.0",
+    "superagent": "^3.8.2",
+    "supertest": "^3.0.0"
+  },
+  "dependencies": {
+    "async": "^2.6.0",
+    "express": "^4.16.2",
+    "lodash": "^4.17.4",
+    "mongoose": "^5.0.0-rc0"
+  }
+}
