@@ -7,7 +7,8 @@
  * @author lally elias <lallyelias87@gmail.com>
  * @public
  */
+let mongoose = require('mongoose');
 
-module.exports = {
-  name: 'starter'
+module.exports = function (options) {
+  mongoose = options.mongoose || mongoose;
 };
