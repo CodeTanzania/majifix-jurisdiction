@@ -3,7 +3,7 @@ services:
  - mongodb
  - redis-server
 node_js:
- - "6.9.2"
+ - "9.3.0"
 before_script:
  - npm install -g grunt-cli
  - redis-cli config set notify-keyspace-events Ex
