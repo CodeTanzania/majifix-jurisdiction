@@ -21,9 +21,6 @@ const controller = require(path.join(__dirname, 'controller'));
 const expressMquery = require('express-mquery').middleware;
 const response = require('express-respond');
 
-// enable token authentication
-// const jwtAuth = require(path.join(__dirname, '..', 'middlewares', 'jwtAuth'));
-
 
 
 function jurisdictionRouter(options) {
