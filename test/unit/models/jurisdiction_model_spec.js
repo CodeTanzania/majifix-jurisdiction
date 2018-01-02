@@ -7,12 +7,11 @@
  */
 
 //dependencies
-const path = require('path');
+// const path = require('path');
 const mongoose = require('mongoose');
 const faker = require('faker');
 const expect = require('chai').expect;
-const Jurisdiction = require(path.join(__dirname, '..', '..', '..', 'models',
-  'jurisdiction'));
+const Jurisdiction = mongoose.model('Jurisdiction');
 let jurisdiction;
 
 describe('Jurisdiction', function () {

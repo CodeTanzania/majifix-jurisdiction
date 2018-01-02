@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/CodeTanzania/majifix-jurisdiction",
   "devDependencies": {
+    "body-parser": "^1.18.2",
     "chai": "^4.1.2",
     "faker": "^4.1.0",
     "grunt": "^1.0.1",
@@ -41,6 +42,9 @@
   "dependencies": {
     "async": "^2.6.0",
     "express": "^4.16.2",
+    "express-mquery": "^0.2.1",
+    "express-respond": "^0.4.0",
+    "inflection": "^1.12.0",
     "lodash": "^4.17.4",
     "mongoose": "^5.0.0-rc0",
     "mongoose-autoset": "^0.1.0",

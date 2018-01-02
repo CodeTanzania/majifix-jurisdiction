@@ -4,12 +4,11 @@
 process.env.NODE_ENV = 'test';
 
 //dependencies
+// const path = require('path')
 const async = require('async');
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
-mongoose.plugin(require('mongoose-exists'));
-mongoose.plugin(require('mongoose-autoset'));
-mongoose.plugin(require('mongoose-regex-search'));
+
 
 //enable mongoose query debug(log)
 // mongoose.set('debug', true);

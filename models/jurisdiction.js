@@ -31,12 +31,24 @@ const _ = require('lodash');
 const async = require('async');
 const randomColor = require('randomcolor');
 const mongoose = require('mongoose');
-// const mongooseExists = require('mongoose-exists');
-// const mongooseAutoset = require('mongoose-autoset');
-// const mongooseRegexSearch = require('mongoose-regex-search');
+const mongooseExists = require('mongoose-exists');
+const mongooseAutoset = require('mongoose-autoset');
+const mongooseRegexSearch = require('mongoose-regex-search');
 const Schema = mongoose.Schema;
 const ObjectId = Schema.Types.ObjectId;
+const mongooseShow =
+  require(path.join(__dirname, '..', 'libs', 'mongoose', 'show'));
+const mongooseEdit =
+  require(path.join(__dirname, '..', 'libs', 'mongoose', 'edit'));
+const mongooseList =
+  require(path.join(__dirname, '..', 'libs', 'mongoose', 'list'));
+const mongooseReload =
+  require(path.join(__dirname, '..', 'libs', 'mongoose', 'reload'));
+const mongooseSoftDelete =
+  require(path.join(__dirname, '..', 'libs', 'mongoose', 'soft_delete'));
 const GeoJSON = require(path.join(__dirname, 'schemas', 'geojson_schema'));
+const mongoosePaginate = require('express-mquery').plugin;
+
 
 /**
  * @name JurisdictionSchema
@@ -405,9 +417,15 @@ JurisdictionSchema.statics.findNearBy = function (options, done) {
 };
 
 // plugins
-// JurisdictionSchema.plugin(mongooseExists);
-// JurisdictionSchema.plugin(mongooseAutoset);
-// JurisdictionSchema.plugin(mongooseRegexSearch);
+JurisdictionSchema.plugin(mongooseExists);
+JurisdictionSchema.plugin(mongooseAutoset);
+JurisdictionSchema.plugin(mongooseRegexSearch);
+JurisdictionSchema.plugin(mongooseShow);
+JurisdictionSchema.plugin(mongooseEdit);
+JurisdictionSchema.plugin(mongooseReload);
+JurisdictionSchema.plugin(mongooseList);
+JurisdictionSchema.plugin(mongooseSoftDelete);
+JurisdictionSchema.plugin(mongoosePaginate);
 
 
 /**
