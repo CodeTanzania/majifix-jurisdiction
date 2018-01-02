@@ -12,7 +12,7 @@ const expect = require('chai').expect;
 const faker = require('faker');
 const request = require('supertest');
 const bodyParser = require('body-parser');
-const router = require(path.join(__dirname, '..', '..', 'index'))({}).router;
+const router = require(path.join(__dirname, '..', '..', 'index'))().router;
 const app = require('express')();
 
 
