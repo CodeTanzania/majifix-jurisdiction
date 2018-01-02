@@ -12,7 +12,6 @@ const expect = require('chai').expect;
 const faker = require('faker');
 const request = require('supertest');
 const bodyParser = require('body-parser');
-const respond = require('express-respond');
 const router = require(path.join(__dirname, '..', '..', 'index'))({}).router;
 const app = require('express')();
 
@@ -23,14 +22,6 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-app.use(require('express-mquery').middleware({
-  limit: 10,
-  maxLimit: 1000
-}));
-
-app.use(respond({
-  types: 'json'
-}));
 
 app.use(router);
 

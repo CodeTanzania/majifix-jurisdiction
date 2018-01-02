@@ -18,6 +18,8 @@ const _ = require('lodash');
 const express = require('express');
 const router = express.Router();
 const controller = require(path.join(__dirname, 'controller'));
+const expressMquery = require('express-mquery').middleware;
+const response = require('express-respond');
 
 // enable token authentication
 // const jwtAuth = require(path.join(__dirname, '..', 'middlewares', 'jwtAuth'));
@@ -29,8 +31,46 @@ function jurisdictionRouter(options) {
   // ensure options
   options = _.merge({}, options);
 
-  const preMiddlewares = _.get(options, 'pre', []);
-  const preIndex = _.get(options, 'preindex', []);
+  const defaultMiddlewares = [
+    expressMquery({
+      limit: 10,
+      maxLimit: 1000
+    }),
+    response({
+      types: 'json'
+    })
+  ]
+
+  //   ensure all pre middlewares
+  const optionsAllMiddlewares = _.get(options, 'pre', []);
+  const preMiddlewares = _.compact(_.concat([], defaultMiddlewares,
+    optionsAllMiddlewares));
+
+  // ensure pre index middlewares
+  const optionsIndexMiddlewares = _.get(options, 'preindex', []);
+  const preIndexMiddlewares = _.compact(_.concat([], optionsIndexMiddlewares,
+    controller.index));
+
+  // ensure pre create middlewares
+  const optionsCreateMiddlewares = _.get(options, 'preCreate', []);
+  const preCreateMiddlewares = _.compact(_.concat([], optionsCreateMiddlewares,
+    controller.create));
+
+  // ensure pre show middlewares
+  const optionsShowMiddlewares = _.get(options, 'preShow', []);
+  const preShowMiddlewares = _.compact(_.concat([], optionsShowMiddlewares,
+    controller.show));
+
+  // ensure pre update middlewares
+  const optionsUpdateMiddlewares = _.get(options, 'preUpdate', []);
+  const preUpdateMiddlewares = _.compact(_.concat([], optionsUpdateMiddlewares,
+    controller.update));
+
+  // ensure pre delete middleware
+  const optionsDeleteMiddlewares = _.get(options, 'preDelete', []);
+  const preDeleteMiddlewares = _.compact(_.concat([], optionsDeleteMiddlewares,
+    controller.destroy));
+
 
   //   add specific middlewares to jurisdictions router
   router.all('/jurisdictions*', preMiddlewares);
@@ -185,9 +225,7 @@ function jurisdictionRouter(options) {
    *    }
    *
    */
-  router.get('/jurisdictions', function (request, response, next) {
-    controller.index(request, response, next);
-  });
+  router.get('/jurisdictions', preIndexMiddlewares);
 
 
   /**
@@ -329,9 +367,7 @@ function jurisdictionRouter(options) {
    *      "error":{}
    *    }
    */
-  router.post('/jurisdictions', function (request, response, next) {
-    controller.create(request, response, next);
-  });
+  router.post('/jurisdictions', preCreateMiddlewares);
 
 
   /**
@@ -438,9 +474,7 @@ function jurisdictionRouter(options) {
    *      "error":{}
    *    }
    */
-  router.get('/jurisdictions/:id', function (request, response, next) {
-    controller.show(request, response, next);
-  });
+  router.get('/jurisdictions/:id', preShowMiddlewares);
 
 
   /**
