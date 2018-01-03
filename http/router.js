@@ -617,9 +617,7 @@ function jurisdictionRouter(options) {
    *      "error":{}
    *    }
    */
-  router.put('/jurisdictions/:id', function (request, response, next) {
-    controller.update(request, response, next);
-  });
+  router.put('/jurisdictions/:id', preUpdateMiddlewares);
 
 
   /**
@@ -762,9 +760,7 @@ function jurisdictionRouter(options) {
    *      "error":{}
    *    }
    */
-  router.patch('/jurisdictions/:id', function (request, response, next) {
-    controller.update(request, response, next);
-  });
+  router.patch('/jurisdictions/:id', preUpdateMiddlewares);
 
 
   /**
@@ -873,9 +869,7 @@ function jurisdictionRouter(options) {
    *      "error":{}
    *    }
    */
-  router.delete('/jurisdictions/:id', function (request, response, next) {
-    controller.destroy(request, response, next);
-  });
+  router.delete('/jurisdictions/:id', preDeleteMiddlewares);
 
 
   /**
