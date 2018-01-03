@@ -1,10 +1,10 @@
 'use strict';
 
 /**
- * @module starter
+ * @module majifix-jurisdiction
  * @version 0.1.0
- * @description starter module for 311 modules
- * @author lally elias <lallyelias87@gmail.com>
+ * @description jurisdiction library for majifix
+ * @author Benson Maruchu <benmaruchu@gmail.com>
  * @public
  */
 const _ = require('lodash');
