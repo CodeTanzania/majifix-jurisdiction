@@ -16,11 +16,15 @@
     "311",
     "tanzania"
   ],
-  "author": {
+  "authors": [{
     "name": "lykmapipo",
     "email": "lallyelias87@gmail.com",
     "url": "https://github.com/lykmapipo"
-  },
+  }, {
+    "name": "BenMaruchu",
+    "email": "benmaruchu@gmail.com",
+    "url": "https://github.com/BenMaruchu"
+  }],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/CodeTanzania/majifix-jurisdiction/issues"
