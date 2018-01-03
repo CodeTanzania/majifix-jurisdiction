@@ -2,8 +2,9 @@
 
 
 //dependencies
-const mongoose = require('mongoose');
-const Jurisdiction = mongoose.model('Jurisdiction');
+const path = require('path');
+const Jurisdiction = require(path.join(__dirname, '..', 'models',
+  'jurisdiction'));
 
 
 /**
