@@ -175,7 +175,7 @@ const JurisdictionSchema = new Schema({
    */
   domain: {
     type: String,
-    // required: true,
+    required: true,
     trim: true,
     lowercase: true,
     searchable: true,
@@ -336,6 +336,11 @@ JurisdictionSchema.pre('validate', function (next) {
     type: GeoJSON.TYPE_POINT,
     coordinates: [0, 0]
   }, this.location ? this.location.toObject() : {});
+
+  // ensure domain field is set
+  if (_.isEmpty(this.domain)) {
+    this.domain = _.snakeCase(this.name);
+  }
 
   next();
 
