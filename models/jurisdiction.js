@@ -175,7 +175,7 @@ const JurisdictionSchema = new Schema({
    */
   domain: {
     type: String,
-    required: true,
+    // required: true,
     trim: true,
     lowercase: true,
     searchable: true,
