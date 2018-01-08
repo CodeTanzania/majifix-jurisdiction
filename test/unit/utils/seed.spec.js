@@ -7,10 +7,14 @@ const path = require('path');
 const expect = require('chai').expect;
 const seed = require(path.join(__dirname, '..', '..', '..', 'utils', 'seed'));
 
-describe('Seeder', () => {
+describe('Seed function', () => {
 
   it('should export a function', () => {
     expect(seed).to.be.a('function');
+  });
+
+  it('should accept two arguments', () => {
+    expect(seed.length).to.be.equal(2);
   });
 
   it('should be able to save one jurisdiction', (done) => {
