@@ -46,4 +46,16 @@ describe('Seeder', () => {
       done();
     });
   });
+
+  it('should  fails when jurisdiction name is empty', (done) => {
+    const jurisdiction = {
+      color: '#fffaaa'
+    };
+
+    seed(jurisdiction, function (error, results) {
+      expect(error).to.exist;
+      expect(results).not.to.exist;
+      done();
+    });
+  });
 });
