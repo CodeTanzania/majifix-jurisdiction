@@ -12,6 +12,7 @@ const path = require('path');
 let mongoose = require('mongoose');
 const Model = require(path.join(__dirname, 'models', 'jurisdiction'));
 const jurisdictionRouter = require(path.join(__dirname, 'http', 'router'));
+const seed = require(path.join(__dirname, 'utils', 'seed'));
 
 
 module.exports = function (options) {
@@ -28,6 +29,7 @@ module.exports = function (options) {
 
   return {
     model: Model,
-    router: Router
+    router: Router,
+    seed: seed
   };
 };
