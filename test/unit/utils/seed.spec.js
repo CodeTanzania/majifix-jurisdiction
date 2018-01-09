@@ -33,7 +33,7 @@ describe('Seed function', () => {
 
   });
 
-  it('should be able to save to save array of jurisdiction', (done) => {
+  it('should be able to save an array of jurisdictions', (done) => {
 
     const jurisdictions = [{
       name: 'Temeke'
