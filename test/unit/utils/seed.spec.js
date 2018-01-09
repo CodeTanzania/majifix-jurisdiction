@@ -43,7 +43,6 @@ describe('Seed function', () => {
     }];
 
     seed(jurisdictions, function (error, results) {
-      console.log(error);
       expect(error).not.exist;
       expect(results).to.exist;
       expect(results).to.be.an('array');
