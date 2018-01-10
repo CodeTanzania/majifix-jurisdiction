@@ -51,7 +51,7 @@ describe('Seed function', () => {
     });
   });
 
-  it('should  fails when jurisdiction name is empty', (done) => {
+  it('should  fail when jurisdiction name is empty', (done) => {
     const jurisdiction = {
       color: faker.random.alphaNumeric(6)
     };
