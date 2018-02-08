@@ -13,7 +13,7 @@ describe('Index', () => {
     expect(index).to.be.a('function');
   });
 
-  it('should retun an object when called', () => {
+  it('should return an object when called', () => {
     const library = index();
     expect(library).to.be.an('object');
   });
@@ -28,7 +28,7 @@ describe('Index', () => {
    * Testing  express Router
    * @see {@link https://stackoverflow.com/questions/38926399/mocha-approach-to-testing-instance-of-express-router}
    */
-  it('should have router property which is an express Router istance', () => {
+  it('should have router property which is an express Router instance', () => {
     const library = index();
     const jurisdictionRouter = library.router;
     expect(library).to.contain.key('router');
