@@ -1,0 +1,13 @@
+{
+  "name": "majifix-jurisdiction",
+  "version": "1.0.0",
+  "description": "A representation of an entity (e.g minicipal) responsible for addressing citizen(or customer) service request(issue).",
+  "title": "MajiFix Account",
+  "url": "https://majifix-jurisdiction.herokuapp.com/v1.0.0",
+  "sampleUrl": "https://majifix-jurisdiction.herokuapp.com/v1.0.0",
+  "template":
+  {
+    "withCompare": true,
+    "withGenerator": true
+  }
+}

@@ -1,35 +1,61 @@
 'use strict';
 
+
 /**
- * @module majifix-jurisdiction
- * @version 0.1.0
- * @description jurisdiction library for majifix
+ * @name majifix-jurisdiction
+ * @description A representation of an entity (e.g minicipal) 
+ * responsible for addressing citizen(or customer) service request(issue).
+ * 
+ * It may be a self managed entity or division within another
+ * entity(jurisdiction) in case there is hierarchy.
+ * 
  * @author Benson Maruchu <benmaruchu@gmail.com>
- * @public
+ * @author lally elias <lallyelias87@mail.com>
+ * @since  0.1.0
+ * @version 0.1.0
+ * @example
+ *
+ * const { app } = require('majifix-jurisdiction');
+ *
+ * ...
+ *
+ * app.start();
+ *
  */
-const _ = require('lodash');
+
+
+/* dependencies */
 const path = require('path');
-let mongoose = require('mongoose');
-const Model = require(path.join(__dirname, 'models', 'jurisdiction'));
-const jurisdictionRouter = require(path.join(__dirname, 'http', 'router'));
-const seed = require(path.join(__dirname, 'utils', 'seed'));
+const app = require('@lykmapipo/express-common');
 
 
-module.exports = function (options) {
-
-  // ensure options
-  options = _.merge({}, options);
-
-  mongoose = _.get(options, 'mongoose', mongoose);
-
-  const routerOptions = _.get(options, 'router', {});
-
-  const Router = jurisdictionRouter(routerOptions);
+/* import models */
+const Jurisdiction =
+  require(path.join(__dirname, 'lib', 'jurisdiction.model'));
 
 
-  return {
-    model: Model,
-    router: Router,
-    seed: seed
-  };
-};
+/* import routers*/
+const router =
+  require(path.join(__dirname, 'lib', 'http.router'));
+
+
+/* export jurisdiction model */
+exports.Jurisdiction = Jurisdiction;
+
+
+/* export jurisdiction router */
+exports.router = router;
+
+
+/* export app */
+Object.defineProperty(exports, 'app', {
+  get() {
+
+    //TODO bind oauth middlewares authenticate, token, authorize
+
+    /* bind jurisdiction router */
+    app.mount(router);
+    return app;
+  }
+
+});
