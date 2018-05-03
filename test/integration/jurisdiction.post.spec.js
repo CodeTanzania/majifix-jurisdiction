@@ -30,7 +30,7 @@ describe('Jurisdiction', function () {
           expect(created).to.exist;
           expect(created._id).to.eql(jurisdiction._id);
           expect(created.name).to.eql(jurisdiction.name);
-          expect(created.number).to.eql(jurisdiction.number);
+          expect(created.code).to.eql(jurisdiction.code);
           done(error, created);
         });
     });
@@ -51,7 +51,7 @@ describe('Jurisdiction', function () {
           expect(created).to.exist;
           expect(created._id).to.eql(jurisdiction._id);
           expect(created.name).to.eql(jurisdiction.name);
-          expect(created.number).to.eql(jurisdiction.number);
+          expect(created.code).to.eql(jurisdiction.code);
           done(error, created);
         });
     });
