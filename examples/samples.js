@@ -8,21 +8,21 @@ const {
   randomPoint,
   randomPolygon
 } = require('mongoose-geojson-schemas');
-const today = moment(new Date());
 
 function sample() {
+  const domain = faker.internet.domainName();
   return {
+    code: faker.finance.account(),
     name: faker.company.companyName(),
     phone: faker.phone.phoneNumber(),
     email: faker.internet.email(),
-    website: faker.internet.domainName(),
-    domain: faker.internet.domainName(),
-    domain: faker.internet.domainName(),
+    website: domain,
+    domain: domain,
     about: faker.lorem.paragraph(),
     address: faker.address.streetAddress(),
     location: randomPoint(),
     boundaries: {
-      coordinates = [
+      coordinates: [
         randomPolygon().coordinates,
         randomPolygon().coordinates
       ]
