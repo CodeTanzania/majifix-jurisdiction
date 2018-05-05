@@ -20,7 +20,7 @@ function sample() {
     domain: domain,
     about: faker.lorem.paragraph(),
     address: faker.address.streetAddress(),
-    location: randomPoint(),
+    // location: randomPoint(),
     boundaries: {
       coordinates: [
         randomPolygon().coordinates,

@@ -33,10 +33,13 @@ function boot() {
     }
 
   ], function (error, results) {
+    console.log(error);
 
     /* fire the app */
     app.start(function (error, env) {
-      console.log(`visit http://0.0.0.0:${env.PORT}/v1.0.0/jurisdictions`);
+      console.log(
+        `visit http://0.0.0.0:${env.PORT}/v1.0.0/jurisdictions`
+      );
     });
 
   });
