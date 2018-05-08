@@ -95,5 +95,14 @@ describe('Jurisdiction', function () {
 
   });
 
+  describe('Statics', function () {
+
+    it('should expose model name as constant', function () {
+      expect(Jurisdiction.MODEL_NAME).to.exist;
+      expect(Jurisdiction.MODEL_NAME).to.be.equal('Jurisdiction');
+    });
+
+  });
+
 
 });
