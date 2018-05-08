@@ -6,7 +6,7 @@ const path = require('path');
 const { expect } = require('chai');
 const sinon = require('sinon');
 const {
-  randomPolygon,
+  randomMultiPolygon,
   TYPE_POINT
 } = require('mongoose-geojson-schemas');
 
@@ -32,12 +32,7 @@ describe('Jurisdiction', function () {
 
     it('should be able to ensure location from boundaries', function () {
       const jurisdiction = Jurisdiction.fake();
-      jurisdiction.boundaries = {
-        coordinates: [
-          randomPolygon().coordinates,
-          randomPolygon().coordinates
-        ]
-      };
+      jurisdiction.boundaries = randomMultiPolygon();
 
       //ensure location
       const location = jurisdiction.ensureLocation();
@@ -59,12 +54,7 @@ describe('Jurisdiction', function () {
 
       let ensureLocation;
       const jurisdiction = Jurisdiction.fake();
-      jurisdiction.boundaries = {
-        coordinates: [
-          randomPolygon().coordinates,
-          randomPolygon().coordinates
-        ]
-      };
+      jurisdiction.boundaries = randomMultiPolygon();
 
       beforeEach(function () {
         ensureLocation =

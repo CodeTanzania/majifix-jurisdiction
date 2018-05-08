@@ -6,7 +6,7 @@ const faker = require('faker');
 const moment = require('moment');
 const {
   randomPoint,
-  randomPolygon
+  randomMultiPolygon
 } = require('mongoose-geojson-schemas');
 
 function sample() {
@@ -20,13 +20,7 @@ function sample() {
     domain: domain,
     about: faker.lorem.paragraph(),
     address: faker.address.streetAddress(),
-    // location: randomPoint(),
-    boundaries: {
-      coordinates: [
-        randomPolygon().coordinates,
-        randomPolygon().coordinates
-      ]
-    }
+    boundaries: randomMultiPolygon()
   };
 }
 
