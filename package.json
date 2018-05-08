@@ -18,23 +18,27 @@
     "majifix",
     "jurisdiction"
   ],
-  "authors": [
+  "contributors": [
     {
       "name": "lykmapipo",
       "email": "lallyelias87@gmail.com",
       "url": "https://github.com/lykmapipo"
     },
     {
-      "name": "BenMaruchu",
+      "name": "benMaruchu",
       "email": "benmaruchu@gmail.com",
       "url": "https://github.com/BenMaruchu"
     }
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/CodeTanzania/majifix-jurisdiction/issues"
+    "url": "https://github.com/CodeTanzania/majifix-jurisdiction/issues",
+    "email": "lallyelias87@gmail.com"
   },
   "homepage": "https://github.com/CodeTanzania/majifix-jurisdiction",
+  "sandbox": {
+    "url": "https://majifix-jurisdiction.herokuapp.com/v0.1.0/jurisdictions"
+  },
   "devDependencies": {
     "body-parser": "^1.18.2",
     "chai": "^4.1.2",
