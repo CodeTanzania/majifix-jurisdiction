@@ -10,7 +10,7 @@ const path = require('path');
 const _ = require('lodash');
 const async = require('async');
 const mongoose = require('mongoose');
-const { Jurisdiction, app } = require(path.join(__dirname, '..'));
+const { Jurisdiction, app, info } = require(path.join(__dirname, '..'));
 let samples = require('./samples')(20);
 
 
@@ -47,10 +47,16 @@ function boot() {
 
   ], function (error, results) {
 
+    /* expose module info */
+    app.get('/', function (request, response) {
+      response.status(200);
+      response.json(info);
+    });
+
     /* fire the app */
     app.start(function (error, env) {
       console.log(
-        `visit http://0.0.0.0:${env.PORT}/v1.0.0/jurisdictions`
+        `visit http://0.0.0.0:${env.PORT}/v${info.version}/jurisdictions`
       );
     });
 

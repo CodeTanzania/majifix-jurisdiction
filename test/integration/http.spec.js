@@ -5,7 +5,11 @@ const path = require('path');
 const request = require('supertest');
 const mongoose = require('mongoose');
 const { expect } = require('chai');
-const { Jurisdiction, app } = require(path.join(__dirname, '..', '..'));
+const {
+  Jurisdiction,
+  app,
+  info
+} = require(path.join(__dirname, '..', '..'));
 
 
 describe('Jurisdiction', function () {
@@ -28,7 +32,7 @@ describe('Jurisdiction', function () {
       jurisdiction = Jurisdiction.fake();
 
       request(app)
-        .post('/v1.0.0/jurisdictions')
+        .post(`/v${info.version}/jurisdictions`)
         .set('Accept', 'application/json')
         .set('Content-Type', 'application/json')
         .send(jurisdiction)
@@ -52,7 +56,7 @@ describe('Jurisdiction', function () {
     it('should handle HTTP GET on /jurisdictions', function (done) {
 
       request(app)
-        .get('/v1.0.0/jurisdictions')
+        .get(`/v${info.version}/jurisdictions`)
         .set('Accept', 'application/json')
         .expect(200)
         .expect('Content-Type', /json/)
@@ -78,7 +82,7 @@ describe('Jurisdiction', function () {
     it('should handle HTTP GET on /jurisdictions/id:', function (done) {
 
       request(app)
-        .get(`/v1.0.0/jurisdictions/${jurisdiction._id}`)
+        .get(`/v${info.version}/jurisdictions/${jurisdiction._id}`)
         .set('Accept', 'application/json')
         .expect(200)
         .end(function (error, response) {
@@ -101,7 +105,8 @@ describe('Jurisdiction', function () {
       const patch = jurisdiction.fakeOnly('name');
 
       request(app)
-        .patch(`/v1.0.0/jurisdictions/${jurisdiction._id}`)
+        .patch(
+          `/v${info.version}/jurisdictions/${jurisdiction._id}`)
         .set('Accept', 'application/json')
         .set('Content-Type', 'application/json')
         .send(patch)
@@ -127,7 +132,7 @@ describe('Jurisdiction', function () {
       const put = jurisdiction.fakeOnly('name');
 
       request(app)
-        .put(`/v1.0.0/jurisdictions/${jurisdiction._id}`)
+        .put(`/v${info.version}/jurisdictions/${jurisdiction._id}`)
         .set('Accept', 'application/json')
         .set('Content-Type', 'application/json')
         .send(put)
@@ -152,7 +157,8 @@ describe('Jurisdiction', function () {
       done) {
 
       request(app)
-        .delete(`/v1.0.0/jurisdictions/${jurisdiction._id}`)
+        .delete(
+          `/v${info.version}/jurisdictions/${jurisdiction._id}`)
         .set('Accept', 'application/json')
         .expect(200)
         .end(function (error, response) {
