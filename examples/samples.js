@@ -13,7 +13,7 @@ function sample() {
   const domain = faker.internet.domainName();
   return {
     code: faker.finance.account(),
-    name: faker.company.companyName(),
+    name: faker.address.county(),
     phone: faker.phone.phoneNumber(),
     email: faker.internet.email(),
     website: domain,
