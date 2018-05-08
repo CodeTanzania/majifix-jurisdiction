@@ -113,7 +113,6 @@ describe('Jurisdiction', function () {
       expect(website.type).to.be.a('function');
       expect(website.type.name).to.be.equal('String');
       expect(website.trim).to.be.true;
-      expect(website.unique).to.be.true;
       expect(website.searchable).to.be.true;
 
     });
