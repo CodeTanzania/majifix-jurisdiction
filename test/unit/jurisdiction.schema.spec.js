@@ -43,7 +43,7 @@ describe('Jurisdiction', function () {
       expect(code.required).to.be.true;
       expect(code.uppercase).to.be.true;
       expect(code.trim).to.be.true;
-      expect(code.unique).to.be.true;
+      expect(code.index).to.be.true;
       expect(code.searchable).to.be.true;
 
     });
@@ -60,9 +60,8 @@ describe('Jurisdiction', function () {
       expect(name.type.name).to.be.equal('String');
       expect(name.required).to.be.true;
       expect(name.trim).to.be.true;
-      expect(name.unique).to.be.true;
       expect(name.searchable).to.be.true;
-      expect(name.unique).to.be.true;
+      expect(name.index).to.be.true;
 
     });
 
