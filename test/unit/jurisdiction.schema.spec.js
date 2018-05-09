@@ -117,24 +117,6 @@ describe('Jurisdiction', function () {
 
     });
 
-
-    it('should have domain field', function () {
-
-      const domain = Jurisdiction.schema.tree.domain;
-      const instance = Jurisdiction.schema.paths.domain.instance;
-
-      expect(instance).to.be.equal('String');
-      expect(domain).to.exist;
-      expect(domain).to.be.an('object');
-      expect(domain.type).to.be.a('function');
-      expect(domain.type.name).to.be.equal('String');
-      expect(domain.trim).to.be.true;
-      expect(domain.unique).to.be.true;
-      expect(domain.searchable).to.be.true;
-
-    });
-
-
     it('should have about field', function () {
 
       const about = Jurisdiction.schema.tree.about;

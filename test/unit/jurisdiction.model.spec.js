@@ -24,8 +24,8 @@ describe('Jurisdiction', function () {
       const jurisdiction = Jurisdiction.fake();
       expect(jurisdiction.ensureLocation).to.exist;
       expect(jurisdiction.ensureLocation).to.be.a('function');
-      expect(jurisdiction.ensureLocation.length).to.be.equal(
-        0);
+      expect(jurisdiction.ensureLocation.length)
+        .to.be.equal(0);
       expect(jurisdiction.ensureLocation.name)
         .to.be.equal('ensureLocation');
     });
@@ -100,6 +100,14 @@ describe('Jurisdiction', function () {
     it('should expose model name as constant', function () {
       expect(Jurisdiction.MODEL_NAME).to.exist;
       expect(Jurisdiction.MODEL_NAME).to.be.equal('Jurisdiction');
+    });
+
+    it('should expose autopulate as options', function () {
+      expect(Jurisdiction.OPTION_AUTOPOPULATE).to.exist;
+      expect(Jurisdiction.OPTION_AUTOPOPULATE)
+        .to.be.eql({
+          select: { code: 1, name: 1 }
+        });
     });
 
   });
