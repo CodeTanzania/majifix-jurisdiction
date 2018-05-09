@@ -23,12 +23,12 @@ describe('Jurisdiction', function () {
     let jurisdictions;
 
     before(function (done) {
-      const fakes = _.map(Jurisdiction.fake(32), function (
-        jurisdiction) {
-        return function (next) {
-          jurisdiction.post(next);
-        };
-      });
+      const fakes =
+        _.map(Jurisdiction.fake(32), function (jurisdiction) {
+          return function (next) {
+            jurisdiction.post(next);
+          };
+        });
       async
       .parallel(fakes, function (error, created) {
         jurisdictions = created;
@@ -92,7 +92,7 @@ describe('Jurisdiction', function () {
 
     it('should be able to search with options', function (done) {
 
-      const options = { filter: { q: jurisdictions[0].name } };
+      const options = { filter: { q: jurisdictions[0].code } };
       Jurisdiction
         .get(options, function (error, results) {
           expect(error).to.not.exist;
