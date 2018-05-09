@@ -106,7 +106,7 @@ describe('Jurisdiction', function () {
       expect(Jurisdiction.OPTION_AUTOPOPULATE).to.exist;
       expect(Jurisdiction.OPTION_AUTOPOPULATE)
         .to.be.eql({
-          select: { code: 1, name: 1 }
+          select: { code: 1, name: 1, color: 1 }
         });
     });
 

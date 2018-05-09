@@ -30,7 +30,9 @@ function boot() {
 
     function seedJurisdiction(next) {
       const jurisdiction = Jurisdiction.fake();
-      jurisdiction.post(next);
+      Jurisdiction.remove(function ( /*error, results*/ ) {
+        jurisdiction.post(next);
+      });
     },
 
     function seed(jurisdiction, next) {

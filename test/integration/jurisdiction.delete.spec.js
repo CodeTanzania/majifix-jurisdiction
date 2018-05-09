@@ -2,15 +2,10 @@
 
 /* dependencies */
 const path = require('path');
-const mongoose = require('mongoose');
 const { expect } = require('chai');
 const { Jurisdiction } = require(path.join(__dirname, '..', '..'));
 
 describe('Jurisdiction', function () {
-
-  before(function (done) {
-    mongoose.connect('mongodb://localhost/majifix-jurisdiction', done);
-  });
 
   before(function (done) {
     Jurisdiction.remove(done);

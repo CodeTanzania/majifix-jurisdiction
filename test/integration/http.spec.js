@@ -3,7 +3,6 @@
 /* dependencies */
 const path = require('path');
 const request = require('supertest');
-const mongoose = require('mongoose');
 const { expect } = require('chai');
 const {
   Jurisdiction,
@@ -15,11 +14,6 @@ const {
 describe('Jurisdiction', function () {
 
   describe('Rest API', function () {
-
-    before(function (done) {
-      mongoose.connect('mongodb://localhost/majifix-jurisdiction',
-        done);
-    });
 
     before(function (done) {
       Jurisdiction.remove(done);
