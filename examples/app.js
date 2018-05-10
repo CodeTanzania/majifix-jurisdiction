@@ -23,27 +23,26 @@ function boot() {
   async.waterfall([
 
     function clear(next) {
-      Jurisdiction.remove(function ( /*error, results*/ ) {
+      Jurisdiction.remove(function ( /*error, results*/) {
         next();
       });
     },
 
     function seedJurisdiction(next) {
       const jurisdiction = Jurisdiction.fake();
-      Jurisdiction.remove(function ( /*error, results*/ ) {
+      Jurisdiction.remove(function ( /*error, results*/) {
         jurisdiction.post(next);
       });
     },
 
     function seed(jurisdiction, next) {
-      /* fake statuses */
+      /* fake jurisdictions */
       samples = _.map(samples, function (sample, index) {
         if ((index % 2 === 0)) {
           sample.jurisdiction = jurisdiction;
         }
         return sample;
       });
-      /* fake jurisdictions */
       Jurisdiction.create(samples, next);
     }
 
