@@ -29,19 +29,20 @@ function boot() {
       });
     },
 
-    function seedJurisdiction_01(next) {
+    function seedJurisdiction(next) {
       const jurisdiction = Jurisdiction.fake();
       jurisdiction.post(next);
     },
 
     function seed(jurisdiction, next) {
       /* fake jurisdictions */
-      samples = _.map(samples, function (sample, index) {
-        if ((index % 2 === 0)) {
-          sample.jurisdiction = jurisdiction;
-        }
-        return sample;
-      });
+      samples =
+        _.map(samples, function (sample, index) {
+          if ((index % 2 === 0)) {
+            sample.jurisdiction = jurisdiction;
+          }
+          return sample;
+        });
       Jurisdiction.create(samples, next);
     }
 
