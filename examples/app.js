@@ -10,6 +10,7 @@ const path = require('path');
 const _ = require('lodash');
 const async = require('async');
 const mongoose = require('mongoose');
+// mongoose.set('debug', true);
 const { Jurisdiction, app, info } = require(path.join(__dirname, '..'));
 let samples = require('./samples')(20);
 
@@ -23,16 +24,14 @@ function boot() {
   async.waterfall([
 
     function clear(next) {
-      Jurisdiction.remove(function ( /*error, results*/) {
+      Jurisdiction.remove(function ( /*error, results*/ ) {
         next();
       });
     },
 
-    function seedJurisdiction(next) {
+    function seedJurisdiction_01(next) {
       const jurisdiction = Jurisdiction.fake();
-      Jurisdiction.remove(function ( /*error, results*/) {
-        jurisdiction.post(next);
-      });
+      jurisdiction.post(next);
     },
 
     function seed(jurisdiction, next) {
