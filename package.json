@@ -1,7 +1,7 @@
 {
   "name": "majifix-jurisdiction",
   "version": "0.1.0",
-  "description": "A representation of an entity (e.g minicipal) responsible for addressing citizen(or customer) service request(issue).",
+  "description": "A representation of an entity (e.g municipal) responsible for addressing citizen(or customer) service request(issue).",
   "main": "index.js",
   "scripts": {
     "test": "grunt test",
@@ -62,7 +62,7 @@
     "async": "^2.6.0",
     "express": "^4.16.3",
     "lodash": "^4.17.10",
-    "majifix-common": "git+https://github.com/CodeTanzania/majifix-common",
+    "majifix-common": "git+https://github.com/CodeTanzania/majifix-common#develop",
     "moment": "^2.22.1",
     "mongoose": "^5.1.1",
     "mongoose-geojson-schemas": "^0.4.0",
