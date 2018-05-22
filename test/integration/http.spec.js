@@ -4,11 +4,8 @@
 const path = require('path');
 const request = require('supertest');
 const { expect } = require('chai');
-const {
-  Jurisdiction,
-  app,
-  info
-} = require(path.join(__dirname, '..', '..'));
+const { env } = require('majifix-common');
+const { Jurisdiction, app } = require(path.join(__dirname, '..', '..'));
 
 
 describe('Jurisdiction', function () {
@@ -26,7 +23,7 @@ describe('Jurisdiction', function () {
       jurisdiction = Jurisdiction.fake();
 
       request(app)
-        .post(`/v${info.version}/jurisdictions`)
+        .post(`/v${env.API_VERSION}/jurisdictions`)
         .set('Accept', 'application/json')
         .set('Content-Type', 'application/json')
         .send(jurisdiction)
@@ -50,7 +47,7 @@ describe('Jurisdiction', function () {
     it('should handle HTTP GET on /jurisdictions', function (done) {
 
       request(app)
-        .get(`/v${info.version}/jurisdictions`)
+        .get(`/v${env.API_VERSION}/jurisdictions`)
         .set('Accept', 'application/json')
         .expect(200)
         .expect('Content-Type', /json/)
@@ -70,13 +67,12 @@ describe('Jurisdiction', function () {
           done(error, response);
 
         });
-
     });
 
     it('should handle HTTP GET on /jurisdictions/id:', function (done) {
 
       request(app)
-        .get(`/v${info.version}/jurisdictions/${jurisdiction._id}`)
+        .get(`/v${env.API_VERSION}/jurisdictions/${jurisdiction._id}`)
         .set('Accept', 'application/json')
         .expect(200)
         .end(function (error, response) {
@@ -89,9 +85,7 @@ describe('Jurisdiction', function () {
           expect(found.name).to.be.equal(jurisdiction.name);
 
           done(error, response);
-
         });
-
     });
 
     it('should handle HTTP PATCH on /jurisdictions/id:', function (done) {
@@ -100,7 +94,7 @@ describe('Jurisdiction', function () {
 
       request(app)
         .patch(
-          `/v${info.version}/jurisdictions/${jurisdiction._id}`)
+          `/v${env.API_VERSION}/jurisdictions/${jurisdiction._id}`)
         .set('Accept', 'application/json')
         .set('Content-Type', 'application/json')
         .send(patch)
@@ -126,7 +120,7 @@ describe('Jurisdiction', function () {
       const put = jurisdiction.fakeOnly('name');
 
       request(app)
-        .put(`/v${info.version}/jurisdictions/${jurisdiction._id}`)
+        .put(`/v${env.API_VERSION}/jurisdictions/${jurisdiction._id}`)
         .set('Accept', 'application/json')
         .set('Content-Type', 'application/json')
         .send(put)
@@ -135,11 +129,11 @@ describe('Jurisdiction', function () {
           expect(error).to.not.exist;
           expect(response).to.exist;
 
-          const puted = response.body;
+          const updated = response.body;
 
-          expect(puted._id).to.exist;
-          expect(puted._id).to.be.equal(jurisdiction._id.toString());
-          expect(puted.name).to.be.equal(jurisdiction.name);
+          expect(updated._id).to.exist;
+          expect(updated._id).to.be.equal(jurisdiction._id.toString());
+          expect(updated.name).to.be.equal(jurisdiction.name);
 
           done(error, response);
 
@@ -152,7 +146,7 @@ describe('Jurisdiction', function () {
 
       request(app)
         .delete(
-          `/v${info.version}/jurisdictions/${jurisdiction._id}`)
+          `/v${env.API_VERSION}/jurisdictions/${jurisdiction._id}`)
         .set('Accept', 'application/json')
         .expect(200)
         .end(function (error, response) {

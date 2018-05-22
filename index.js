@@ -43,12 +43,9 @@ const fields = [
   'sandbox',
   'contributors'
 ];
+
+/* extract information from package.json */
 const info = _.merge({}, _.pick(pkg, fields));
-
-
-/* ensure api version */
-process.env.API_VERSION = (process.env.API_VERSION || info.version);
-
 
 /* import models */
 const Jurisdiction =
