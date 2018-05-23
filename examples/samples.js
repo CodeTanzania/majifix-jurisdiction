@@ -1,6 +1,6 @@
 'use strict';
 
-/* depedencies */
+/* dependencies */
 const _ = require('lodash');
 const faker = require('faker');
 const moment = require('moment');
