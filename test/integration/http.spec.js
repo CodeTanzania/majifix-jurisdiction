@@ -4,9 +4,7 @@
 const path = require('path');
 const request = require('supertest');
 const { expect } = require('chai');
-const { env } = require('@codetanzania/majifix-common');
-const { Jurisdiction, app } = require(path.join(__dirname, '..', '..'));
-
+const { Jurisdiction, router, app } = require(path.join(__dirname, '..', '..'));
 
 describe('Jurisdiction', function () {
 
@@ -23,7 +21,7 @@ describe('Jurisdiction', function () {
       jurisdiction = Jurisdiction.fake();
 
       request(app)
-        .post(`/v${env.API_VERSION}/jurisdictions`)
+        .post(`/v${router.apiVersion}/jurisdictions`)
         .set('Accept', 'application/json')
         .set('Content-Type', 'application/json')
         .send(jurisdiction)
@@ -47,7 +45,7 @@ describe('Jurisdiction', function () {
     it('should handle HTTP GET on /jurisdictions', function (done) {
 
       request(app)
-        .get(`/v${env.API_VERSION}/jurisdictions`)
+        .get(`/v${router.apiVersion}/jurisdictions`)
         .set('Accept', 'application/json')
         .expect(200)
         .expect('Content-Type', /json/)
@@ -72,7 +70,7 @@ describe('Jurisdiction', function () {
     it('should handle HTTP GET on /jurisdictions/id:', function (done) {
 
       request(app)
-        .get(`/v${env.API_VERSION}/jurisdictions/${jurisdiction._id}`)
+        .get(`/v${router.apiVersion}/jurisdictions/${jurisdiction._id}`)
         .set('Accept', 'application/json')
         .expect(200)
         .end(function (error, response) {
@@ -94,7 +92,7 @@ describe('Jurisdiction', function () {
 
       request(app)
         .patch(
-          `/v${env.API_VERSION}/jurisdictions/${jurisdiction._id}`)
+          `/v${router.apiVersion}/jurisdictions/${jurisdiction._id}`)
         .set('Accept', 'application/json')
         .set('Content-Type', 'application/json')
         .send(patch)
@@ -120,7 +118,7 @@ describe('Jurisdiction', function () {
       const put = jurisdiction.fakeOnly('name');
 
       request(app)
-        .put(`/v${env.API_VERSION}/jurisdictions/${jurisdiction._id}`)
+        .put(`/v${router.apiVersion}/jurisdictions/${jurisdiction._id}`)
         .set('Accept', 'application/json')
         .set('Content-Type', 'application/json')
         .send(put)
@@ -146,7 +144,7 @@ describe('Jurisdiction', function () {
 
       request(app)
         .delete(
-          `/v${env.API_VERSION}/jurisdictions/${jurisdiction._id}`)
+          `/v${router.apiVersion}/jurisdictions/${jurisdiction._id}`)
         .set('Accept', 'application/json')
         .expect(200)
         .end(function (error, response) {

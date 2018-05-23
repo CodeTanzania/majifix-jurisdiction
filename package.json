@@ -1,6 +1,6 @@
 {
-  "name": "majifix-jurisdiction",
-  "version": "0.1.0",
+  "name": "@codetanzania/majifix-jurisdiction",
+  "version": "1.0.0",
   "description": "A representation of an entity (e.g municipal) responsible for addressing citizen(or customer) service request(issue).",
   "main": "index.js",
   "scripts": {
@@ -13,10 +13,11 @@
     "url": "https://github.com/CodeTanzania/majifix-jurisdiction.git"
   },
   "keywords": [
-    "open311",
-    "311",
+    "codetanzania",
     "majifix",
-    "jurisdiction"
+    "majifix-module",
+    "jurisdiction",
+    "open311"
   ],
   "contributors": [
     {
@@ -37,7 +38,7 @@
   },
   "homepage": "https://github.com/CodeTanzania/majifix-jurisdiction",
   "sandbox": {
-    "url": "https://majifix-jurisdiction.herokuapp.com/v0.1.0/jurisdictions"
+    "url": "https://majifix-jurisdiction.herokuapp.com/v1/jurisdictions"
   },
   "devDependencies": {
     "@benmaruchu/faker": "^4.2.1",
@@ -58,7 +59,7 @@
   },
   "dependencies": {
     "@codetanzania/majifix-common": "^0.2.0",
-    "@lykmapipo/express-common": "^0.5.1",
+    "@lykmapipo/express-common": "^0.6.0",
     "async": "^2.6.1",
     "express": "^4.16.3",
     "lodash": "^4.17.10",
@@ -68,5 +69,9 @@
     "mongoose-locale-schema": "^0.1.0",
     "mongoose-rest-actions": "^0.12.1",
     "randomcolor": "^0.5.3"
+  },
+  "engines": {
+    "node": ">=8.1.11",
+    "npm": ">=5.6.0"
   }
 }

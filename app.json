@@ -1,12 +1,13 @@
 {
   "name": "majifix-jurisdiction",
-  "description": "A representation of an entity (e.g minicipal) responsible for addressing citizen(or customer) service request(issue).",
+  "description": "A representation of an entity (e.g municipal) responsible for addressing citizen(or customer) service request(issue).",
   "repository": "https://github.com/CodeTanzania/majifix-jurisdiction.git",
   "keywords": [
-    "open311",
-    "311",
+    "codetanzania",
     "majifix",
-    "jurisdiction"
+    "majifix-module",
+    "jurisdiction",
+    "open311"
   ],
   "addons": [
     "mongolab"
