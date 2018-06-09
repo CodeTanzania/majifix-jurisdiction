@@ -1,8 +1,8 @@
 'use strict';
 
-/* depedencies */
+/* dependencies */
 const _ = require('lodash');
-const faker = require('faker');
+const faker = require('@benmaruchu/faker');
 const moment = require('moment');
 const {
   randomPoint,

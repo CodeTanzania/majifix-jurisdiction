@@ -3,14 +3,14 @@
 
 /**
  * @name majifix-jurisdiction
- * @description A representation of an entity (e.g minicipal) 
+ * @description A representation of an entity (e.g municipal)
  * responsible for addressing citizen(or customer) service request(issue).
- * 
+ *
  * It may be a self managed entity or division within another
  * entity(jurisdiction) in case there is hierarchy.
- * 
+ *
  * @author Benson Maruchu <benmaruchu@gmail.com>
- * @author lally elias <lallyelias87@mail.com>
+ * @author lally elias <lallyelias87@gmail.com>
  * @since  0.1.0
  * @version 0.1.0
  * @example

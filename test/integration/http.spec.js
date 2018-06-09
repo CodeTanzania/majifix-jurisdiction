@@ -4,11 +4,7 @@
 const path = require('path');
 const request = require('supertest');
 const { expect } = require('chai');
-const {
-  Jurisdiction,
-  router,
-  app
-} = require(path.join(__dirname, '..', '..'));
+const { Jurisdiction, router, app } = require(path.join(__dirname, '..', '..'));
 
 describe('Jurisdiction', function () {
 
@@ -69,7 +65,6 @@ describe('Jurisdiction', function () {
           done(error, response);
 
         });
-
     });
 
     it('should handle HTTP GET on /jurisdictions/id:', function (done) {
@@ -90,9 +85,7 @@ describe('Jurisdiction', function () {
           expect(found.name).to.be.equal(jurisdiction.name);
 
           done(error, response);
-
         });
-
     });
 
     it('should handle HTTP PATCH on /jurisdictions/id:', function (done) {
@@ -139,11 +132,11 @@ describe('Jurisdiction', function () {
           expect(error).to.not.exist;
           expect(response).to.exist;
 
-          const puted = response.body;
+          const updated = response.body;
 
-          expect(puted._id).to.exist;
-          expect(puted._id).to.be.equal(jurisdiction._id.toString());
-          expect(puted.name).to.be.equal(jurisdiction.name);
+          expect(updated._id).to.exist;
+          expect(updated._id).to.be.equal(jurisdiction._id.toString());
+          expect(updated.name).to.be.equal(jurisdiction.name);
 
           done(error, response);
 

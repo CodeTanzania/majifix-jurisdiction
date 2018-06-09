@@ -11,7 +11,7 @@ const _ = require('lodash');
 const async = require('async');
 const mongoose = require('mongoose');
 // mongoose.set('debug', true);
-const { Jurisdiction, app, info } = require(path.join(__dirname, '..'));
+const { Jurisdiction, router, info, app } = require(path.join(__dirname, '..'));
 let samples = require('./samples')(20);
 
 
@@ -24,7 +24,7 @@ function boot() {
   async.waterfall([
 
     function clear(next) {
-      Jurisdiction.remove(function ( /*error, results*/ ) {
+      Jurisdiction.remove(function ( /*error, results*/) {
         next();
       });
     },
@@ -57,7 +57,7 @@ function boot() {
     /* fire the app */
     app.start(function (error, env) {
       console.log(
-        `visit http://0.0.0.0:${env.PORT}/v${info.version}/jurisdictions`
+        `visit http://0.0.0.0:${env.PORT}/v${router.apiVersion}/jurisdictions`
       );
     });
 
