@@ -13,30 +13,30 @@ describe('Jurisdiction', function () {
 
   describe('static delete', function () {
 
-    let account;
+    let jurisdiction;
 
     before(function (done) {
       const fake = Jurisdiction.fake();
       fake
         .post(function (error, created) {
-          account = created;
+          jurisdiction = created;
           done(error, created);
         });
     });
 
     it('should be able to delete', function (done) {
       Jurisdiction
-        .del(account._id, function (error, deleted) {
+        .del(jurisdiction._id, function (error, deleted) {
           expect(error).to.not.exist;
           expect(deleted).to.exist;
-          expect(deleted._id).to.eql(account._id);
+          expect(deleted._id).to.eql(jurisdiction._id);
           done(error, deleted);
         });
     });
 
     it('should throw if not exists', function (done) {
       Jurisdiction
-        .del(account._id, function (error, deleted) {
+        .del(jurisdiction._id, function (error, deleted) {
           expect(error).to.exist;
           expect(error.status).to.exist;
           expect(error.message).to.be.equal('Not Found');
@@ -49,33 +49,70 @@ describe('Jurisdiction', function () {
 
   describe('instance delete', function () {
 
-    let account;
+    let jurisdiction;
 
     before(function (done) {
       const fake = Jurisdiction.fake();
       fake
         .post(function (error, created) {
-          account = created;
+          jurisdiction = created;
           done(error, created);
         });
     });
 
     it('should be able to delete', function (done) {
-      account
+      jurisdiction
         .del(function (error, deleted) {
           expect(error).to.not.exist;
           expect(deleted).to.exist;
-          expect(deleted._id).to.eql(account._id);
+          expect(deleted._id).to.eql(jurisdiction._id);
           done(error, deleted);
         });
     });
 
     it('should throw if not exists', function (done) {
-      account
+      jurisdiction
         .del(function (error, deleted) {
           expect(error).to.not.exist;
           expect(deleted).to.exist;
-          expect(deleted._id).to.eql(account._id);
+          expect(deleted._id).to.eql(jurisdiction._id);
+          done();
+        });
+    });
+
+  });
+
+  describe('dependancy check', function () {
+
+    let parent;
+    let child;
+
+    before(function (done) {
+      parent = Jurisdiction.fake();
+      parent
+        .post(function (error, created) {
+          parent = created;
+          done(error, created);
+        });
+    });
+
+    before(function (done) {
+      child = Jurisdiction.fake();
+      child.jurisdiction = parent;
+      child
+        .post(function (error, created) {
+          child = created;
+          done(error, created);
+        });
+    });
+
+
+    it('should restrict parent deletion', function (done) {
+      parent
+        .del(function (error) {
+          expect(error).to.exist;
+          expect(error.message).to.contain('Fail to Delete');
+          expect(error.status).to.be.equal(400);
           done();
         });
     });
