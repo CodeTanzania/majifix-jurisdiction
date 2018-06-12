@@ -1,3 +1,7 @@
+# v1.1.0 / 2018-06-12
+- Use latest dependencies
+- Add dependencies checker logic defore delete
+
 # v1.1.0 / 2018-06-09
 
 - Force latest dependencies
