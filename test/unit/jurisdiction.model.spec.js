@@ -45,6 +45,40 @@ describe('Jurisdiction', function () {
       expect(location.coordinates).to.have.length(2);
     });
 
+    it('`preValidate` should be a function', function () {
+      const jurisdiction = Jurisdiction.fake();
+      expect(jurisdiction.preValidate).to.exist;
+      expect(jurisdiction.preValidate).to.be.a('function');
+      expect(jurisdiction.preValidate.length)
+        .to.be.equal(1);
+      expect(jurisdiction.preValidate.name)
+        .to.be.equal('preValidate');
+    });
+
+    it('should be able to ensure code and color', function (done) {
+      //fake
+      const jurisdiction = Jurisdiction.fake();
+
+      //pre condition
+      jurisdiction.color = undefined;
+      jurisdiction.code = undefined;
+
+      jurisdiction.preValidate(function (error, preValidated) {
+
+        //post condition
+        const { code, color } = preValidated;
+
+        //assertions
+        expect(code).to.exist;
+        expect(code).to.eql(jurisdiction.name[0].toUpperCase());
+        expect(color).to.exist;
+
+        done(error, preValidated);
+
+      });
+
+    });
+
   });
 
 

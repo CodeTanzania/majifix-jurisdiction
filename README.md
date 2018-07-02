@@ -4,7 +4,7 @@
 [![Dependencies Status](https://david-dm.org/CodeTanzania/majifix-jurisdiction/status.svg?style=flat-square)](https://david-dm.org/CodeTanzania/majifix-jurisdiction)
 [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/CodeTanzania/majifix-jurisdiction/tree/develop)
 
-A representation of an entity (e.g municipal) responsible for addressing citizen(or customer) service request(issue).
+A representation of an entity (e.g municipal, local government etc) responsible for addressing citizen(or customer) service request(issue).
 
 ## Requirements
 
