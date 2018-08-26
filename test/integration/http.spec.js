@@ -4,7 +4,11 @@
 const path = require('path');
 const request = require('supertest');
 const { expect } = require('chai');
-const { Jurisdiction, router, app } = require(path.join(__dirname, '..', '..'));
+const {
+  Jurisdiction,
+  apiVersion,
+  app
+} = require(path.join(__dirname, '..', '..'));
 
 describe('Jurisdiction', function () {
 
@@ -21,7 +25,7 @@ describe('Jurisdiction', function () {
       jurisdiction = Jurisdiction.fake();
 
       request(app)
-        .post(`/v${router.apiVersion}/jurisdictions`)
+        .post(`/v${apiVersion}/jurisdictions`)
         .set('Accept', 'application/json')
         .set('Content-Type', 'application/json')
         .send(jurisdiction)
@@ -45,7 +49,7 @@ describe('Jurisdiction', function () {
     it('should handle HTTP GET on /jurisdictions', function (done) {
 
       request(app)
-        .get(`/v${router.apiVersion}/jurisdictions`)
+        .get(`/v${apiVersion}/jurisdictions`)
         .set('Accept', 'application/json')
         .expect(200)
         .expect('Content-Type', /json/)
@@ -71,7 +75,7 @@ describe('Jurisdiction', function () {
 
       request(app)
         .get(
-          `/v${router.apiVersion}/jurisdictions/${jurisdiction._id}`
+          `/v${apiVersion}/jurisdictions/${jurisdiction._id}`
         )
         .set('Accept', 'application/json')
         .expect(200)
@@ -94,7 +98,7 @@ describe('Jurisdiction', function () {
 
       request(app)
         .patch(
-          `/v${router.apiVersion}/jurisdictions/${jurisdiction._id}`
+          `/v${apiVersion}/jurisdictions/${jurisdiction._id}`
         )
         .set('Accept', 'application/json')
         .set('Content-Type', 'application/json')
@@ -122,7 +126,7 @@ describe('Jurisdiction', function () {
 
       request(app)
         .put(
-          `/v${router.apiVersion}/jurisdictions/${jurisdiction._id}`
+          `/v${apiVersion}/jurisdictions/${jurisdiction._id}`
         )
         .set('Accept', 'application/json')
         .set('Content-Type', 'application/json')
@@ -149,7 +153,7 @@ describe('Jurisdiction', function () {
 
       request(app)
         .delete(
-          `/v${router.apiVersion}/jurisdictions/${jurisdiction._id}`
+          `/v${apiVersion}/jurisdictions/${jurisdiction._id}`
         )
         .set('Accept', 'application/json')
         .expect(200)

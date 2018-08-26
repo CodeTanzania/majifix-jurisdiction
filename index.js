@@ -71,6 +71,10 @@ exports.Jurisdiction = Jurisdiction;
 exports.router = router;
 
 
+/* export router api version */
+exports.apiVersion = router.apiVersion;
+
+
 /* export app */
 Object.defineProperty(exports, 'app', {
   get() {
