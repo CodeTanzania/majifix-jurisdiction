@@ -1,3 +1,6 @@
+# v1.4.1 / 2018-09-01
+- Force latest dependencies
+
 # v1.4.0 / 2018-08-26
 - Force latest dependencies
 - Export apiVersion module level
