@@ -147,7 +147,7 @@ describe('Jurisdiction', function () {
 
     });
 
-    describe('location', function () {
+    describe.skip('location', function () {
 
       it('should be an embedded subdocument', function () {
 
@@ -199,7 +199,7 @@ describe('Jurisdiction', function () {
     });
 
 
-    describe('boundaries', function () {
+    describe.skip('boundaries', function () {
 
       it('should be an embedded subdocument', function () {
 
