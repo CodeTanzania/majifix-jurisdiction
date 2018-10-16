@@ -1,3 +1,7 @@
+# 1.4.2 / 16-10-2018
+- Force latest dependencies
+- Update integration test setup and cleanup
+
 # 1.4.2 / 09-09-2018
 - force latest dependencies
 - run security audit fix
