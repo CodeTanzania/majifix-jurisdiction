@@ -147,7 +147,7 @@ describe('Jurisdiction', function () {
 
     });
 
-    describe.skip('location', function () {
+    describe('location', function () {
 
       it('should be an embedded subdocument', function () {
 
@@ -164,7 +164,7 @@ describe('Jurisdiction', function () {
 
       });
 
-      it('should have GeoJSON type field', function () {
+      it.skip('should have GeoJSON type field', function () {
 
         const schema = Jurisdiction.schema.paths.location.schema;
         const type = schema.tree.type;
@@ -180,7 +180,7 @@ describe('Jurisdiction', function () {
       });
 
 
-      it('should have GeoJSON coordinates field', function () {
+      it.skip('should have GeoJSON coordinates field', function () {
 
         const schema = Jurisdiction.schema.paths.location.schema;
         const coordinates = schema.tree.coordinates;
@@ -195,11 +195,10 @@ describe('Jurisdiction', function () {
 
       });
 
-
     });
 
 
-    describe.skip('boundaries', function () {
+    describe('boundaries', function () {
 
       it('should be an embedded subdocument', function () {
 
@@ -217,7 +216,7 @@ describe('Jurisdiction', function () {
 
       });
 
-      it('should have GeoJSON type field', function () {
+      it.skip('should have GeoJSON type field', function () {
 
         const schema = Jurisdiction.schema.paths.boundaries.schema;
         const type = schema.tree.type;
@@ -233,7 +232,7 @@ describe('Jurisdiction', function () {
       });
 
 
-      it('should have GeoJSON coordinates field', function () {
+      it.skip('should have GeoJSON coordinates field', function () {
 
         const schema = Jurisdiction.schema.paths.boundaries.schema;
         const coordinates = schema.tree.coordinates;

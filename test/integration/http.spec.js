@@ -175,7 +175,7 @@ describe('Jurisdiction', function () {
 
 
     after(function (done) {
-      Jurisdiction.remove(done);
+      Jurisdiction.deleteMany(done);
     });
 
   });

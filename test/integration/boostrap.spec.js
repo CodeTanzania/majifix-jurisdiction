@@ -1,28 +1,34 @@
 'use strict';
 
 
+process.env.NODE_ENV = 'test';
+
+
 /* dependencies */
 const mongoose = require('mongoose');
+const MONGODB_URI = 'mongodb://localhost/majifix-jurisdiction';
 
 
-function wipe(done) {
+/* clean and restore database */
+const wipe = (done) => {
   if (mongoose.connection && mongoose.connection.dropDatabase) {
     mongoose.connection.dropDatabase(done);
   } else {
     done();
   }
-}
+};
 
 
-//setup database
-before(function (done) {
-  mongoose.connect('mongodb://localhost/majifix-jurisdiction', done);
+/* setup database */
+before((done) => {
+  const options = { useNewUrlParser: true };
+  mongoose.connect(MONGODB_URI, options, done);
 });
 
 
-// clear database
+/* clear database */
 before(wipe);
 
 
-// clear database
+/* clear database */
 after(wipe);
