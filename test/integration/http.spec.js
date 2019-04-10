@@ -4,33 +4,30 @@
 const path = require('path');
 const request = require('supertest');
 const { expect } = require('chai');
-const {
-  Jurisdiction,
-  apiVersion,
-  app
-} = require(path.join(__dirname, '..', '..'));
+const { Jurisdiction, apiVersion, app } = require(path.join(
+  __dirname,
+  '..',
+  '..'
+));
 
-describe('Jurisdiction', function () {
-
-  describe('Rest API', function () {
-
-    before(function (done) {
+describe('Jurisdiction', function() {
+  describe('Rest API', function() {
+    before(function(done) {
       Jurisdiction.remove(done);
     });
 
     let jurisdiction;
 
-    it('should handle HTTP POST on /jurisdictions', function (done) {
-
+    it('should handle HTTP POST on /jurisdictions', function(done) {
       jurisdiction = Jurisdiction.fake();
 
       request(app)
-        .post(`/v${apiVersion}/jurisdictions`)
+        .post(`/${apiVersion}/jurisdictions`)
         .set('Accept', 'application/json')
         .set('Content-Type', 'application/json')
         .send(jurisdiction)
         .expect(201)
-        .end(function (error, response) {
+        .end(function(error, response) {
           expect(error).to.not.exist;
           expect(response).to.exist;
 
@@ -41,19 +38,16 @@ describe('Jurisdiction', function () {
           expect(created.name).to.exist;
 
           done(error, response);
-
         });
-
     });
 
-    it('should handle HTTP GET on /jurisdictions', function (done) {
-
+    it('should handle HTTP GET on /jurisdictions', function(done) {
       request(app)
-        .get(`/v${apiVersion}/jurisdictions`)
+        .get(`/${apiVersion}/jurisdictions`)
         .set('Accept', 'application/json')
         .expect(200)
         .expect('Content-Type', /json/)
-        .end(function (error, response) {
+        .end(function(error, response) {
           expect(error).to.not.exist;
           expect(response).to.exist;
 
@@ -67,19 +61,15 @@ describe('Jurisdiction', function () {
           expect(result.pages).to.exist;
           expect(result.lastModified).to.exist;
           done(error, response);
-
         });
     });
 
-    it('should handle HTTP GET on /jurisdictions/id:', function (done) {
-
+    it('should handle HTTP GET on /jurisdictions/id:', function(done) {
       request(app)
-        .get(
-          `/v${apiVersion}/jurisdictions/${jurisdiction._id}`
-        )
+        .get(`/${apiVersion}/jurisdictions/${jurisdiction._id}`)
         .set('Accept', 'application/json')
         .expect(200)
-        .end(function (error, response) {
+        .end(function(error, response) {
           expect(error).to.not.exist;
           expect(response).to.exist;
 
@@ -92,19 +82,16 @@ describe('Jurisdiction', function () {
         });
     });
 
-    it('should handle HTTP PATCH on /jurisdictions/id:', function (done) {
-
+    it('should handle HTTP PATCH on /jurisdictions/id:', function(done) {
       const patch = jurisdiction.fakeOnly('name');
 
       request(app)
-        .patch(
-          `/v${apiVersion}/jurisdictions/${jurisdiction._id}`
-        )
+        .patch(`/${apiVersion}/jurisdictions/${jurisdiction._id}`)
         .set('Accept', 'application/json')
         .set('Content-Type', 'application/json')
-        .send(patch)
+        .send({ name: patch.name })
         .expect(200)
-        .end(function (error, response) {
+        .end(function(error, response) {
           expect(error).to.not.exist;
           expect(response).to.exist;
 
@@ -115,24 +102,19 @@ describe('Jurisdiction', function () {
           expect(patched.name).to.be.equal(jurisdiction.name);
 
           done(error, response);
-
         });
-
     });
 
-    it('should handle HTTP PUT on /jurisdictions/id:', function (done) {
-
+    it('should handle HTTP PUT on /jurisdictions/id:', function(done) {
       const put = jurisdiction.fakeOnly('name');
 
       request(app)
-        .put(
-          `/v${apiVersion}/jurisdictions/${jurisdiction._id}`
-        )
+        .put(`/${apiVersion}/jurisdictions/${jurisdiction._id}`)
         .set('Accept', 'application/json')
         .set('Content-Type', 'application/json')
-        .send(put)
+        .send({ name: put.name })
         .expect(200)
-        .end(function (error, response) {
+        .end(function(error, response) {
           expect(error).to.not.exist;
           expect(response).to.exist;
 
@@ -143,21 +125,15 @@ describe('Jurisdiction', function () {
           expect(updated.name).to.be.equal(jurisdiction.name);
 
           done(error, response);
-
         });
-
     });
 
-    it('should handle HTTP DELETE on /jurisdictions/:id', function (
-      done) {
-
+    it('should handle HTTP DELETE on /jurisdictions/:id', function(done) {
       request(app)
-        .delete(
-          `/v${apiVersion}/jurisdictions/${jurisdiction._id}`
-        )
+        .delete(`/${apiVersion}/jurisdictions/${jurisdiction._id}`)
         .set('Accept', 'application/json')
         .expect(200)
-        .end(function (error, response) {
+        .end(function(error, response) {
           expect(error).to.not.exist;
           expect(response).to.exist;
 
@@ -168,16 +144,11 @@ describe('Jurisdiction', function () {
           expect(deleted.name).to.be.equal(jurisdiction.name);
 
           done(error, response);
-
         });
-
     });
 
-
-    after(function (done) {
+    after(function(done) {
       Jurisdiction.deleteMany(done);
     });
-
   });
-
 });
