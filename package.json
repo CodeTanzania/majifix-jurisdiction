@@ -87,6 +87,9 @@
     "mongoose-rest-actions": ">=0.24.0",
     "randomcolor": ">=0.5.4"
   },
+  "peerDependencies": {
+    "mongoose": ">=5.5.0"
+  },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
