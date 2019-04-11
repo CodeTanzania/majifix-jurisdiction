@@ -1,6 +1,6 @@
 {
   "name": "@codetanzania/majifix-jurisdiction",
-  "version": "1.5.3",
+  "version": "1.5.4",
   "description": "A representation of an entity (e.g municipal, local government etc) responsible for addressing citizen(or customer) service request(issue)",
   "main": "index.js",
   "scripts": {
@@ -86,6 +86,9 @@
     "mongoose-locale-schema": ">=0.2.1",
     "mongoose-rest-actions": ">=0.24.0",
     "randomcolor": ">=0.5.4"
+  },
+  "peerDependencies": {
+    "mongoose": ">=5.5.0"
   },
   "config": {
     "commitizen": {
