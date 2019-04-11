@@ -1,3 +1,10 @@
+#### 1.5.4 (2019-04-11)
+
+##### Chores
+
+- update package version to 1.5.4 ([bfe3ba27](https://github.com/CodeTanzania/majifix-jurisdiction/commit/bfe3ba2738686db0a5b921fbaeefd2f703c37155))
+- **package.json:** add mongoose as peer dependency ([4ae21e3f](https://github.com/CodeTanzania/majifix-jurisdiction/commit/4ae21e3fa2d53d16df4a7afdcef704ecb10a5039))
+
 #### 1.5.3 (2019-04-10)
 
 ##### Chores
