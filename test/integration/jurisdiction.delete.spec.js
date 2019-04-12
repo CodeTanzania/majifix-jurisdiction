@@ -5,28 +5,28 @@ const path = require('path');
 const { expect } = require('chai');
 const { Jurisdiction } = require(path.join(__dirname, '..', '..'));
 
-describe('Jurisdiction', function () {
+describe('Jurisdiction', () => {
 
-  before(function (done) {
+  before(done => {
     Jurisdiction.remove(done);
   });
 
-  describe('static delete', function () {
+  describe('static delete', () => {
 
     let jurisdiction;
 
-    before(function (done) {
+    before(done => {
       const fake = Jurisdiction.fake();
       fake
-        .post(function (error, created) {
+        .post((error, created) => {
           jurisdiction = created;
           done(error, created);
         });
     });
 
-    it('should be able to delete', function (done) {
+    it('should be able to delete', done => {
       Jurisdiction
-        .del(jurisdiction._id, function (error, deleted) {
+        .del(jurisdiction._id, (error, deleted) => {
           expect(error).to.not.exist;
           expect(deleted).to.exist;
           expect(deleted._id).to.eql(jurisdiction._id);
@@ -34,9 +34,9 @@ describe('Jurisdiction', function () {
         });
     });
 
-    it('should throw if not exists', function (done) {
+    it('should throw if not exists', done => {
       Jurisdiction
-        .del(jurisdiction._id, function (error, deleted) {
+        .del(jurisdiction._id, (error, deleted) => {
           expect(error).to.exist;
           expect(error.status).to.exist;
           expect(error.message).to.be.equal('Not Found');
@@ -47,22 +47,22 @@ describe('Jurisdiction', function () {
 
   });
 
-  describe('instance delete', function () {
+  describe('instance delete', () => {
 
     let jurisdiction;
 
-    before(function (done) {
+    before(done => {
       const fake = Jurisdiction.fake();
       fake
-        .post(function (error, created) {
+        .post((error, created) => {
           jurisdiction = created;
           done(error, created);
         });
     });
 
-    it('should be able to delete', function (done) {
+    it('should be able to delete', done => {
       jurisdiction
-        .del(function (error, deleted) {
+        .del((error, deleted) => {
           expect(error).to.not.exist;
           expect(deleted).to.exist;
           expect(deleted._id).to.eql(jurisdiction._id);
@@ -70,9 +70,9 @@ describe('Jurisdiction', function () {
         });
     });
 
-    it('should throw if not exists', function (done) {
+    it('should throw if not exists', done => {
       jurisdiction
-        .del(function (error, deleted) {
+        .del((error, deleted) => {
           expect(error).to.not.exist;
           expect(deleted).to.exist;
           expect(deleted._id).to.eql(jurisdiction._id);
@@ -82,34 +82,34 @@ describe('Jurisdiction', function () {
 
   });
 
-  describe('dependancy check', function () {
+  describe('dependancy check', () => {
 
     let parent;
     let child;
 
-    before(function (done) {
+    before(done => {
       parent = Jurisdiction.fake();
       parent
-        .post(function (error, created) {
+        .post((error, created) => {
           parent = created;
           done(error, created);
         });
     });
 
-    before(function (done) {
+    before(done => {
       child = Jurisdiction.fake();
       child.jurisdiction = parent;
       child
-        .post(function (error, created) {
+        .post((error, created) => {
           child = created;
           done(error, created);
         });
     });
 
 
-    it('should restrict parent deletion', function (done) {
+    it('should restrict parent deletion', done => {
       parent
-        .del(function (error) {
+        .del(error => {
           expect(error).to.exist;
           expect(error.message).to.contain('Fail to Delete');
           expect(error.status).to.be.equal(400);
@@ -119,7 +119,7 @@ describe('Jurisdiction', function () {
 
   });
 
-  after(function (done) {
+  after(done => {
     Jurisdiction.remove(done);
   });
 

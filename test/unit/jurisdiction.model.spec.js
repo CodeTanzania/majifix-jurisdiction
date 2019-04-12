@@ -16,11 +16,11 @@ const Jurisdiction =
   require(path.join(__dirname, '..', '..', 'lib', 'jurisdiction.model'));
 
 
-describe('Jurisdiction', function () {
+describe('Jurisdiction', () => {
 
-  describe('Instance', function () {
+  describe('Instance', () => {
 
-    it('`ensureLocation` should be a function', function () {
+    it('`ensureLocation` should be a function', () => {
       const jurisdiction = Jurisdiction.fake();
       expect(jurisdiction.ensureLocation).to.exist;
       expect(jurisdiction.ensureLocation).to.be.a('function');
@@ -30,7 +30,7 @@ describe('Jurisdiction', function () {
         .to.be.equal('ensureLocation');
     });
 
-    it('should be able to ensure location from boundaries', function () {
+    it('should be able to ensure location from boundaries', () => {
       const jurisdiction = Jurisdiction.fake();
       jurisdiction.boundaries = randomMultiPolygon();
 
@@ -45,7 +45,7 @@ describe('Jurisdiction', function () {
       expect(location.coordinates).to.have.length(2);
     });
 
-    it('`preValidate` should be a function', function () {
+    it('`preValidate` should be a function', () => {
       const jurisdiction = Jurisdiction.fake();
       expect(jurisdiction.preValidate).to.exist;
       expect(jurisdiction.preValidate).to.be.a('function');
@@ -55,7 +55,7 @@ describe('Jurisdiction', function () {
         .to.be.equal('preValidate');
     });
 
-    it('should be able to ensure code and color', function (done) {
+    it('should be able to ensure code and color', done => {
       //fake
       const jurisdiction = Jurisdiction.fake();
 
@@ -63,7 +63,7 @@ describe('Jurisdiction', function () {
       jurisdiction.color = undefined;
       jurisdiction.code = undefined;
 
-      jurisdiction.preValidate(function (error, preValidated) {
+      jurisdiction.preValidate((error, preValidated) => {
 
         //post condition
         const { code, color } = preValidated;
@@ -82,25 +82,25 @@ describe('Jurisdiction', function () {
   });
 
 
-  describe('Hooks', function () {
+  describe('Hooks', () => {
 
-    describe('beforePost', function () {
+    describe('beforePost', () => {
 
       let ensureLocation;
       const jurisdiction = Jurisdiction.fake();
       jurisdiction.boundaries = randomMultiPolygon();
 
-      beforeEach(function () {
+      beforeEach(() => {
         ensureLocation =
           sinon.spy(jurisdiction, 'ensureLocation');
       });
 
-      afterEach(function () {
+      afterEach(() => {
         ensureLocation.restore();
       });
 
       it('should be able to ensure location from boundaries',
-        function (done) {
+        done => {
 
           jurisdiction
             .beforePost(function (error, updated) {
@@ -129,14 +129,14 @@ describe('Jurisdiction', function () {
 
   });
 
-  describe('Statics', function () {
+  describe('Statics', () => {
 
-    it('should expose model name as constant', function () {
+    it('should expose model name as constant', () => {
       expect(Jurisdiction.MODEL_NAME).to.exist;
       expect(Jurisdiction.MODEL_NAME).to.be.equal('Jurisdiction');
     });
 
-    it('should expose autopulate as options', function () {
+    it('should expose autopulate as options', () => {
       expect(Jurisdiction.OPTION_AUTOPOPULATE).to.exist;
       expect(Jurisdiction.OPTION_AUTOPOPULATE)
         .to.be.eql({

@@ -5,22 +5,22 @@ const path = require('path');
 const { expect } = require('chai');
 const { Jurisdiction } = require(path.join(__dirname, '..', '..'));
 
-describe('Jurisdiction', function () {
+describe('Jurisdiction', () => {
 
-  before(function (done) {
+  before(done => {
     Jurisdiction.remove(done);
   });
 
-  describe('static post', function () {
+  describe('static post', () => {
 
     let jurisdiction;
 
-    it('should be able to post', function (done) {
+    it('should be able to post', done => {
 
       jurisdiction = Jurisdiction.fake();
 
       Jurisdiction
-        .post(jurisdiction, function (error, created) {
+        .post(jurisdiction, (error, created) => {
           expect(error).to.not.exist;
           expect(created).to.exist;
           expect(created._id).to.eql(jurisdiction._id);
@@ -32,16 +32,16 @@ describe('Jurisdiction', function () {
 
   });
 
-  describe('instance post', function () {
+  describe('instance post', () => {
 
     let jurisdiction;
 
-    it('should be able to post', function (done) {
+    it('should be able to post', done => {
 
       jurisdiction = Jurisdiction.fake();
 
       jurisdiction
-        .post(function (error, created) {
+        .post((error, created) => {
           expect(error).to.not.exist;
           expect(created).to.exist;
           expect(created._id).to.eql(jurisdiction._id);
@@ -53,7 +53,7 @@ describe('Jurisdiction', function () {
 
   });
 
-  after(function (done) {
+  after(done => {
     Jurisdiction.remove(done);
   });
 

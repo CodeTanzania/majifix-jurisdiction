@@ -10,11 +10,11 @@ const Jurisdiction =
   require(path.join(__dirname, '..', '..', 'lib', 'jurisdiction.model'));
 
 
-describe('Jurisdiction', function () {
+describe('Jurisdiction', () => {
 
-  describe('Schema', function () {
+  describe('Schema', () => {
 
-    it('should have jurisdiction field', function () {
+    it('should have jurisdiction field', () => {
 
       const jurisdiction = Jurisdiction.schema.tree.jurisdiction;
       const instance = Jurisdiction.schema.paths.jurisdiction.instance;
@@ -29,7 +29,7 @@ describe('Jurisdiction', function () {
 
     });
 
-    it('should have code field', function () {
+    it('should have code field', () => {
 
       const code = Jurisdiction.schema.tree.code;
       const instance = Jurisdiction.schema.paths.code.instance;
@@ -47,7 +47,7 @@ describe('Jurisdiction', function () {
 
     });
 
-    it('should have name field', function () {
+    it('should have name field', () => {
 
       const name = Jurisdiction.schema.tree.name;
       const instance = Jurisdiction.schema.paths.name.instance;
@@ -65,7 +65,7 @@ describe('Jurisdiction', function () {
     });
 
 
-    it('should have phone field', function () {
+    it('should have phone field', () => {
 
       const phone = Jurisdiction.schema.tree.phone;
       const instance = Jurisdiction.schema.paths.phone.instance;
@@ -83,7 +83,7 @@ describe('Jurisdiction', function () {
     });
 
 
-    it('should have email field', function () {
+    it('should have email field', () => {
 
       const email = Jurisdiction.schema.tree.email;
       const instance = Jurisdiction.schema.paths.email.instance;
@@ -100,7 +100,7 @@ describe('Jurisdiction', function () {
 
     });
 
-    it('should have website field', function () {
+    it('should have website field', () => {
 
       const website = Jurisdiction.schema.tree.website;
       const instance = Jurisdiction.schema.paths.website.instance;
@@ -115,7 +115,7 @@ describe('Jurisdiction', function () {
 
     });
 
-    it('should have about field', function () {
+    it('should have about field', () => {
 
       const about = Jurisdiction.schema.tree.about;
       const instance = Jurisdiction.schema.paths.about.instance;
@@ -131,7 +131,7 @@ describe('Jurisdiction', function () {
 
     });
 
-    it('should have address field', function () {
+    it('should have address field', () => {
 
       const address = Jurisdiction.schema.tree.address;
       const instance = Jurisdiction.schema.paths.address.instance;
@@ -147,9 +147,9 @@ describe('Jurisdiction', function () {
 
     });
 
-    describe('location', function () {
+    describe('location', () => {
 
-      it('should be an embedded subdocument', function () {
+      it('should be an embedded subdocument', () => {
 
         const location = Jurisdiction.schema.tree.location;
         const instance = Jurisdiction.schema.paths.location.instance;
@@ -164,7 +164,7 @@ describe('Jurisdiction', function () {
 
       });
 
-      it.skip('should have GeoJSON type field', function () {
+      it.skip('should have GeoJSON type field', () => {
 
         const schema = Jurisdiction.schema.paths.location.schema;
         const type = schema.tree.type;
@@ -180,7 +180,7 @@ describe('Jurisdiction', function () {
       });
 
 
-      it.skip('should have GeoJSON coordinates field', function () {
+      it.skip('should have GeoJSON coordinates field', () => {
 
         const schema = Jurisdiction.schema.paths.location.schema;
         const coordinates = schema.tree.coordinates;
@@ -198,9 +198,9 @@ describe('Jurisdiction', function () {
     });
 
 
-    describe('boundaries', function () {
+    describe('boundaries', () => {
 
-      it('should be an embedded subdocument', function () {
+      it('should be an embedded subdocument', () => {
 
         const boundaries = Jurisdiction.schema.tree.boundaries;
         const instance = Jurisdiction.schema.paths.boundaries.instance;
@@ -216,7 +216,7 @@ describe('Jurisdiction', function () {
 
       });
 
-      it.skip('should have GeoJSON type field', function () {
+      it.skip('should have GeoJSON type field', () => {
 
         const schema = Jurisdiction.schema.paths.boundaries.schema;
         const type = schema.tree.type;
@@ -232,7 +232,7 @@ describe('Jurisdiction', function () {
       });
 
 
-      it.skip('should have GeoJSON coordinates field', function () {
+      it.skip('should have GeoJSON coordinates field', () => {
 
         const schema = Jurisdiction.schema.paths.boundaries.schema;
         const coordinates = schema.tree.coordinates;
@@ -249,7 +249,7 @@ describe('Jurisdiction', function () {
     });
 
 
-    it('should have color field', function () {
+    it('should have color field', () => {
 
       const color = Jurisdiction.schema.tree.color;
       const instance = Jurisdiction.schema.paths.color.instance;

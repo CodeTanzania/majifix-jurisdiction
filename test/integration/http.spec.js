@@ -12,13 +12,13 @@ const { Jurisdiction, apiVersion, app } = require(path.join(
 
 describe('Jurisdiction', function() {
   describe('Rest API', function() {
-    before(function(done) {
+    before(done => {
       Jurisdiction.remove(done);
     });
 
     let jurisdiction;
 
-    it('should handle HTTP POST on /jurisdictions', function(done) {
+    it('should handle HTTP POST on /jurisdictions', done => {
       jurisdiction = Jurisdiction.fake();
 
       request(app)
@@ -27,7 +27,7 @@ describe('Jurisdiction', function() {
         .set('Content-Type', 'application/json')
         .send(jurisdiction)
         .expect(201)
-        .end(function(error, response) {
+        .end((error, response) => {
           expect(error).to.not.exist;
           expect(response).to.exist;
 
@@ -41,13 +41,13 @@ describe('Jurisdiction', function() {
         });
     });
 
-    it('should handle HTTP GET on /jurisdictions', function(done) {
+    it('should handle HTTP GET on /jurisdictions', done => {
       request(app)
         .get(`/${apiVersion}/jurisdictions`)
         .set('Accept', 'application/json')
         .expect(200)
         .expect('Content-Type', /json/)
-        .end(function(error, response) {
+        .end((error, response) => {
           expect(error).to.not.exist;
           expect(response).to.exist;
 
@@ -64,12 +64,12 @@ describe('Jurisdiction', function() {
         });
     });
 
-    it('should handle HTTP GET on /jurisdictions/id:', function(done) {
+    it('should handle HTTP GET on /jurisdictions/id:', done => {
       request(app)
         .get(`/${apiVersion}/jurisdictions/${jurisdiction._id}`)
         .set('Accept', 'application/json')
         .expect(200)
-        .end(function(error, response) {
+        .end((error, response) => {
           expect(error).to.not.exist;
           expect(response).to.exist;
 
@@ -82,7 +82,7 @@ describe('Jurisdiction', function() {
         });
     });
 
-    it('should handle HTTP PATCH on /jurisdictions/id:', function(done) {
+    it('should handle HTTP PATCH on /jurisdictions/id:', done => {
       const patch = jurisdiction.fakeOnly('name');
 
       request(app)
@@ -91,7 +91,7 @@ describe('Jurisdiction', function() {
         .set('Content-Type', 'application/json')
         .send({ name: patch.name })
         .expect(200)
-        .end(function(error, response) {
+        .end((error, response) => {
           expect(error).to.not.exist;
           expect(response).to.exist;
 
@@ -105,7 +105,7 @@ describe('Jurisdiction', function() {
         });
     });
 
-    it('should handle HTTP PUT on /jurisdictions/id:', function(done) {
+    it('should handle HTTP PUT on /jurisdictions/id:', done => {
       const put = jurisdiction.fakeOnly('name');
 
       request(app)
@@ -114,7 +114,7 @@ describe('Jurisdiction', function() {
         .set('Content-Type', 'application/json')
         .send({ name: put.name })
         .expect(200)
-        .end(function(error, response) {
+        .end((error, response) => {
           expect(error).to.not.exist;
           expect(response).to.exist;
 
@@ -128,12 +128,12 @@ describe('Jurisdiction', function() {
         });
     });
 
-    it('should handle HTTP DELETE on /jurisdictions/:id', function(done) {
+    it('should handle HTTP DELETE on /jurisdictions/:id', done => {
       request(app)
         .delete(`/${apiVersion}/jurisdictions/${jurisdiction._id}`)
         .set('Accept', 'application/json')
         .expect(200)
-        .end(function(error, response) {
+        .end((error, response) => {
           expect(error).to.not.exist;
           expect(response).to.exist;
 
@@ -147,7 +147,7 @@ describe('Jurisdiction', function() {
         });
     });
 
-    after(function(done) {
+    after(done => {
       Jurisdiction.deleteMany(done);
     });
   });

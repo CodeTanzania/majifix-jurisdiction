@@ -7,34 +7,34 @@ const async = require('async');
 const { expect } = require('chai');
 const { Jurisdiction } = require(path.join(__dirname, '..', '..'));
 
-describe('Jurisdiction', function () {
+describe('Jurisdiction', () => {
 
-  before(function (done) {
+  before(done => {
     Jurisdiction.remove(done);
   });
 
-  describe('get', function () {
+  describe('get', () => {
 
     let jurisdictions;
 
-    before(function (done) {
+    before(done => {
       const fakes =
-        _.map(Jurisdiction.fake(32), function (jurisdiction) {
-          return function (next) {
+        _.map(Jurisdiction.fake(32), jurisdiction => {
+          return next => {
             jurisdiction.post(next);
           };
         });
       async
-        .parallel(fakes, function (error, created) {
+        .parallel(fakes, (error, created) => {
           jurisdictions = created;
           done(error, created);
         });
     });
 
-    it('should be able to get without options', function (done) {
+    it('should be able to get without options', done => {
 
       Jurisdiction
-        .get(function (error, results) {
+        .get((error, results) => {
           expect(error).to.not.exist;
           expect(results).to.exist;
           expect(results.data).to.exist;
@@ -57,11 +57,11 @@ describe('Jurisdiction', function () {
 
     });
 
-    it('should be able to get with options', function (done) {
+    it('should be able to get with options', done => {
 
       const options = { page: 1, limit: 20 };
       Jurisdiction
-        .get(options, function (error, results) {
+        .get(options, (error, results) => {
           expect(error).to.not.exist;
           expect(results).to.exist;
           expect(results.data).to.exist;
@@ -85,11 +85,11 @@ describe('Jurisdiction', function () {
     });
 
 
-    it('should be able to search with options', function (done) {
+    it('should be able to search with options', done => {
 
       const options = { filter: { q: jurisdictions[0].code } };
       Jurisdiction
-        .get(options, function (error, results) {
+        .get(options, (error, results) => {
           expect(error).to.not.exist;
           expect(results).to.exist;
           expect(results.data).to.exist;
@@ -113,10 +113,10 @@ describe('Jurisdiction', function () {
     });
 
 
-    it('should parse filter options', function (done) {
+    it('should parse filter options', done => {
       const options = { filter: { code: jurisdictions[0].code } };
       Jurisdiction
-        .get(options, function (error, results) {
+        .get(options, (error, results) => {
           expect(error).to.not.exist;
           expect(results).to.exist;
           expect(results.data).to.exist;
@@ -141,7 +141,7 @@ describe('Jurisdiction', function () {
 
   });
 
-  after(function (done) {
+  after(done => {
     Jurisdiction.remove(done);
   });
 

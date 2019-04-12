@@ -6,28 +6,28 @@ const _ = require('lodash');
 const { expect } = require('chai');
 const { Jurisdiction } = require(path.join(__dirname, '..', '..'));
 
-describe('Jurisdiction', function () {
+describe('Jurisdiction', () => {
 
-  before(function (done) {
+  before(done => {
     Jurisdiction.remove(done);
   });
 
-  describe('get by id', function () {
+  describe('get by id', () => {
 
     let jurisdiction;
 
-    before(function (done) {
+    before(done => {
       const fake = Jurisdiction.fake();
       fake
-        .post(function (error, created) {
+        .post((error, created) => {
           jurisdiction = created;
           done(error, created);
         });
     });
 
-    it('should be able to get an instance', function (done) {
+    it('should be able to get an instance', done => {
       Jurisdiction
-        .getById(jurisdiction._id, function (error, found) {
+        .getById(jurisdiction._id, (error, found) => {
           expect(error).to.not.exist;
           expect(found).to.exist;
           expect(found._id).to.eql(jurisdiction._id);
@@ -35,7 +35,7 @@ describe('Jurisdiction', function () {
         });
     });
 
-    it('should be able to get with options', function (done) {
+    it('should be able to get with options', done => {
 
       const options = {
         _id: jurisdiction._id,
@@ -43,7 +43,7 @@ describe('Jurisdiction', function () {
       };
 
       Jurisdiction
-        .getById(options, function (error, found) {
+        .getById(options, (error, found) => {
           expect(error).to.not.exist;
           expect(found).to.exist;
           expect(found._id).to.eql(jurisdiction._id);
@@ -72,11 +72,11 @@ describe('Jurisdiction', function () {
 
     });
 
-    it('should throw if not exists', function (done) {
+    it('should throw if not exists', done => {
       const jurisdiction = Jurisdiction.fake();
 
       Jurisdiction
-        .getById(jurisdiction._id, function (error, found) {
+        .getById(jurisdiction._id, (error, found) => {
           expect(error).to.exist;
           expect(error.status).to.exist;
           expect(error.message).to.be.equal('Not Found');
@@ -87,7 +87,7 @@ describe('Jurisdiction', function () {
 
   });
 
-  after(function (done) {
+  after(done => {
     Jurisdiction.remove(done);
   });
 
