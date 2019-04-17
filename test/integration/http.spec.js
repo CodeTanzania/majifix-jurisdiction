@@ -10,8 +10,8 @@ const { Jurisdiction, apiVersion, app } = require(path.join(
   '..'
 ));
 
-describe('Jurisdiction', function() {
-  describe('Rest API', function() {
+describe('Jurisdiction', () => {
+  describe('Rest API', () => {
     before(done => {
       Jurisdiction.remove(done);
     });

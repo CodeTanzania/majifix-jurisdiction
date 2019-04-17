@@ -103,7 +103,7 @@ describe('Jurisdiction', () => {
         done => {
 
           jurisdiction
-            .beforePost(function (error, updated) {
+            .beforePost((error, updated) => {
 
               //assert jurisdiction
               const { location } = updated;

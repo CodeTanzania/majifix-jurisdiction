@@ -62,7 +62,7 @@ describe('Jurisdiction', () => {
             'address',
             'createdAt',
             'updatedAt'
-          ], function (field) {
+          ], field => {
             expect(fields).to.not.include(field);
           });
 
