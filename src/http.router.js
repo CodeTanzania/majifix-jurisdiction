@@ -1,6 +1,3 @@
-'use strict';
-
-
 /**
  * @apiDefine Jurisdiction  Jurisdiction
  *
@@ -17,7 +14,6 @@
  * @version 1.0.0
  * @public
  */
-
 
 /**
  * @apiDefine Jurisdiction
@@ -47,7 +43,6 @@
  * @apiSuccess {Date} updatedAt Date when jurisdiction was last updated
  *
  */
-
 
 /**
  * @apiDefine Jurisdictions
@@ -86,7 +81,6 @@
  * was last modified
  *
  */
-
 
 /**
  * @apiDefine JurisdictionSuccessResponse
@@ -170,7 +164,6 @@
  *     "updatedAt": "2018-05-06T18:00:53.282Z"
  *   }
  */
-
 
 /**
  * @apiDefine JurisdictionsSuccessResponse
@@ -263,27 +256,22 @@
  *  }
  */
 
-
 /* dependencies */
-const path = require('path');
-const _ = require('lodash');
-const { getString } = require('@lykmapipo/env');
-const Router = require('@lykmapipo/express-common').Router;
+import _ from 'lodash';
+import { getString } from '@lykmapipo/env';
+import { Router } from '@lykmapipo/express-common';
 
+/* declarations */
+import Jurisdiction from './jurisdiction.model';
 
 /* local constants */
 const API_VERSION = getString('API_VERSION', '1.0.0');
 const PATH_SINGLE = '/jurisdictions/:id';
 const PATH_LIST = '/jurisdictions';
 const PATH_CHILDREN = '/jurisdictions/:jurisdiction/jurisdictions';
-
-
-/* declarations */
-const Jurisdiction = require(path.join(__dirname, 'jurisdiction.model'));
 const router = new Router({
-  version: API_VERSION
+  version: API_VERSION,
 });
-
 
 /**
  * @api {get} /jurisdictions List Jurisdictions
@@ -302,29 +290,22 @@ const router = new Router({
  * @apiUse AuthorizationHeaderErrorExample
  */
 router.get(PATH_LIST, function getJurisdictions(request, response, next) {
-
-  //obtain request options
+  // obtain request options
   const options = _.merge({}, request.mquery);
 
-  Jurisdiction
-    .get(options, function onGetJurisdictions(error, results) {
+  Jurisdiction.get(options, function onGetJurisdictions(error, results) {
+    // forward error
+    if (error) {
+      next(error);
+    }
 
-      //forward error
-      if (error) {
-        next(error);
-      }
-
-      //handle response
-      else {
-        response.status(200);
-        response.json(results);
-      }
-
-    });
-
+    // handle response
+    else {
+      response.status(200);
+      response.json(results);
+    }
+  });
 });
-
-
 
 /**
  * @api {post} /jurisdictions Create New Jurisdiction
@@ -343,29 +324,22 @@ router.get(PATH_LIST, function getJurisdictions(request, response, next) {
  * @apiUse AuthorizationHeaderErrorExample
  */
 router.post(PATH_LIST, function postJurisdiction(request, response, next) {
-
-  //obtain request body
+  // obtain request body
   const body = _.merge({}, request.body);
 
-  Jurisdiction
-    .post(body, function onPostJurisdiction(error, created) {
+  Jurisdiction.post(body, function onPostJurisdiction(error, created) {
+    // forward error
+    if (error) {
+      next(error);
+    }
 
-      //forward error
-      if (error) {
-        next(error);
-      }
-
-      //handle response
-      else {
-        response.status(201);
-        response.json(created);
-      }
-
-    });
-
+    // handle response
+    else {
+      response.status(201);
+      response.json(created);
+    }
+  });
 });
-
-
 
 /**
  * @api {get} /jurisdictions/:id Get Existing Jurisdiction
@@ -383,31 +357,25 @@ router.post(PATH_LIST, function postJurisdiction(request, response, next) {
  * @apiUse AuthorizationHeaderErrorExample
  */
 router.get(PATH_SINGLE, function getJurisdiction(request, response, next) {
-
-  //obtain request options
+  // obtain request options
   const options = _.merge({}, request.mquery);
 
-  //obtain jurisdiction id
-  options._id = request.params.id;
+  // obtain jurisdiction id
+  options._id = request.params.id; // eslint-disable-line no-underscore-dangle
 
-  Jurisdiction
-    .getById(options, function onGetJurisdiction(error, found) {
+  Jurisdiction.getById(options, function onGetJurisdiction(error, found) {
+    // forward error
+    if (error) {
+      next(error);
+    }
 
-      //forward error
-      if (error) {
-        next(error);
-      }
-
-      //handle response
-      else {
-        response.status(200);
-        response.json(found);
-      }
-
-    });
-
+    // handle response
+    else {
+      response.status(200);
+      response.json(found);
+    }
+  });
 });
-
 
 /**
  * @api {patch} /jurisdictions/:id Patch Existing Jurisdiction
@@ -426,32 +394,28 @@ router.get(PATH_SINGLE, function getJurisdiction(request, response, next) {
  * @apiUse AuthorizationHeaderErrorExample
  */
 router.patch(PATH_SINGLE, function patchJurisdiction(request, response, next) {
+  // obtain jurisdiction id
+  const _id = request.params.id; // eslint-disable-line no-underscore-dangle
 
-  //obtain jurisdiction id
-  const _id = request.params.id;
-
-  //obtain request body
+  // obtain request body
   const patches = _.merge({}, request.body);
 
-  Jurisdiction
-    .patch(_id, patches, function onPatchJurisdiction(error, patched) {
+  Jurisdiction.patch(_id, patches, function onPatchJurisdiction(
+    error,
+    patched
+  ) {
+    // forward error
+    if (error) {
+      next(error);
+    }
 
-      //forward error
-      if (error) {
-        next(error);
-      }
-
-      //handle response
-      else {
-        response.status(200);
-        response.json(patched);
-      }
-
-    });
-
+    // handle response
+    else {
+      response.status(200);
+      response.json(patched);
+    }
+  });
 });
-
-
 
 /**
  * @api {put} /jurisdictions/:id Put Existing Jurisdiction
@@ -470,32 +434,25 @@ router.patch(PATH_SINGLE, function patchJurisdiction(request, response, next) {
  * @apiUse AuthorizationHeaderErrorExample
  */
 router.put(PATH_SINGLE, function putJurisdiction(request, response, next) {
+  // obtain jurisdiction id
+  const _id = request.params.id; // eslint-disable-line no-underscore-dangle
 
-  //obtain jurisdiction id
-  const _id = request.params.id;
-
-  //obtain request body
+  // obtain request body
   const updates = _.merge({}, request.body);
 
-  Jurisdiction
-    .put(_id, updates, function onPutJurisdiction(error, updated) {
+  Jurisdiction.put(_id, updates, function onPutJurisdiction(error, updated) {
+    // forward error
+    if (error) {
+      next(error);
+    }
 
-      //forward error
-      if (error) {
-        next(error);
-      }
-
-      //handle response
-      else {
-        response.status(200);
-        response.json(updated);
-      }
-
-    });
-
+    // handle response
+    else {
+      response.status(200);
+      response.json(updated);
+    }
+  });
 });
-
-
 
 /**
  * @api {delete} /jurisdictions/:id Delete Existing Jurisdiction
@@ -513,30 +470,27 @@ router.put(PATH_SINGLE, function putJurisdiction(request, response, next) {
  * @apiUse AuthorizationHeaderError
  * @apiUse AuthorizationHeaderErrorExample
  */
-router.delete(PATH_SINGLE, function deleteJurisdiction(request, response, next) {
+router.delete(PATH_SINGLE, function deleteJurisdiction(
+  request,
+  response,
+  next
+) {
+  // obtain jurisdiction id
+  const _id = request.params.id; // eslint-disable-line no-underscore-dangle
 
-  //obtain jurisdiction id
-  const _id = request.params.id;
+  Jurisdiction.del(_id, function onDeleteJurisdiction(error, deleted) {
+    // forward error
+    if (error) {
+      next(error);
+    }
 
-  Jurisdiction
-    .del(_id, function onDeleteJurisdiction(error, deleted) {
-
-      //forward error
-      if (error) {
-        next(error);
-      }
-
-      //handle response
-      else {
-        response.status(200);
-        response.json(deleted);
-      }
-
-    });
-
+    // handle response
+    else {
+      response.status(200);
+      response.json(deleted);
+    }
+  });
 });
-
-
 
 /**
  * @api {get} /jurisdictions/:jurisdiction/jurisdictions List Sub-Jurisdictions
@@ -554,34 +508,29 @@ router.delete(PATH_SINGLE, function deleteJurisdiction(request, response, next) 
  * @apiUse AuthorizationHeaderError
  * @apiUse AuthorizationHeaderErrorExample
  */
-router.get(PATH_CHILDREN, function getSubJurisdictions(request, response, next) {
-
-  //obtain request options
+router.get(PATH_CHILDREN, function getSubJurisdictions(
+  request,
+  response,
+  next
+) {
+  // obtain request options
   const { jurisdiction } = request.params;
-  const filter =
-    (jurisdiction ? { filter: { jurisdiction: jurisdiction } } : {});
+  const filter = jurisdiction ? { filter: { jurisdiction } } : {};
   const options = _.merge({}, filter, request.mquery);
 
+  Jurisdiction.get(options, function onGetSubJurisdictions(error, results) {
+    // forward error
+    if (error) {
+      next(error);
+    }
 
-  Jurisdiction
-    .get(options, function onGetSubJurisdictions(error, results) {
-
-      //forward error
-      if (error) {
-        next(error);
-      }
-
-      //handle response
-      else {
-        response.status(200);
-        response.json(results);
-      }
-
-    });
-
+    // handle response
+    else {
+      response.status(200);
+      response.json(results);
+    }
+  });
 });
-
-
 
 /* expose router */
 module.exports = router;
