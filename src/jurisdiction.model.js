@@ -766,4 +766,4 @@ JurisdictionSchema.statics.OPTION_AUTOPOPULATE = OPTION_AUTOPOPULATE;
 JurisdictionSchema.plugin(actions);
 
 /* export jurisdiction model */
-module.exports = mongoose.model(JURISDICTION_MODEL_NAME, JurisdictionSchema);
+export default mongoose.model(JURISDICTION_MODEL_NAME, JurisdictionSchema);
