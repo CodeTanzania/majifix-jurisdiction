@@ -12,7 +12,10 @@
     "pretest": "npm run lint",
     "test": "NODE_ENV=test mocha --exit --require @babel/register test/**/*.spec.js",
     "docs": "doxdox 'lib/**/*.js' -p package.json -l markdown -o DOCUMENTATION.md",
+    "start": "BASE_PATH=./examples node ./examples/app.js",
+    "seed": "BASE_PATH=./examples node ./examples/seed.js",
     "cmt": "git add -A && git-cz",
+    "dev": "npm run start",
     "commit": "git-cz",
     "commit:all": "git add -A && git-cz",
     "changelog": "changelog"
