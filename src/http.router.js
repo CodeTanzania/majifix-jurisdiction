@@ -533,4 +533,4 @@ router.get(PATH_CHILDREN, function getSubJurisdictions(
 });
 
 /* expose router */
-module.exports = router;
+export default router;
