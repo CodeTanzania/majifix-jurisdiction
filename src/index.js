@@ -23,31 +23,20 @@
 /* dependencies */
 import { pkg } from '@lykmapipo/common';
 import app from '@lykmapipo/express-common';
-import {
-  name,
-  description,
-  version,
-  license,
-  homepage,
-  repository,
-  bugs,
-  sandbox,
-  contributors,
-} from '../package.json';
 import Jurisdiction from './jurisdiction.model';
 import router from './http.router';
 
 /* declarations */
 const info = pkg(
-  name,
-  description,
-  version,
-  license,
-  homepage,
-  repository,
-  bugs,
-  sandbox,
-  contributors
+  'name',
+  'description',
+  'version',
+  'license',
+  'homepage',
+  'repository',
+  'bugs',
+  'sandbox',
+  'contributors'
 );
 
 /* export router api version */
