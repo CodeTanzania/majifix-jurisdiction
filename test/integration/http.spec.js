@@ -1,19 +1,14 @@
-'use strict';
-
 /* dependencies */
-const path = require('path');
-const request = require('supertest');
-const { expect } = require('chai');
-const { Jurisdiction, apiVersion, app } = require(path.join(
-  __dirname,
-  '..',
-  '..'
-));
+import request from 'supertest';
+
+import { expect } from 'chai';
+import { clear } from '@lykmapipo/mongoose-test-helpers';
+import { Jurisdiction, apiVersion, app } from '../../src';
 
 describe('Jurisdiction', () => {
   describe('Rest API', () => {
     before(done => {
-      Jurisdiction.remove(done);
+      clear(Jurisdiction, done);
     });
 
     let jurisdiction;
@@ -51,7 +46,7 @@ describe('Jurisdiction', () => {
           expect(error).to.not.exist;
           expect(response).to.exist;
 
-          //assert payload
+          // assert payload
           const result = response.body;
           expect(result.data).to.exist;
           expect(result.total).to.exist;
@@ -148,7 +143,7 @@ describe('Jurisdiction', () => {
     });
 
     after(done => {
-      Jurisdiction.deleteMany(done);
+      clear(Jurisdiction, done);
     });
   });
 });
