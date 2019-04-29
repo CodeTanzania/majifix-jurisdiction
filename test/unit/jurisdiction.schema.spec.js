@@ -1,23 +1,14 @@
-'use strict';
-
-
 /* dependencies */
-const path = require('path');
-const { expect } = require('chai');
+import { expect } from 'chai';
 
 /* declarations */
-const Jurisdiction =
-  require(path.join(__dirname, '..', '..', 'lib', 'jurisdiction.model'));
-
+import Jurisdiction from '../../src/jurisdiction.model';
 
 describe('Jurisdiction', () => {
-
   describe('Schema', () => {
-
     it('should have jurisdiction field', () => {
-
-      const jurisdiction = Jurisdiction.schema.tree.jurisdiction;
-      const instance = Jurisdiction.schema.paths.jurisdiction.instance;
+      const { jurisdiction } = Jurisdiction.schema.tree;
+      const { instance } = Jurisdiction.schema.paths.jurisdiction;
 
       expect(instance).to.be.equal('ObjectID');
       expect(jurisdiction).to.exist;
@@ -26,13 +17,11 @@ describe('Jurisdiction', () => {
       expect(jurisdiction.type.name).to.be.equal('ObjectId');
       expect(jurisdiction.index).to.be.true;
       expect(jurisdiction.exists).to.be.true;
-
     });
 
     it('should have code field', () => {
-
-      const code = Jurisdiction.schema.tree.code;
-      const instance = Jurisdiction.schema.paths.code.instance;
+      const { code } = Jurisdiction.schema.tree;
+      const { instance } = Jurisdiction.schema.paths.code;
 
       expect(instance).to.be.equal('String');
       expect(code).to.exist;
@@ -44,13 +33,11 @@ describe('Jurisdiction', () => {
       expect(code.trim).to.be.true;
       expect(code.index).to.be.true;
       expect(code.searchable).to.be.true;
-
     });
 
     it('should have name field', () => {
-
-      const name = Jurisdiction.schema.tree.name;
-      const instance = Jurisdiction.schema.paths.name.instance;
+      const { name } = Jurisdiction.schema.tree;
+      const { instance } = Jurisdiction.schema.paths.name;
 
       expect(instance).to.be.equal('String');
       expect(name).to.exist;
@@ -61,14 +48,11 @@ describe('Jurisdiction', () => {
       expect(name.trim).to.be.true;
       expect(name.searchable).to.be.true;
       expect(name.index).to.be.true;
-
     });
 
-
     it('should have phone field', () => {
-
-      const phone = Jurisdiction.schema.tree.phone;
-      const instance = Jurisdiction.schema.paths.phone.instance;
+      const { phone } = Jurisdiction.schema.tree;
+      const { instance } = Jurisdiction.schema.paths.phone;
 
       expect(instance).to.be.equal('String');
       expect(phone).to.exist;
@@ -79,14 +63,11 @@ describe('Jurisdiction', () => {
       expect(phone.trim).to.be.true;
       expect(phone.index).to.be.true;
       expect(phone.searchable).to.be.true;
-
     });
 
-
     it('should have email field', () => {
-
-      const email = Jurisdiction.schema.tree.email;
-      const instance = Jurisdiction.schema.paths.email.instance;
+      const { email } = Jurisdiction.schema.tree;
+      const { instance } = Jurisdiction.schema.paths.email;
 
       expect(instance).to.be.equal('String');
       expect(email).to.exist;
@@ -97,13 +78,11 @@ describe('Jurisdiction', () => {
       expect(email.lowercase).to.be.true;
       expect(email.index).to.be.true;
       expect(email.searchable).to.be.true;
-
     });
 
     it('should have website field', () => {
-
-      const website = Jurisdiction.schema.tree.website;
-      const instance = Jurisdiction.schema.paths.website.instance;
+      const { website } = Jurisdiction.schema.tree;
+      const { instance } = Jurisdiction.schema.paths.website;
 
       expect(instance).to.be.equal('String');
       expect(website).to.exist;
@@ -112,13 +91,11 @@ describe('Jurisdiction', () => {
       expect(website.type.name).to.be.equal('String');
       expect(website.trim).to.be.true;
       expect(website.searchable).to.be.true;
-
     });
 
     it('should have about field', () => {
-
-      const about = Jurisdiction.schema.tree.about;
-      const instance = Jurisdiction.schema.paths.about.instance;
+      const { about } = Jurisdiction.schema.tree;
+      const { instance } = Jurisdiction.schema.paths.about;
 
       expect(instance).to.be.equal('String');
       expect(about).to.exist;
@@ -128,13 +105,11 @@ describe('Jurisdiction', () => {
       expect(about.trim).to.be.true;
       expect(about.searchable).to.be.true;
       expect(about.index).to.be.true;
-
     });
 
     it('should have address field', () => {
-
-      const address = Jurisdiction.schema.tree.address;
-      const instance = Jurisdiction.schema.paths.address.instance;
+      const { address } = Jurisdiction.schema.tree;
+      const { instance } = Jurisdiction.schema.paths.address;
 
       expect(instance).to.be.equal('String');
       expect(address).to.exist;
@@ -144,16 +119,13 @@ describe('Jurisdiction', () => {
       expect(address.trim).to.be.true;
       expect(address.index).to.be.true;
       expect(address.searchable).to.be.true;
-
     });
 
     describe('location', () => {
-
       it('should be an embedded subdocument', () => {
-
-        const location = Jurisdiction.schema.tree.location;
-        const instance = Jurisdiction.schema.paths.location.instance;
-        const tree = Jurisdiction.schema.paths.location.schema.tree;
+        const { location } = Jurisdiction.schema.tree;
+        const { instance } = Jurisdiction.schema.paths.location;
+        const { tree } = Jurisdiction.schema.paths.location.schema;
 
         expect(instance).to.be.equal('Embedded');
         expect(location).to.exist;
@@ -161,14 +133,12 @@ describe('Jurisdiction', () => {
         expect(tree).to.exist;
         expect(tree.type).to.exist;
         expect(tree.coordinates).to.exist;
-
       });
 
       it.skip('should have GeoJSON type field', () => {
-
-        const schema = Jurisdiction.schema.paths.location.schema;
-        const type = schema.tree.type;
-        const instance = schema.paths.type.instance;
+        const { schema } = Jurisdiction.schema.paths.location;
+        const { type } = schema.tree;
+        const { instance } = schema.paths.type;
 
         expect(instance).to.be.equal('String');
         expect(type).to.exist;
@@ -176,36 +146,26 @@ describe('Jurisdiction', () => {
         expect(type.type).to.be.a('function');
         expect(type.type.name).to.be.equal('String');
         expect(type.default).to.exist;
-
       });
 
-
       it.skip('should have GeoJSON coordinates field', () => {
-
-        const schema = Jurisdiction.schema.paths.location.schema;
-        const coordinates = schema.tree.coordinates;
-        const instance = schema.paths.coordinates.instance;
+        const { schema } = Jurisdiction.schema.paths.location;
+        const { coordinates } = schema.tree;
+        const { instance } = schema.paths.coordinates;
 
         expect(instance).to.be.equal('Array');
         expect(coordinates).to.exist;
         expect(coordinates).to.be.an('object');
         expect(coordinates.type[0]).to.be.a('function');
-        expect(coordinates.type[0].name).to.be.equal(
-          'Number');
-
+        expect(coordinates.type[0].name).to.be.equal('Number');
       });
-
     });
 
-
     describe('boundaries', () => {
-
       it('should be an embedded subdocument', () => {
-
-        const boundaries = Jurisdiction.schema.tree.boundaries;
-        const instance = Jurisdiction.schema.paths.boundaries.instance;
-        const tree = Jurisdiction.schema.paths.boundaries.schema
-          .tree;
+        const { boundaries } = Jurisdiction.schema.tree;
+        const { instance } = Jurisdiction.schema.paths.boundaries;
+        const { tree } = Jurisdiction.schema.paths.boundaries.schema;
 
         expect(instance).to.be.equal('Embedded');
         expect(boundaries).to.exist;
@@ -213,14 +173,12 @@ describe('Jurisdiction', () => {
         expect(tree).to.exist;
         expect(tree.type).to.exist;
         expect(tree.coordinates).to.exist;
-
       });
 
       it.skip('should have GeoJSON type field', () => {
-
-        const schema = Jurisdiction.schema.paths.boundaries.schema;
-        const type = schema.tree.type;
-        const instance = schema.paths.type.instance;
+        const { schema } = Jurisdiction.schema.paths.boundaries;
+        const { type } = schema.tree;
+        const { instance } = schema.paths.type;
 
         expect(instance).to.be.equal('String');
         expect(type).to.exist;
@@ -228,31 +186,23 @@ describe('Jurisdiction', () => {
         expect(type.type).to.be.a('function');
         expect(type.type.name).to.be.equal('String');
         expect(type.default).to.exist;
-
       });
 
-
       it.skip('should have GeoJSON coordinates field', () => {
-
-        const schema = Jurisdiction.schema.paths.boundaries.schema;
-        const coordinates = schema.tree.coordinates;
-        const instance = schema.paths.coordinates.instance;
+        const { schema } = Jurisdiction.schema.paths.boundaries;
+        const { coordinates } = schema.tree;
+        const { instance } = schema.paths.coordinates;
 
         expect(instance).to.be.equal('Array');
         expect(coordinates).to.exist;
         expect(coordinates).to.be.an('object');
         expect(coordinates.type[0]).to.be.an('array');
-
       });
-
-
     });
 
-
     it('should have color field', () => {
-
-      const color = Jurisdiction.schema.tree.color;
-      const instance = Jurisdiction.schema.paths.color.instance;
+      const { color } = Jurisdiction.schema.tree;
+      const { instance } = Jurisdiction.schema.paths.color;
 
       expect(instance).to.be.equal('String');
       expect(color).to.exist;
@@ -261,9 +211,6 @@ describe('Jurisdiction', () => {
       expect(color.type.name).to.be.equal('String');
       expect(color.trim).to.be.true;
       expect(color.default).to.be.exist;
-
     });
-
   });
-
 });

@@ -1,13 +1,11 @@
-'use strict';
-
 /* dependencies */
-const path = require('path');
-const { expect } = require('chai');
-const { Jurisdiction } = require(path.join(__dirname, '..', '..'));
+import { expect } from 'chai';
+import { clear } from '@lykmapipo/mongoose-test-helpers';
+import { Jurisdiction } from '../../src';
 
 describe('Jurisdiction', () => {
   before(done => {
-    Jurisdiction.remove(done);
+    clear(Jurisdiction, done);
   });
 
   describe('static patch', () => {
@@ -84,6 +82,6 @@ describe('Jurisdiction', () => {
   });
 
   after(done => {
-    Jurisdiction.remove(done);
+    clear(Jurisdiction, done);
   });
 });
