@@ -21,6 +21,7 @@
  */
 
 /* dependencies */
+import { pkg } from '@lykmapipo/common';
 import app from '@lykmapipo/express-common';
 import {
   name,
@@ -37,7 +38,7 @@ import Jurisdiction from './jurisdiction.model';
 import router from './http.router';
 
 /* declarations */
-const info = {
+const info = pkg(
   name,
   description,
   version,
@@ -46,13 +47,13 @@ const info = {
   repository,
   bugs,
   sandbox,
-  contributors,
-};
+  contributors
+);
 
 /* export router api version */
 const apiVersion = router.version;
 
-/*bind jurisdiction router */
+/* bind jurisdiction router */
 app.mount(router);
 
 /* export */
