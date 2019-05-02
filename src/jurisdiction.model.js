@@ -9,19 +9,11 @@
  *
  * @author lally elias <lallyelias87@gmail.com>
  * @author Benson Maruchu <benmaruchu@gmail.com>
+ * @author Richard Aggrey <richardaggrey7@gmail.com>
  * @license MIT
  * @since 0.1.0
  * @version 1.0.0
  * @public
- */
-
-/*
- * @todo add list of contacts
- * @todo add support for both landline and mobile phone number
- * @todo add country details(code, currency, calling code etc)
- * @todo add default locale
- * @todo add i18n & l10n settings
- * @todo add downstream and upstream server setting(url, client_id, client_secret)
  */
 
 /* dependencies */
@@ -405,40 +397,6 @@ JurisdictionSchema.index(
 
 /*
  *------------------------------------------------------------------------------
- *  Virtual
- *------------------------------------------------------------------------------
- */
-
-/**
- * @name longitude
- * @description obtain jurisdiction longitude
- * @type {number}
- * @since 0.1.0
- * @version 1.0.0
- * @instance
- */
-JurisdictionSchema.virtual('longitude').get(function getLongitude() {
-  return this.location && this.location.coordinates
-    ? this.location.coordinates[0]
-    : 0;
-});
-
-/**
- * @name latitude
- * @description obtain jurisdiction latitude
- * @type {number}
- * @since 0.1.0
- * @version 1.0.0
- * @instance
- */
-JurisdictionSchema.virtual('latitude').get(function getLatitude() {
-  return this.location && this.location.coordinates
-    ? this.location.coordinates[1]
-    : 0;
-});
-
-/*
- *------------------------------------------------------------------------------
  *  Hooks
  *------------------------------------------------------------------------------
  */
@@ -563,22 +521,6 @@ JurisdictionSchema.methods.beforePost = function beforePost(done) {
 };
 
 /**
- * @name afterPost
- * @description post save jurisdiction logics
- * @param {function} done callback to invoke on success or error
- * @since 0.1.0
- * @version 1.0.0
- * @instance
- */
-JurisdictionSchema.methods.afterPost = function afterPost(done) {
-  /**
-   * @todo sync(upsert) jurisdiction to public api(cloud instance)
-   * in background
-   */
-  done();
-};
-
-/**
  * @name beforeDelete
  * @description pre delete jurisdiction logics
  * @param {function} done callback to invoke on success or error
@@ -657,22 +599,6 @@ JurisdictionSchema.methods.beforeDelete = function beforeDelete(done) {
   else {
     done();
   }
-};
-
-/**
- * @name afterDelete
- * @description post delete jurisdiction logics
- * @param {function} done callback to invoke on success or error
- * @since 0.1.0
- * @version 1.0.0
- * @instance
- */
-JurisdictionSchema.methods.afterDelete = function afterDelete(done) {
-  /**
-   * @todo sync(upsert) jurisdiction to public api(cloud instance)
-   * in background
-   */
-  done();
 };
 
 /*

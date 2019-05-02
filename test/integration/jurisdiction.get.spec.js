@@ -1,10 +1,10 @@
 /* dependencies */
 import _ from 'lodash';
-import async from 'async';
-import { clear } from '@lykmapipo/mongoose-test-helpers';
+import { clear, create } from '@lykmapipo/mongoose-test-helpers';
 import { expect } from 'chai';
 
 import { Jurisdiction } from '../../src';
+import boundaries from '../fixtures/multipolygon.json';
 
 describe('Jurisdiction', () => {
   before(done => {
@@ -15,15 +15,11 @@ describe('Jurisdiction', () => {
     let jurisdictions;
 
     before(done => {
-      const fakes = _.map(Jurisdiction.fake(32), jurisdiction => {
-        return next => {
-          jurisdiction.post(next);
-        };
+      jurisdictions = _.map(Jurisdiction.fake(32), jurisdiction => {
+        jurisdiction.set('boundaries', boundaries);
+        return jurisdiction;
       });
-      async.parallel(fakes, (error, created) => {
-        jurisdictions = created;
-        done(error, created);
-      });
+      create(jurisdictions, done);
     });
 
     it('should be able to get without options', done => {

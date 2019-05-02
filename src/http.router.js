@@ -9,6 +9,7 @@
  *
  * @author lally elias <lallyelias87@gmail.com>
  * @author Benson Maruchu <benmaruchu@gmail.com>
+ * @author Richard Aggrey <richardaggrey7@gmail.com>
  * @license MIT
  * @since  0.1.0
  * @version 1.0.0
