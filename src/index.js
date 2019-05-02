@@ -29,6 +29,7 @@ import router from './http.router';
 
 /* declarations */
 const info = pkg(
+  '../package.json',
   'name',
   'description',
   'version',
