@@ -1,126 +1,107 @@
-'use strict';
+import { expect } from 'chai';
+import { clear } from '@lykmapipo/mongoose-test-helpers';
+import { Jurisdiction } from '../../src';
 
-/* dependencies */
-const path = require('path');
-const { expect } = require('chai');
-const { Jurisdiction } = require(path.join(__dirname, '..', '..'));
-
-describe('Jurisdiction', function () {
-
-  before(function (done) {
-    Jurisdiction.remove(done);
+describe('Jurisdiction', () => {
+  before(done => {
+    clear(Jurisdiction, done);
   });
 
-  describe('static delete', function () {
-
+  describe('static delete', () => {
     let jurisdiction;
 
-    before(function (done) {
+    before(done => {
       const fake = Jurisdiction.fake();
-      fake
-        .post(function (error, created) {
-          jurisdiction = created;
-          done(error, created);
-        });
+      fake.post((error, created) => {
+        jurisdiction = created;
+        done(error, created);
+      });
     });
 
-    it('should be able to delete', function (done) {
-      Jurisdiction
-        .del(jurisdiction._id, function (error, deleted) {
-          expect(error).to.not.exist;
-          expect(deleted).to.exist;
-          expect(deleted._id).to.eql(jurisdiction._id);
-          done(error, deleted);
-        });
+    it('should be able to delete', done => {
+      Jurisdiction.del(jurisdiction._id, (error, deleted) => {
+        expect(error).to.not.exist;
+        expect(deleted).to.exist;
+        expect(deleted._id).to.eql(jurisdiction._id);
+        done(error, deleted);
+      });
     });
 
-    it('should throw if not exists', function (done) {
-      Jurisdiction
-        .del(jurisdiction._id, function (error, deleted) {
-          expect(error).to.exist;
-          expect(error.status).to.exist;
-          expect(error.message).to.be.equal('Not Found');
-          expect(deleted).to.not.exist;
-          done();
-        });
+    it('should throw if not exists', done => {
+      Jurisdiction.del(jurisdiction._id, (error, deleted) => {
+        expect(error).to.exist;
+        expect(error.name).to.exist;
+        expect(error.name).to.equal('DocumentNotFoundError');
+        expect(error.message).to.exist;
+        expect(error.status).to.exist;
+        expect(deleted).to.not.exist;
+        done();
+      });
     });
-
   });
 
-  describe('instance delete', function () {
-
+  describe('instance delete', () => {
     let jurisdiction;
 
-    before(function (done) {
+    before(done => {
       const fake = Jurisdiction.fake();
-      fake
-        .post(function (error, created) {
-          jurisdiction = created;
-          done(error, created);
-        });
+      fake.post((error, created) => {
+        jurisdiction = created;
+        done(error, created);
+      });
     });
 
-    it('should be able to delete', function (done) {
-      jurisdiction
-        .del(function (error, deleted) {
-          expect(error).to.not.exist;
-          expect(deleted).to.exist;
-          expect(deleted._id).to.eql(jurisdiction._id);
-          done(error, deleted);
-        });
+    it('should be able to delete', done => {
+      jurisdiction.del((error, deleted) => {
+        expect(error).to.not.exist;
+        expect(deleted).to.exist;
+        expect(deleted._id).to.eql(jurisdiction._id);
+        done(error, deleted);
+      });
     });
 
-    it('should throw if not exists', function (done) {
-      jurisdiction
-        .del(function (error, deleted) {
-          expect(error).to.not.exist;
-          expect(deleted).to.exist;
-          expect(deleted._id).to.eql(jurisdiction._id);
-          done();
-        });
+    it('should throw if not exists', done => {
+      jurisdiction.del((error, deleted) => {
+        expect(error).to.not.exist;
+        expect(deleted).to.exist;
+        expect(deleted._id).to.eql(jurisdiction._id);
+        done();
+      });
     });
-
   });
 
-  describe('dependancy check', function () {
-
+  describe('dependancy check', () => {
     let parent;
     let child;
 
-    before(function (done) {
+    before(done => {
       parent = Jurisdiction.fake();
-      parent
-        .post(function (error, created) {
-          parent = created;
-          done(error, created);
-        });
+      parent.post((error, created) => {
+        parent = created;
+        done(error, created);
+      });
     });
 
-    before(function (done) {
+    before(done => {
       child = Jurisdiction.fake();
       child.jurisdiction = parent;
-      child
-        .post(function (error, created) {
-          child = created;
-          done(error, created);
-        });
+      child.post((error, created) => {
+        child = created;
+        done(error, created);
+      });
     });
 
-
-    it('should restrict parent deletion', function (done) {
-      parent
-        .del(function (error) {
-          expect(error).to.exist;
-          expect(error.message).to.contain('Fail to Delete');
-          expect(error.status).to.be.equal(400);
-          done();
-        });
+    it('should restrict parent deletion', done => {
+      parent.del(error => {
+        expect(error).to.exist;
+        expect(error.message).to.contain('Fail to Delete');
+        expect(error.status).to.be.equal(400);
+        done();
+      });
     });
-
   });
 
-  after(function (done) {
-    Jurisdiction.remove(done);
+  after(done => {
+    clear(Jurisdiction, done);
   });
-
 });
