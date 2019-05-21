@@ -1,4 +1,3 @@
-/* dependencies */
 import { expect } from 'chai';
 import { clear } from '@lykmapipo/mongoose-test-helpers';
 import { Jurisdiction } from '../../src';
@@ -31,8 +30,10 @@ describe('Jurisdiction', () => {
     it('should throw if not exists', done => {
       Jurisdiction.del(jurisdiction._id, (error, deleted) => {
         expect(error).to.exist;
+        expect(error.name).to.exist;
+        expect(error.name).to.equal('DocumentNotFoundError');
+        expect(error.message).to.exist;
         expect(error.status).to.exist;
-        expect(error.message).to.be.equal('Not Found');
         expect(deleted).to.not.exist;
         done();
       });
