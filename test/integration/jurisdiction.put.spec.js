@@ -1,13 +1,11 @@
-'use strict';
-
 /* dependencies */
-const path = require('path');
-const { expect } = require('chai');
-const { Jurisdiction } = require(path.join(__dirname, '..', '..'));
+import { expect } from 'chai';
+import { clear } from '@lykmapipo/mongoose-test-helpers';
+import { Jurisdiction } from '../../src';
 
 describe('Jurisdiction', () => {
   before(done => {
-    Jurisdiction.remove(done);
+    clear(Jurisdiction, done);
   });
 
   describe('static put', () => {
@@ -24,25 +22,30 @@ describe('Jurisdiction', () => {
     it('should be able to put', done => {
       jurisdiction = jurisdiction.fakeOnly('name');
 
-      Jurisdiction.put(jurisdiction._id, { name: jurisdiction.name }, (
-        error,
-        updated
-      ) => {
-        expect(error).to.not.exist;
-        expect(updated).to.exist;
-        expect(updated._id).to.eql(jurisdiction._id);
-        expect(updated.name).to.eql(jurisdiction.name);
-        done(error, updated);
-      });
+      Jurisdiction.put(
+        jurisdiction._id,
+        { name: jurisdiction.name },
+        (error, updated) => {
+          expect(error).to.not.exist;
+          expect(updated).to.exist;
+          expect(updated._id).to.eql(jurisdiction._id);
+          expect(updated.name).to.eql(jurisdiction.name);
+          done(error, updated);
+        }
+      );
     });
 
     it('should throw if not exists', done => {
       const fake = Jurisdiction.fake();
 
-      Jurisdiction.put(fake._id, fake, (error, updated) => {
+      const { _id, ...updates } = fake;
+
+      Jurisdiction.put(_id, updates, (error, updated) => {
         expect(error).to.exist;
         expect(error.status).to.exist;
-        expect(error.message).to.be.equal('Not Found');
+        expect(error.name).to.exist;
+        expect(error.name).to.be.equal('DocumentNotFoundError');
+        expect(error.message).to.exist;
         expect(updated).to.not.exist;
         done();
       });
@@ -83,6 +86,6 @@ describe('Jurisdiction', () => {
   });
 
   after(done => {
-    Jurisdiction.remove(done);
+    clear(Jurisdiction, done);
   });
 });
