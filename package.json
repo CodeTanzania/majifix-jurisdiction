@@ -67,7 +67,7 @@
     "@commitlint/cli": "8.0.0",
     "@commitlint/config-conventional": "8.0.0",
     "@commitlint/travis-cli": "8.0.0",
-    "@lykmapipo/mongoose-test-helpers": "0.7.6",
+    "@lykmapipo/mongoose-test-helpers": "0.7.7",
     "chai": "4.2.0",
     "commitizen": "3.1.1",
     "cz-conventional-changelog": "2.1.0",
