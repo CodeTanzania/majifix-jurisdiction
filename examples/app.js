@@ -5,14 +5,14 @@ process.env.MONGODB_URI =
 /* dependencies */
 const _ = require('lodash');
 const async = require('async');
-const app = require('@lykmapipo/express-common');
+const { app, mount, start } = require('@lykmapipo/express-common');
 const { connect, jsonSchema } = require('@lykmapipo/mongoose-common');
 // mongoose.set('debug', true);
 const { Jurisdiction, apiVersion, info, router } = require('../lib/index');
 let samples = require('./samples')(20);
 
 /* connect to mongoose */
-app.mount(router);
+mount(router);
 
 connect(connectionError => {
   if (connectionError) {
@@ -60,7 +60,7 @@ connect(connectionError => {
       });
 
       /* fire the app */
-      app.start((error, env) => {
+      start((error, env) => {
         // eslint-disable-next-line no-console
         console.log(
           `visit http://0.0.0.0:${env.PORT}/${apiVersion}/jurisdictions`

@@ -3,12 +3,15 @@ import request from 'supertest';
 
 import { expect } from 'chai';
 import { clear } from '@lykmapipo/mongoose-test-helpers';
-import { Jurisdiction, apiVersion, app } from '../../src';
+import { app, mount } from '@lykmapipo/express-common';
+import { Jurisdiction, apiVersion, router } from '../../src';
 
 describe('Jurisdiction Rest API', () => {
   before(done => {
     clear(Jurisdiction, done);
   });
+
+  mount(router);
 
   let jurisdiction;
 
