@@ -83,7 +83,7 @@
     "husky": "2.4.0",
     "lint-staged": "8.2.0",
     "mocha": "6.1.4",
-    "mongoose": "5.5.13",
+    "mongoose": "5.5.14",
     "prettier": "1.18.2",
     "rimraf": "2.6.3",
     "rollup": "1.14.4",
