@@ -80,7 +80,7 @@
     "eslint-plugin-prettier": "3.1.0",
     "generate-changelog": "1.8.0",
     "handlebars": "4.1.2",
-    "husky": "2.6.0",
+    "husky": "2.7.0",
     "lint-staged": "8.2.1",
     "mocha": "6.1.4",
     "mongoose": "5.6.1",
