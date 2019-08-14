@@ -1,11 +1,29 @@
-import { pkg } from '@lykmapipo/common';
+import { randomColor, idOf, pkg } from '@lykmapipo/common';
 import _ from 'lodash';
-import async from 'async';
-import randomColor from 'randomcolor';
-import mongoose from 'mongoose';
+import { waterfall } from 'async';
+import { model, createSchema, ObjectId } from '@lykmapipo/mongoose-common';
 import actions from 'mongoose-rest-actions';
-import { models, schema } from '@codetanzania/majifix-common';
-import { Point, MultiPolygon, centroidOf, TYPE_MULTIPOLYGON } from 'mongoose-geojson-schemas';
+import exportable from '@lykmapipo/mongoose-exportable';
+import {
+  Point,
+  MultiPolygon,
+  centroidOf,
+  TYPE_MULTIPOLYGON,
+} from 'mongoose-geojson-schemas';
+import {
+  MODEL_NAME_JURISDICTION,
+  checkDependenciesFor,
+  POPULATION_MAX_DEPTH,
+  COLLECTION_NAME_JURISDICTION,
+  MODEL_NAME_PRIORITY,
+  MODEL_NAME_STATUS,
+  MODEL_NAME_SERVICEGROUP,
+  MODEL_NAME_SERVICE,
+  MODEL_NAME_SERVICEREQUEST,
+  MODEL_NAME_ACCOUNT,
+  MODEL_NAME_CONTENT,
+  PATH_NAME_JURISDICTION,
+} from '@codetanzania/majifix-common';
 import { getString } from '@lykmapipo/env';
 import { Router } from '@lykmapipo/express-common';
 
@@ -27,28 +45,14 @@ import { Router } from '@lykmapipo/express-common';
  * @public
  */
 
-const { Schema } = mongoose;
-const { ObjectId } = Schema.Types;
-
 /* constants */
-const JURISDICTION_PATH = 'jurisdiction';
-const { POPULATION_MAX_DEPTH } = schema;
-const {
-  JURISDICTION_MODEL_NAME,
-  PRIORITY_MODEL_NAME,
-  STATUS_MODEL_NAME,
-  SERVICEGROUP_MODEL_NAME,
-  SERVICE_MODEL_NAME,
-  SERVICEREQUEST_MODEL_NAME,
-  ACCOUNT_MODEL_NAME,
-  CONTENT_MODEL_NAME,
-  getModel,
-} = models;
-const SCHEMA_OPTIONS = { timestamps: true, emitIndexErrors: true };
+const OPTION_SELECT = { code: 1, name: 1, color: 1 };
 const OPTION_AUTOPOPULATE = {
-  select: { code: 1, name: 1, color: 1 },
+  select: OPTION_SELECT,
   maxDepth: POPULATION_MAX_DEPTH,
 };
+const SCHEMA_OPTIONS = { collection: COLLECTION_NAME_JURISDICTION };
+const INDEX_UNIQUE = { jurisdiction: 1, code: 1, name: 1 };
 
 /**
  * @name JurisdictionSchema
@@ -57,7 +61,7 @@ const OPTION_AUTOPOPULATE = {
  * @version 1.0.0
  * @private
  */
-const JurisdictionSchema = new Schema(
+const JurisdictionSchema = createSchema(
   {
     /**
      * @name jurisdiction
@@ -86,8 +90,8 @@ const JurisdictionSchema = new Schema(
      */
     jurisdiction: {
       type: ObjectId,
-      ref: JURISDICTION_MODEL_NAME,
-      exists: true,
+      ref: MODEL_NAME_JURISDICTION,
+      exists: { refresh: true, select: OPTION_SELECT },
       autopopulate: OPTION_AUTOPOPULATE,
       index: true,
     },
@@ -103,6 +107,8 @@ const JurisdictionSchema = new Schema(
      * @property {boolean} trim - force trimming
      * @property {boolean} required - mark required
      * @property {boolean} uppercase - force upper-casing
+     * @property {boolean} taggable - allow field use for tagging
+     * @property {boolean} exportable - allow field to be exported
      * @property {boolean} searchable - allow for searching
      * @property {object} fake - fake data generator options
      * @property {boolean} index - ensure database index
@@ -116,6 +122,8 @@ const JurisdictionSchema = new Schema(
       trim: true,
       required: true,
       uppercase: true,
+      taggable: true,
+      exportable: true,
       searchable: true,
       fake: {
         generator: 'finance',
@@ -133,6 +141,8 @@ const JurisdictionSchema = new Schema(
      * @property {object} type - schema(data) type
      * @property {boolean} trim - force trimming
      * @property {boolean} required - mark required
+     * @property {boolean} taggable - allow field use for tagging
+     * @property {boolean} exportable - allow field to be exported
      * @property {boolean} searchable - allow for searching
      * @property {object} fake - fake data generator options
      * @property {boolean} index - ensure database index
@@ -145,6 +155,8 @@ const JurisdictionSchema = new Schema(
       type: String,
       trim: true,
       required: true,
+      taggable: true,
+      exportable: true,
       searchable: true,
       fake: {
         generator: 'address',
@@ -163,6 +175,8 @@ const JurisdictionSchema = new Schema(
      * @property {object} type - schema(data) type
      * @property {boolean} trim - force trimming
      * @property {boolean} required - mark required
+     * @property {boolean} taggable - allow field use for tagging
+     * @property {boolean} exportable - allow field to be exported
      * @property {boolean} searchable - allow for searching
      * @property {object} fake - fake data generator options
      * @property {boolean} index - ensure database index
@@ -175,6 +189,8 @@ const JurisdictionSchema = new Schema(
       type: String,
       trim: true,
       required: true,
+      taggable: true,
+      exportable: true,
       searchable: true,
       fake: {
         generator: 'phone',
@@ -194,6 +210,8 @@ const JurisdictionSchema = new Schema(
      * @property {boolean} trim - force trimming
      * @property {boolean} required - mark required
      * @property {boolean} lowercase - force lower-casing
+     * @property {boolean} taggable - allow field use for tagging
+     * @property {boolean} exportable - allow field to be exported
      * @property {boolean} searchable - allow for searching
      * @property {object} fake - fake data generator options
      * @property {boolean} index - ensure database index
@@ -207,6 +225,8 @@ const JurisdictionSchema = new Schema(
       trim: true,
       required: true,
       lowercase: true,
+      taggable: true,
+      exportable: true,
       searchable: true,
       fake: {
         generator: 'internet',
@@ -225,6 +245,8 @@ const JurisdictionSchema = new Schema(
      * @property {object} type - schema(data) type
      * @property {boolean} trim - force trimming
      * @property {boolean} lowercase - force lower-casing
+     * @property {boolean} taggable - allow field use for tagging
+     * @property {boolean} exportable - allow field to be exported
      * @property {boolean} searchable - allow for searching
      * @property {object} fake - fake data generator options
      * @property {boolean} index - ensure database index
@@ -237,6 +259,8 @@ const JurisdictionSchema = new Schema(
       type: String,
       trim: true,
       lowercase: true,
+      taggable: true,
+      exportable: true,
       searchable: true,
       fake: {
         generator: 'internet',
@@ -254,6 +278,7 @@ const JurisdictionSchema = new Schema(
      * @property {object} type - schema(data) type
      * @property {boolean} trim - force trimming
      * @property {boolean} required - mark required
+     * @property {boolean} exportable - allow field to be exported
      * @property {boolean} searchable - allow for searching
      * @property {object} fake - fake data generator options
      * @property {boolean} index - ensure database index
@@ -265,6 +290,7 @@ const JurisdictionSchema = new Schema(
     about: {
       type: String,
       trim: true,
+      exportable: true,
       searchable: true,
       fake: {
         generator: 'lorem',
@@ -282,6 +308,7 @@ const JurisdictionSchema = new Schema(
      * @type {object}
      * @property {object} type - schema(data) type
      * @property {boolean} trim - force trimming
+     * @property {boolean} exportable - allow field to be exported
      * @property {boolean} searchable - allow for searching
      * @property {object} fake - fake data generator options
      * @property {boolean} index - ensure database index
@@ -293,6 +320,7 @@ const JurisdictionSchema = new Schema(
     address: {
       type: String,
       trim: true,
+      exportable: true,
       searchable: true,
       fake: {
         generator: 'address',
@@ -313,6 +341,7 @@ const JurisdictionSchema = new Schema(
      * @property {object} type - schema(data) type
      * @property {boolean} trim - force trimming
      * @property {boolean} uppercase - force upper-casing
+     * @property {boolean} exportable - allow field to be exported
      * @property {boolean} default - default value
      * @property {object} fake - fake data generator options
      *
@@ -324,9 +353,8 @@ const JurisdictionSchema = new Schema(
       type: String,
       trim: true,
       uppercase: true,
-      default() {
-        return randomColor();
-      },
+      exportable: true,
+      default: () => randomColor(),
       fake: true,
     },
 
@@ -375,7 +403,9 @@ const JurisdictionSchema = new Schema(
      */
     boundaries: MultiPolygon,
   },
-  SCHEMA_OPTIONS
+  SCHEMA_OPTIONS,
+  actions,
+  exportable
 );
 
 /*
@@ -387,10 +417,7 @@ const JurisdictionSchema = new Schema(
 // ensure `unique` compound index on jurisdiction, code and name
 // to fix unique indexes on code and name in case they are used in more than
 // one jurisdiction with different administration
-JurisdictionSchema.index(
-  { jurisdiction: 1, code: 1, name: 1 },
-  { unique: true }
-);
+JurisdictionSchema.index(INDEX_UNIQUE, { unique: true });
 
 /*
  *------------------------------------------------------------------------------
@@ -411,9 +438,9 @@ JurisdictionSchema.pre('validate', function preValidate(done) {
 });
 
 /*
- *-----------------------------------------------------------------------------------
+ *------------------------------------------------------------------------------
  *  Instance
- *-----------------------------------------------------------------------------------
+ *------------------------------------------------------------------------------
  */
 
 /**
@@ -460,7 +487,7 @@ JurisdictionSchema.methods.preValidate = function preValidate(done) {
  */
 JurisdictionSchema.methods.ensureLocation = function ensureLocation() {
   // calculate boundaries centroid and set location if not available
-  if (!this.location && this.boundaries) {
+  if (this.boundaries) {
     const centroid = centroidOf(this.boundaries);
     this.location = centroid;
   }
@@ -479,38 +506,10 @@ JurisdictionSchema.methods.ensureLocation = function ensureLocation() {
 JurisdictionSchema.methods.beforePost = function beforePost(done) {
   // perform pre save logics
   try {
-    // ensure fresh parent
-    const Jurisdiction = getModel(JURISDICTION_MODEL_NAME);
-    const parendId = this.jurisdiction
-      ? this.jurisdiction._id // eslint-disable-line no-underscore-dangle
-      : this.jurisdiction;
+    // ensure location
+    this.ensureLocation();
 
-    // load fresh parent
-    if (parendId) {
-      Jurisdiction.getById(
-        parendId,
-        function afterGetParent(error, parent) {
-          // set parent
-          if (parent) {
-            this.jurisdiction = parent;
-          }
-
-          // ensure location
-          this.ensureLocation();
-
-          // continue
-          done(error, this);
-        }.bind(this)
-      );
-    }
-
-    // continue
-    else {
-      // ensure location
-      this.ensureLocation();
-
-      done(null, this);
-    }
+    done(null, this);
   } catch (error) {
     // catch and report error
     done(error);
@@ -528,74 +527,21 @@ JurisdictionSchema.methods.beforePost = function beforePost(done) {
 JurisdictionSchema.methods.beforeDelete = function beforeDelete(done) {
   // collect dependencies model name
   const dependencies = [
-    JURISDICTION_MODEL_NAME,
-    PRIORITY_MODEL_NAME,
-    STATUS_MODEL_NAME,
-    SERVICEGROUP_MODEL_NAME,
-    SERVICE_MODEL_NAME,
-    SERVICEREQUEST_MODEL_NAME,
-    ACCOUNT_MODEL_NAME,
-    CONTENT_MODEL_NAME,
+    MODEL_NAME_JURISDICTION,
+    MODEL_NAME_PRIORITY,
+    MODEL_NAME_STATUS,
+    MODEL_NAME_SERVICEGROUP,
+    MODEL_NAME_SERVICE,
+    MODEL_NAME_SERVICEREQUEST,
+    MODEL_NAME_ACCOUNT,
+    MODEL_NAME_CONTENT,
   ];
 
-  // prepare dependencies checker
-  const dependants = {};
-  _.forEach(
-    dependencies,
-    function dependencyCheck(dependency) {
-      // requirements
-      const dependantKey = `check${dependency}Dependency`;
-      const Dependant = getModel(dependency);
-      const dependantLabel = _.chain(dependency)
-        .snakeCase()
-        .split('_')
-        .join(' ')
-        .value();
+  // path to check
+  const path = PATH_NAME_JURISDICTION;
 
-      // restrict per existing model
-      if (Dependant) {
-        // collect dependant cleaner
-        dependants[dependantKey] = function dependantCleaner(next) {
-          Dependant.count(
-            {
-              [JURISDICTION_PATH]: this._id, // eslint-disable-line no-underscore-dangle
-            },
-            function dependantCleanerError(error, count) {
-              // warn can not delete due to dependencies
-              let deleteDependantError = error;
-              if (count && count > 0) {
-                const errorMessage = `Fail to Delete. ${count} ${dependantLabel} depend on it`;
-                deleteDependantError = new Error(errorMessage);
-              }
-
-              // ensure error status
-              if (deleteDependantError) {
-                deleteDependantError.status = 400;
-              }
-
-              // return
-              next(deleteDependantError, this);
-            }.bind(this)
-          );
-        }.bind(this);
-      }
-    }.bind(this)
-  );
-
-  // check dependencies
-  if (!_.isEmpty(dependants)) {
-    async.parallel(
-      dependants,
-      function dependantsError(error) {
-        done(error, this);
-      }.bind(this)
-    );
-  }
-
-  // continue
-  else {
-    done();
-  }
+  // do check dependencies
+  return checkDependenciesFor(this, { path, dependencies }, done);
 };
 
 /*
@@ -603,6 +549,10 @@ JurisdictionSchema.methods.beforeDelete = function beforeDelete(done) {
  * Statics
  *------------------------------------------------------------------------------
  */
+
+/* static constants */
+JurisdictionSchema.statics.MODEL_NAME = MODEL_NAME_JURISDICTION;
+JurisdictionSchema.statics.OPTION_AUTOPOPULATE = OPTION_AUTOPOPULATE;
 
 /**
  * @name findNearBy
@@ -612,7 +562,6 @@ JurisdictionSchema.methods.beforeDelete = function beforeDelete(done) {
  * @param {number[]} options.coordinates coordinates of the location
  * @param {function} done a callback to invoke on success or error
  * @return {Object[]} collection  of jurisdiction near by specified coordinates
- * @see {@link https://docs.mongodb.com/manual/reference/operator/query/nearSphere/#op._S_nearSphere}
  * @since 0.1.0
  * @version 1.0.0
  * @public
@@ -654,7 +603,7 @@ JurisdictionSchema.statics.findNearBy = function findNearBy(options, done) {
   }
 
   // find jurisdiction(s) which is near by provided coordinates
-  async.waterfall(
+  waterfall(
     [
       function ensureIndexes(next) {
         this.ensureIndexes(function ensureIndexesError(error) {
@@ -675,21 +624,27 @@ JurisdictionSchema.statics.findNearBy = function findNearBy(options, done) {
   );
 };
 
-/* static constants */
-JurisdictionSchema.statics.MODEL_NAME = JURISDICTION_MODEL_NAME;
-JurisdictionSchema.statics.OPTION_AUTOPOPULATE = OPTION_AUTOPOPULATE;
-
-/*
- *------------------------------------------------------------------------------
- * Plugins
- *------------------------------------------------------------------------------
+/**
+ * @name prepareSeedCriteria
+ * @function prepareSeedCriteria
+ * @description define seed data criteria
+ * @param {Object} seed jurisdiction to be seeded
+ * @returns {Object} packed criteria for seeding
+ *
+ * @author lally elias <lallyelias87@gmail.com>
+ * @since 1.6.0
+ * @version 0.1.0
+ * @static
  */
-
-/* use mongoose rest actions */
-JurisdictionSchema.plugin(actions);
+JurisdictionSchema.statics.prepareSeedCriteria = seed => {
+  const criteria = idOf(seed)
+    ? _.pick(seed, '_id')
+    : _.pick(seed, ..._.keys(INDEX_UNIQUE));
+  return criteria;
+};
 
 /* export jurisdiction model */
-var Jurisdiction = mongoose.model(JURISDICTION_MODEL_NAME, JurisdictionSchema);
+var Jurisdiction = model(MODEL_NAME_JURISDICTION, JurisdictionSchema);
 
 /**
  * @apiDefine Jurisdiction  Jurisdiction
