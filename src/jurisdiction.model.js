@@ -21,6 +21,7 @@ import { waterfall } from 'async';
 import { idOf, randomColor } from '@lykmapipo/common';
 import { createSchema, model, ObjectId } from '@lykmapipo/mongoose-common';
 import actions from 'mongoose-rest-actions';
+import exportable from '@lykmapipo/mongoose-exportable';
 import {
   Point,
   MultiPolygon,
@@ -56,321 +57,352 @@ const INDEX_UNIQUE = { jurisdiction: 1, code: 1, name: 1 };
  * @version 1.0.0
  * @private
  */
-const JurisdictionSchema = createSchema({
-  /**
-   * @name jurisdiction
-   * @description Top jurisdiction under which this jurisdiction derived.
-   *
-   * This is applicable where a large jurisdiction delegates
-   * its power to its division(s).
-   *
-   * If not set the jurisdiction will be treated as a top
-   * jurisdiction and will be affected by any logics implemented
-   * accordingly.
-   *
-   * @type {object}
-   * @property {object} type - schema(data) type
-   * @property {string} ref - referenced collection
-   * @property {boolean} autoset - allow to set id from full object
-   * @property {boolean} exists - ensure ref exists before save
-   * @property {object} autopopulate - jurisdiction population options
-   * @property {object} autopopulate.select - jurisdiction fields to
-   * select when populating
-   * @property {boolean} index - ensure database index
-   *
-   * @since 0.1.0
-   * @version 1.0.0
-   * @instance
-   */
-  jurisdiction: {
-    type: ObjectId,
-    ref: MODEL_NAME_JURISDICTION,
-    exists: { refresh: true, select: OPTION_SELECT },
-    autopopulate: OPTION_AUTOPOPULATE,
-    index: true,
-  },
-
-  /**
-   * @name code
-   * @description Unique human readable coded name of the jurisdiction.
-   *
-   * Used in deriving service request code.
-   *
-   * @type {object}
-   * @property {object} type - schema(data) type
-   * @property {boolean} trim - force trimming
-   * @property {boolean} required - mark required
-   * @property {boolean} uppercase - force upper-casing
-   * @property {boolean} searchable - allow for searching
-   * @property {object} fake - fake data generator options
-   * @property {boolean} index - ensure database index
-   *
-   * @since 0.1.0
-   * @version 1.0.0
-   * @instance
-   */
-  code: {
-    type: String,
-    trim: true,
-    required: true,
-    uppercase: true,
-    searchable: true,
-    fake: {
-      generator: 'finance',
-      type: 'account',
-      unique: true,
+const JurisdictionSchema = createSchema(
+  {
+    /**
+     * @name jurisdiction
+     * @description Top jurisdiction under which this jurisdiction derived.
+     *
+     * This is applicable where a large jurisdiction delegates
+     * its power to its division(s).
+     *
+     * If not set the jurisdiction will be treated as a top
+     * jurisdiction and will be affected by any logics implemented
+     * accordingly.
+     *
+     * @type {object}
+     * @property {object} type - schema(data) type
+     * @property {string} ref - referenced collection
+     * @property {boolean} autoset - allow to set id from full object
+     * @property {boolean} exists - ensure ref exists before save
+     * @property {object} autopopulate - jurisdiction population options
+     * @property {object} autopopulate.select - jurisdiction fields to
+     * select when populating
+     * @property {boolean} index - ensure database index
+     *
+     * @since 0.1.0
+     * @version 1.0.0
+     * @instance
+     */
+    jurisdiction: {
+      type: ObjectId,
+      ref: MODEL_NAME_JURISDICTION,
+      exists: { refresh: true, select: OPTION_SELECT },
+      autopopulate: OPTION_AUTOPOPULATE,
+      index: true,
     },
-    index: true,
-  },
 
-  /**
-   * @name name
-   * @description Unique human readable name of the jurisdiction
-   *
-   * @type {object}
-   * @property {object} type - schema(data) type
-   * @property {boolean} trim - force trimming
-   * @property {boolean} required - mark required
-   * @property {boolean} searchable - allow for searching
-   * @property {object} fake - fake data generator options
-   * @property {boolean} index - ensure database index
-   *
-   * @since 0.1.0
-   * @version 1.0.0
-   * @instance
-   */
-  name: {
-    type: String,
-    trim: true,
-    required: true,
-    searchable: true,
-    fake: {
-      generator: 'address',
-      type: 'county',
+    /**
+     * @name code
+     * @description Unique human readable coded name of the jurisdiction.
+     *
+     * Used in deriving service request code.
+     *
+     * @type {object}
+     * @property {object} type - schema(data) type
+     * @property {boolean} trim - force trimming
+     * @property {boolean} required - mark required
+     * @property {boolean} uppercase - force upper-casing
+     * @property {boolean} taggable - allow field use for tagging
+     * @property {boolean} exportable - allow field to be exported
+     * @property {boolean} searchable - allow for searching
+     * @property {object} fake - fake data generator options
+     * @property {boolean} index - ensure database index
+     *
+     * @since 0.1.0
+     * @version 1.0.0
+     * @instance
+     */
+    code: {
+      type: String,
+      trim: true,
+      required: true,
+      uppercase: true,
+      taggable: true,
+      exportable: true,
+      searchable: true,
+      fake: {
+        generator: 'finance',
+        type: 'account',
+        unique: true,
+      },
+      index: true,
     },
-    index: true,
-  },
 
-  /**
-   * @name phone
-   * @description Primary mobile phone number used to contact jurisdiction.
-   *
-   * Used when a party want to send an SMS or call the jurisdiction.
-   *
-   * @type {object}
-   * @property {object} type - schema(data) type
-   * @property {boolean} trim - force trimming
-   * @property {boolean} required - mark required
-   * @property {boolean} searchable - allow for searching
-   * @property {object} fake - fake data generator options
-   * @property {boolean} index - ensure database index
-   *
-   * @since 0.1.0
-   * @version 1.0.0
-   * @instance
-   */
-  phone: {
-    type: String,
-    trim: true,
-    required: true,
-    searchable: true,
-    fake: {
-      generator: 'phone',
-      type: 'phoneNumber',
+    /**
+     * @name name
+     * @description Unique human readable name of the jurisdiction
+     *
+     * @type {object}
+     * @property {object} type - schema(data) type
+     * @property {boolean} trim - force trimming
+     * @property {boolean} required - mark required
+     * @property {boolean} taggable - allow field use for tagging
+     * @property {boolean} exportable - allow field to be exported
+     * @property {boolean} searchable - allow for searching
+     * @property {object} fake - fake data generator options
+     * @property {boolean} index - ensure database index
+     *
+     * @since 0.1.0
+     * @version 1.0.0
+     * @instance
+     */
+    name: {
+      type: String,
+      trim: true,
+      required: true,
+      taggable: true,
+      exportable: true,
+      searchable: true,
+      fake: {
+        generator: 'address',
+        type: 'county',
+      },
+      index: true,
     },
-    index: true,
-  },
 
-  /**
-   * @name email
-   * @description Primary email address used to contact jurisdiction direct.
-   *
-   * Used when a party want to send direct mail to specific jurisdiction.
-   *
-   * @type {object}
-   * @property {object} type - schema(data) type
-   * @property {boolean} trim - force trimming
-   * @property {boolean} required - mark required
-   * @property {boolean} lowercase - force lower-casing
-   * @property {boolean} searchable - allow for searching
-   * @property {object} fake - fake data generator options
-   * @property {boolean} index - ensure database index
-   *
-   * @since 0.1.0
-   * @version 1.0.0
-   * @instance
-   */
-  email: {
-    type: String,
-    trim: true,
-    required: true,
-    lowercase: true,
-    searchable: true,
-    fake: {
-      generator: 'internet',
-      type: 'email',
+    /**
+     * @name phone
+     * @description Primary mobile phone number used to contact jurisdiction.
+     *
+     * Used when a party want to send an SMS or call the jurisdiction.
+     *
+     * @type {object}
+     * @property {object} type - schema(data) type
+     * @property {boolean} trim - force trimming
+     * @property {boolean} required - mark required
+     * @property {boolean} taggable - allow field use for tagging
+     * @property {boolean} exportable - allow field to be exported
+     * @property {boolean} searchable - allow for searching
+     * @property {object} fake - fake data generator options
+     * @property {boolean} index - ensure database index
+     *
+     * @since 0.1.0
+     * @version 1.0.0
+     * @instance
+     */
+    phone: {
+      type: String,
+      trim: true,
+      required: true,
+      taggable: true,
+      exportable: true,
+      searchable: true,
+      fake: {
+        generator: 'phone',
+        type: 'phoneNumber',
+      },
+      index: true,
     },
-    index: true,
-  },
 
-  /**
-   * @name website
-   * @description Primary website url of the jurisdiction.
-   *
-   * Used when a party want to obtain specific information about jurisdiction.
-   *
-   * @type {object}
-   * @property {object} type - schema(data) type
-   * @property {boolean} trim - force trimming
-   * @property {boolean} lowercase - force lower-casing
-   * @property {boolean} searchable - allow for searching
-   * @property {object} fake - fake data generator options
-   * @property {boolean} index - ensure database index
-   *
-   * @since 0.1.0
-   * @version 1.0.0
-   * @instance
-   */
-  website: {
-    type: String,
-    trim: true,
-    lowercase: true,
-    searchable: true,
-    fake: {
-      generator: 'internet',
-      type: 'domainName',
+    /**
+     * @name email
+     * @description Primary email address used to contact jurisdiction direct.
+     *
+     * Used when a party want to send direct mail to specific jurisdiction.
+     *
+     * @type {object}
+     * @property {object} type - schema(data) type
+     * @property {boolean} trim - force trimming
+     * @property {boolean} required - mark required
+     * @property {boolean} lowercase - force lower-casing
+     * @property {boolean} taggable - allow field use for tagging
+     * @property {boolean} exportable - allow field to be exported
+     * @property {boolean} searchable - allow for searching
+     * @property {object} fake - fake data generator options
+     * @property {boolean} index - ensure database index
+     *
+     * @since 0.1.0
+     * @version 1.0.0
+     * @instance
+     */
+    email: {
+      type: String,
+      trim: true,
+      required: true,
+      lowercase: true,
+      taggable: true,
+      exportable: true,
+      searchable: true,
+      fake: {
+        generator: 'internet',
+        type: 'email',
+      },
+      index: true,
     },
-    index: true,
-  },
 
-  /**
-   * @name about
-   * @description A brief summary about jurisdiction if available i.e
-   * additional details that clarify what a jurisdiction do.
-   *
-   * @type {object}
-   * @property {object} type - schema(data) type
-   * @property {boolean} trim - force trimming
-   * @property {boolean} required - mark required
-   * @property {boolean} searchable - allow for searching
-   * @property {object} fake - fake data generator options
-   * @property {boolean} index - ensure database index
-   *
-   * @since 0.1.0
-   * @version 1.0.0
-   * @instance
-   */
-  about: {
-    type: String,
-    trim: true,
-    searchable: true,
-    fake: {
-      generator: 'lorem',
-      type: 'paragraph',
+    /**
+     * @name website
+     * @description Primary website url of the jurisdiction.
+     *
+     * Used when a party want to obtain specific information about jurisdiction.
+     *
+     * @type {object}
+     * @property {object} type - schema(data) type
+     * @property {boolean} trim - force trimming
+     * @property {boolean} lowercase - force lower-casing
+     * @property {boolean} taggable - allow field use for tagging
+     * @property {boolean} exportable - allow field to be exported
+     * @property {boolean} searchable - allow for searching
+     * @property {object} fake - fake data generator options
+     * @property {boolean} index - ensure database index
+     *
+     * @since 0.1.0
+     * @version 1.0.0
+     * @instance
+     */
+    website: {
+      type: String,
+      trim: true,
+      lowercase: true,
+      taggable: true,
+      exportable: true,
+      searchable: true,
+      fake: {
+        generator: 'internet',
+        type: 'domainName',
+      },
+      index: true,
     },
-    index: true,
-  },
 
-  /**
-   * @name address
-   * @description Human readable physical address of jurisdiction office.
-   *
-   * Used when a party what to physical go or visit the jurisdiction office.
-   *
-   * @type {object}
-   * @property {object} type - schema(data) type
-   * @property {boolean} trim - force trimming
-   * @property {boolean} searchable - allow for searching
-   * @property {object} fake - fake data generator options
-   * @property {boolean} index - ensure database index
-   *
-   * @since 0.1.0
-   * @version 1.0.0
-   * @instance
-   */
-  address: {
-    type: String,
-    trim: true,
-    searchable: true,
-    fake: {
-      generator: 'address',
-      type: 'streetAddress',
+    /**
+     * @name about
+     * @description A brief summary about jurisdiction if available i.e
+     * additional details that clarify what a jurisdiction do.
+     *
+     * @type {object}
+     * @property {object} type - schema(data) type
+     * @property {boolean} trim - force trimming
+     * @property {boolean} required - mark required
+     * @property {boolean} exportable - allow field to be exported
+     * @property {boolean} searchable - allow for searching
+     * @property {object} fake - fake data generator options
+     * @property {boolean} index - ensure database index
+     *
+     * @since 0.1.0
+     * @version 1.0.0
+     * @instance
+     */
+    about: {
+      type: String,
+      trim: true,
+      exportable: true,
+      searchable: true,
+      fake: {
+        generator: 'lorem',
+        type: 'paragraph',
+      },
+      index: true,
     },
-    index: true,
+
+    /**
+     * @name address
+     * @description Human readable physical address of jurisdiction office.
+     *
+     * Used when a party what to physical go or visit the jurisdiction office.
+     *
+     * @type {object}
+     * @property {object} type - schema(data) type
+     * @property {boolean} trim - force trimming
+     * @property {boolean} exportable - allow field to be exported
+     * @property {boolean} searchable - allow for searching
+     * @property {object} fake - fake data generator options
+     * @property {boolean} index - ensure database index
+     *
+     * @since 0.1.0
+     * @version 1.0.0
+     * @instance
+     */
+    address: {
+      type: String,
+      trim: true,
+      exportable: true,
+      searchable: true,
+      fake: {
+        generator: 'address',
+        type: 'streetAddress',
+      },
+      index: true,
+    },
+
+    /**
+     * @name color
+     * @description A color code(in hexadecimal format) eg. #363636 used to
+     * differentiate jurisdictions visually.
+     *
+     * If not provided it will randomly generated, but it is not
+     * guarantee its visual appeal.
+     *
+     * @type {object}
+     * @property {object} type - schema(data) type
+     * @property {boolean} trim - force trimming
+     * @property {boolean} uppercase - force upper-casing
+     * @property {boolean} exportable - allow field to be exported
+     * @property {boolean} default - default value
+     * @property {object} fake - fake data generator options
+     *
+     * @since 0.1.0
+     * @version 1.0.0
+     * @instance
+     */
+    color: {
+      type: String,
+      trim: true,
+      uppercase: true,
+      exportable: true,
+      default: () => randomColor(),
+      fake: true,
+    },
+
+    /**
+     * @name location
+     * @description A center of jurisdiction. Its an office reachable
+     * by citizen(or customer)
+     *
+     * @type {object}
+     * @property {object} location - geo json point
+     * @property {string} location.type - Point
+     * @property {number[]} location.coordinates - longitude, latitude pair of
+     * the geo point
+     *
+     * @since 0.1.0
+     * @version 1.0.0
+     * @instance
+     * @example
+     * {
+     *    type: 'Point',
+     *    coordinates: [-76.80207859497996, 55.69469494228919]
+     * }
+     */
+    location: Point,
+
+    /**
+     * @name boundaries
+     * @description Jurisdiction boundaries.
+     *
+     * Its mainly used for geo lookup of service request
+     * jurisdiction based on its geo coordinates.
+     *
+     * @type {object}
+     * @property {object} boundaries - geo json multi polygon
+     * @property {string} boundaries.type - MultiPolygon
+     * @property {number[]} boundaries.coordinates - collection of polygon
+     *
+     * @since 0.1.0
+     * @version 1.0.0
+     * @instance
+     * @example
+     * {
+     *    type: 'MultiPolygon',
+     *    coordinates: [ [ [ [-76.80207859497996, 55.69469494228919] ] ] ]
+     * }
+     */
+    boundaries: MultiPolygon,
   },
-
-  /**
-   * @name color
-   * @description A color code(in hexadecimal format) eg. #363636 used to
-   * differentiate jurisdictions visually.
-   *
-   * If not provided it will randomly generated, but it is not
-   * guarantee its visual appeal.
-   *
-   * @type {object}
-   * @property {object} type - schema(data) type
-   * @property {boolean} trim - force trimming
-   * @property {boolean} uppercase - force upper-casing
-   * @property {boolean} default - default value
-   * @property {object} fake - fake data generator options
-   *
-   * @since 0.1.0
-   * @version 1.0.0
-   * @instance
-   */
-  color: {
-    type: String,
-    trim: true,
-    uppercase: true,
-    default: () => randomColor(),
-    fake: true,
-  },
-
-  /**
-   * @name location
-   * @description A center of jurisdiction. Its an office reachable
-   * by citizen(or customer)
-   *
-   * @type {object}
-   * @property {object} location - geo json point
-   * @property {string} location.type - Point
-   * @property {number[]} location.coordinates - longitude, latitude pair of
-   * the geo point
-   *
-   * @since 0.1.0
-   * @version 1.0.0
-   * @instance
-   * @example
-   * {
-   *    type: 'Point',
-   *    coordinates: [-76.80207859497996, 55.69469494228919]
-   * }
-   */
-  location: Point,
-
-  /**
-   * @name boundaries
-   * @description Jurisdiction boundaries.
-   *
-   * Its mainly used for geo lookup of service request
-   * jurisdiction based on its geo coordinates.
-   *
-   * @type {object}
-   * @property {object} boundaries - geo json multi polygon
-   * @property {string} boundaries.type - MultiPolygon
-   * @property {number[]} boundaries.coordinates - collection of polygon
-   *
-   * @since 0.1.0
-   * @version 1.0.0
-   * @instance
-   * @example
-   * {
-   *    type: 'MultiPolygon',
-   *    coordinates: [ [ [ [-76.80207859497996, 55.69469494228919] ] ] ]
-   * }
-   */
-  boundaries: MultiPolygon,
-});
+  {},
+  actions,
+  exportable
+);
 
 /*
  *------------------------------------------------------------------------------
@@ -606,15 +638,6 @@ JurisdictionSchema.statics.prepareSeedCriteria = seed => {
     : _.pick(seed, ..._.keys(INDEX_UNIQUE));
   return criteria;
 };
-
-/*
- *------------------------------------------------------------------------------
- * Plugins
- *------------------------------------------------------------------------------
- */
-
-/* use mongoose rest actions */
-JurisdictionSchema.plugin(actions);
 
 /* export jurisdiction model */
 export default model(MODEL_NAME_JURISDICTION, JurisdictionSchema);
