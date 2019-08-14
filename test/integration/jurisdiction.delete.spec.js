@@ -1,5 +1,4 @@
-import { expect } from 'chai';
-import { clear } from '@lykmapipo/mongoose-test-helpers';
+import { clear, expect } from '@lykmapipo/mongoose-test-helpers';
 import { Jurisdiction } from '../../src';
 
 describe('Jurisdiction', () => {

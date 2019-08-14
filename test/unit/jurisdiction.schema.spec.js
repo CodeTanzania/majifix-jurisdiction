@@ -16,7 +16,7 @@ describe('Jurisdiction', () => {
       expect(jurisdiction.type).to.be.a('function');
       expect(jurisdiction.type.name).to.be.equal('ObjectId');
       expect(jurisdiction.index).to.be.true;
-      expect(jurisdiction.exists).to.be.true;
+      expect(jurisdiction.exists).to.exist.and.be.an('object');
     });
 
     it('should have code field', () => {
