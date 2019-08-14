@@ -38,6 +38,7 @@ import {
   MODEL_NAME_SERVICEREQUEST,
   MODEL_NAME_ACCOUNT,
   MODEL_NAME_CONTENT,
+  COLLECTION_NAME_JURISDICTION,
   PATH_NAME_JURISDICTION,
   checkDependenciesFor,
 } from '@codetanzania/majifix-common';
@@ -48,6 +49,7 @@ const OPTION_AUTOPOPULATE = {
   select: OPTION_SELECT,
   maxDepth: POPULATION_MAX_DEPTH,
 };
+const SCHEMA_OPTIONS = { collection: COLLECTION_NAME_JURISDICTION };
 const INDEX_UNIQUE = { jurisdiction: 1, code: 1, name: 1 };
 
 /**
@@ -399,7 +401,7 @@ const JurisdictionSchema = createSchema(
      */
     boundaries: MultiPolygon,
   },
-  {},
+  SCHEMA_OPTIONS,
   actions,
   exportable
 );
