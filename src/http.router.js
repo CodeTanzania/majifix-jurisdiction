@@ -258,7 +258,6 @@
  */
 
 /* dependencies */
-import _ from 'lodash';
 import { getString } from '@lykmapipo/env';
 import {
   getFor,
@@ -477,29 +476,12 @@ router.delete(
  * @apiUse AuthorizationHeaderError
  * @apiUse AuthorizationHeaderErrorExample
  */
-router.get(PATH_CHILDREN, function getSubJurisdictions(
-  request,
-  response,
-  next
-) {
-  // obtain request options
-  const { jurisdiction } = request.params;
-  const filter = jurisdiction ? { filter: { jurisdiction } } : {};
-  const options = _.merge({}, filter, request.mquery);
-
-  Jurisdiction.get(options, function onGetSubJurisdictions(error, results) {
-    // forward error
-    if (error) {
-      next(error);
-    }
-
-    // handle response
-    else {
-      response.status(200);
-      response.json(results);
-    }
-  });
-});
+router.get(
+  PATH_CHILDREN,
+  getFor({
+    get: (options, done) => Jurisdiction.get(options, done),
+  })
+);
 
 /* expose router */
 export default router;
