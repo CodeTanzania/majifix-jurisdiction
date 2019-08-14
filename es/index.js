@@ -740,7 +740,7 @@ router.get(
   PATH_EXPORT,
   downloadFor({
     download: (options, done) => {
-      const fileName = `jurisdiction_exports_${Date.now()}.csv`;
+      const fileName = `jurisdictions_exports_${Date.now()}.csv`;
       const readStream = Jurisdiction.exportCsv(options);
       return done(null, { fileName, readStream });
     },
