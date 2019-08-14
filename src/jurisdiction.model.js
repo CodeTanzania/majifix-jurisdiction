@@ -18,7 +18,7 @@
 
 import _ from 'lodash';
 import { waterfall } from 'async';
-import { randomColor } from '@lykmapipo/common';
+import { idOf, randomColor } from '@lykmapipo/common';
 import { createSchema, model, ObjectId } from '@lykmapipo/mongoose-common';
 import actions from 'mongoose-rest-actions';
 import {
@@ -47,6 +47,7 @@ const OPTION_AUTOPOPULATE = {
   select: OPTION_SELECT,
   maxDepth: POPULATION_MAX_DEPTH,
 };
+const INDEX_UNIQUE = { jurisdiction: 1, code: 1, name: 1 };
 
 /**
  * @name JurisdictionSchema
@@ -380,10 +381,7 @@ const JurisdictionSchema = createSchema({
 // ensure `unique` compound index on jurisdiction, code and name
 // to fix unique indexes on code and name in case they are used in more than
 // one jurisdiction with different administration
-JurisdictionSchema.index(
-  { jurisdiction: 1, code: 1, name: 1 },
-  { unique: true }
-);
+JurisdictionSchema.index(INDEX_UNIQUE, { unique: true });
 
 /*
  *------------------------------------------------------------------------------
@@ -516,6 +514,10 @@ JurisdictionSchema.methods.beforeDelete = function beforeDelete(done) {
  *------------------------------------------------------------------------------
  */
 
+/* static constants */
+JurisdictionSchema.statics.MODEL_NAME = MODEL_NAME_JURISDICTION;
+JurisdictionSchema.statics.OPTION_AUTOPOPULATE = OPTION_AUTOPOPULATE;
+
 /**
  * @name findNearBy
  * @description find jurisdiction near a specified coordinates
@@ -586,9 +588,24 @@ JurisdictionSchema.statics.findNearBy = function findNearBy(options, done) {
   );
 };
 
-/* static constants */
-JurisdictionSchema.statics.MODEL_NAME = MODEL_NAME_JURISDICTION;
-JurisdictionSchema.statics.OPTION_AUTOPOPULATE = OPTION_AUTOPOPULATE;
+/**
+ * @name prepareSeedCriteria
+ * @function prepareSeedCriteria
+ * @description define seed data criteria
+ * @param {Object} seed jurisdiction to be seeded
+ * @returns {Object} packed criteria for seeding
+ *
+ * @author lally elias <lallyelias87@gmail.com>
+ * @since 1.6.0
+ * @version 0.1.0
+ * @static
+ */
+JurisdictionSchema.statics.prepareSeedCriteria = seed => {
+  const criteria = idOf(seed)
+    ? _.pick(seed, '_id')
+    : _.pick(seed, ..._.keys(INDEX_UNIQUE));
+  return criteria;
+};
 
 /*
  *------------------------------------------------------------------------------
