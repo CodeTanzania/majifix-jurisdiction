@@ -103,7 +103,16 @@ describe('Jurisdiction', () => {
       expect(Jurisdiction.MODEL_NAME).to.be.equal('Jurisdiction');
     });
 
-    it.skip('should expose autopulate as options', () => {
+    it('should expose field select option', () => {
+      expect(Jurisdiction.OPTION_SELECT).to.exist;
+      expect(Jurisdiction.OPTION_SELECT).to.be.eql({
+        code: 1,
+        name: 1,
+        color: 1,
+      });
+    });
+
+    it('should expose autopulate as options', () => {
       expect(Jurisdiction.OPTION_AUTOPOPULATE).to.exist;
       expect(Jurisdiction.OPTION_AUTOPOPULATE).to.be.eql({
         select: { code: 1, name: 1, color: 1 },
