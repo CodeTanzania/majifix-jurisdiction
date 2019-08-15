@@ -1,3 +1,13 @@
+#### 1.7.0 (2019-08-15)
+
+##### Chores
+
+- **deps:** update dependency rimraf to v3 ([d4010d63](https://github.com/CodeTanzania/majifix-jurisdiction/commit/d4010d63aaf4038aa5b4c6dba408bc862df95a50))
+
+##### New Features
+
+- add select field static field ([f597650d](https://github.com/CodeTanzania/majifix-jurisdiction/commit/f597650d806384bde43a00b5916d56dbc0870a08))
+
 #### 1.6.0 (2019-08-14)
 
 ##### Chores
