@@ -1,6 +1,5 @@
 /* dependencies */
-import { expect } from 'chai';
-import sinon from 'sinon';
+import { expect, sinon } from '@lykmapipo/mongoose-test-helpers';
 import { randomMultiPolygon, TYPE_POINT } from 'mongoose-geojson-schemas';
 
 /* declarations */
@@ -19,7 +18,6 @@ describe('Jurisdiction', () => {
     it('should be able to ensure location from boundaries', () => {
       const jurisdiction = Jurisdiction.fake();
       jurisdiction.boundaries = randomMultiPolygon();
-
       // ensure location
       const location = jurisdiction.ensureLocation();
       expect(location).to.exist;
@@ -78,6 +76,7 @@ describe('Jurisdiction', () => {
       it('should be able to ensure location from boundaries', done => {
         jurisdiction.beforePost((error, updated) => {
           // assert jurisdiction
+
           const { location } = updated;
           expect(location).to.exist;
           expect(location.type).to.exist;
