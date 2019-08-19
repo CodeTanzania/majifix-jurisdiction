@@ -1,8 +1,5 @@
-/* dependencies */
 import { SchemaTypes } from '@lykmapipo/mongoose-common';
-import { expect } from 'chai';
-
-/* declarations */
+import { expect } from '@lykmapipo/mongoose-test-helpers';
 import Jurisdiction from '../../src/jurisdiction.model';
 
 describe('Jurisdiction', () => {

@@ -1,8 +1,5 @@
-/* dependencies */
 import { expect, sinon } from '@lykmapipo/mongoose-test-helpers';
 import { randomMultiPolygon, TYPE_POINT } from 'mongoose-geojson-schemas';
-
-/* declarations */
 import Jurisdiction from '../../src/jurisdiction.model';
 
 describe('Jurisdiction', () => {
