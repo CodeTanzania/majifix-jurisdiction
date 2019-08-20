@@ -1,216 +1,234 @@
-/* dependencies */
-import { expect } from 'chai';
-
-/* declarations */
+import { SchemaTypes } from '@lykmapipo/mongoose-common';
+import { expect } from '@lykmapipo/mongoose-test-helpers';
 import Jurisdiction from '../../src/jurisdiction.model';
 
 describe('Jurisdiction', () => {
   describe('Schema', () => {
     it('should have jurisdiction field', () => {
-      const { jurisdiction } = Jurisdiction.schema.tree;
-      const { instance } = Jurisdiction.schema.paths.jurisdiction;
+      const jurisdiction = Jurisdiction.path('jurisdiction');
 
-      expect(instance).to.be.equal('ObjectID');
       expect(jurisdiction).to.exist;
-      expect(jurisdiction).to.be.an('object');
-      expect(jurisdiction.type).to.be.a('function');
-      expect(jurisdiction.type.name).to.be.equal('ObjectId');
-      expect(jurisdiction.index).to.be.true;
-      expect(jurisdiction.exists).to.exist.and.be.an('object');
+      expect(jurisdiction).to.be.instanceof(SchemaTypes.ObjectID);
+      expect(jurisdiction.options).to.exist;
+      expect(jurisdiction.options).to.be.an('object');
+      expect(jurisdiction.options.type).to.be.a('function');
+      expect(jurisdiction.options.type.name).to.be.equal('ObjectId');
+      expect(jurisdiction.options.ref).to.exist.and.be.equal('Jurisdiction');
+      expect(jurisdiction.options.exists).to.exist.and.be.an('object');
+      expect(jurisdiction.options.autopopulate).to.exist.and.an('object');
+      expect(jurisdiction.options.index).to.be.true;
     });
 
     it('should have code field', () => {
-      const { code } = Jurisdiction.schema.tree;
-      const { instance } = Jurisdiction.schema.paths.code;
+      const code = Jurisdiction.path('code');
 
-      expect(instance).to.be.equal('String');
       expect(code).to.exist;
-      expect(code).to.be.an('object');
-      expect(code.type).to.be.a('function');
-      expect(code.type.name).to.be.equal('String');
-      expect(code.required).to.be.true;
-      expect(code.uppercase).to.be.true;
-      expect(code.trim).to.be.true;
-      expect(code.index).to.be.true;
-      expect(code.searchable).to.be.true;
+      expect(code).to.be.instanceof(SchemaTypes.String);
+      expect(code.options).to.exist;
+      expect(code.options).to.be.an('object');
+      expect(code.options.type).to.exist.and.be.a('function');
+      expect(code.options.type.name).to.be.equal('String');
+      expect(code.options.required).to.be.true;
+      expect(code.options.uppercase).to.be.true;
+      expect(code.options.taggable).to.be.true;
+      expect(code.options.exportable).to.be.true;
+      expect(code.options.trim).to.be.true;
+      expect(code.options.searchable).to.be.true;
+      expect(code.options.fake).to.exist;
+      expect(code.options.index).to.be.true;
     });
 
     it('should have name field', () => {
-      const { name } = Jurisdiction.schema.tree;
-      const { instance } = Jurisdiction.schema.paths.name;
+      const name = Jurisdiction.path('name');
 
-      expect(instance).to.be.equal('String');
       expect(name).to.exist;
-      expect(name).to.be.an('object');
-      expect(name.type).to.be.a('function');
-      expect(name.type.name).to.be.equal('String');
-      expect(name.required).to.be.true;
-      expect(name.trim).to.be.true;
-      expect(name.searchable).to.be.true;
-      expect(name.index).to.be.true;
+      expect(name).to.be.instanceof(SchemaTypes.String);
+      expect(name.options).to.exist;
+      expect(name.options).to.be.an('object');
+      expect(name.options.type).to.exist.and.be.a('function');
+      expect(name.options.type.name).to.be.equal('String');
+      expect(name.options.required).to.be.true;
+      expect(name.options.taggable).to.be.true;
+      expect(name.options.exportable).to.be.true;
+      expect(name.options.trim).to.be.true;
+      expect(name.options.searchable).to.be.true;
+      expect(name.options.fake).to.exist;
+      expect(name.options.index).to.be.true;
     });
 
     it('should have phone field', () => {
-      const { phone } = Jurisdiction.schema.tree;
-      const { instance } = Jurisdiction.schema.paths.phone;
+      const phone = Jurisdiction.path('phone');
 
-      expect(instance).to.be.equal('String');
       expect(phone).to.exist;
-      expect(phone).to.be.an('object');
-      expect(phone.type).to.be.a('function');
-      expect(phone.type.name).to.be.equal('String');
-      expect(phone.required).to.be.true;
-      expect(phone.trim).to.be.true;
-      expect(phone.index).to.be.true;
-      expect(phone.searchable).to.be.true;
+      expect(phone).to.be.instanceof(SchemaTypes.String);
+      expect(phone.options).to.exist;
+      expect(phone.options).to.be.an('object');
+      expect(phone.options.type).to.exist.and.be.a('function');
+      expect(phone.options.type.name).to.be.equal('String');
+      expect(phone.options.required).to.be.true;
+      expect(phone.options.taggable).to.be.true;
+      expect(phone.options.exportable).to.be.true;
+      expect(phone.options.trim).to.be.true;
+      expect(phone.options.searchable).to.be.true;
+      expect(phone.options.fake).to.exist;
+      expect(phone.options.index).to.be.true;
     });
 
     it('should have email field', () => {
-      const { email } = Jurisdiction.schema.tree;
-      const { instance } = Jurisdiction.schema.paths.email;
+      const email = Jurisdiction.path('email');
 
-      expect(instance).to.be.equal('String');
       expect(email).to.exist;
-      expect(email).to.be.an('object');
-      expect(email.type).to.be.a('function');
-      expect(email.type.name).to.be.equal('String');
-      expect(email.trim).to.be.true;
-      expect(email.lowercase).to.be.true;
-      expect(email.index).to.be.true;
-      expect(email.searchable).to.be.true;
+      expect(email).to.be.instanceof(SchemaTypes.String);
+      expect(email.options).to.exist;
+      expect(email.options).to.be.an('object');
+      expect(email.options.type).to.exist.and.be.a('function');
+      expect(email.options.type.name).to.be.equal('String');
+      expect(email.options.required).to.be.true;
+      expect(email.options.taggable).to.be.true;
+      expect(email.options.lowercase).to.be.true;
+      expect(email.options.exportable).to.be.true;
+      expect(email.options.trim).to.be.true;
+      expect(email.options.searchable).to.be.true;
+      expect(email.options.fake).to.exist;
+      expect(email.options.index).to.be.true;
     });
 
     it('should have website field', () => {
-      const { website } = Jurisdiction.schema.tree;
-      const { instance } = Jurisdiction.schema.paths.website;
+      const website = Jurisdiction.path('website');
 
-      expect(instance).to.be.equal('String');
       expect(website).to.exist;
-      expect(website).to.be.an('object');
-      expect(website.type).to.be.a('function');
-      expect(website.type.name).to.be.equal('String');
-      expect(website.trim).to.be.true;
-      expect(website.searchable).to.be.true;
+      expect(website).to.be.instanceof(SchemaTypes.String);
+      expect(website.options).to.exist;
+      expect(website.options).to.be.an('object');
+      expect(website.options.type).to.exist.and.be.a('function');
+      expect(website.options.type.name).to.be.equal('String');
+      expect(website.options.lowercase).to.be.true;
+      expect(website.options.taggable).to.be.true;
+      expect(website.options.exportable).to.be.true;
+      expect(website.options.trim).to.be.true;
+      expect(website.options.searchable).to.be.true;
+      expect(website.options.fake).to.exist;
+      expect(website.options.index).to.be.true;
     });
 
     it('should have about field', () => {
-      const { about } = Jurisdiction.schema.tree;
-      const { instance } = Jurisdiction.schema.paths.about;
+      const about = Jurisdiction.path('about');
 
-      expect(instance).to.be.equal('String');
       expect(about).to.exist;
-      expect(about).to.be.an('object');
-      expect(about.type).to.be.a('function');
-      expect(about.type.name).to.be.equal('String');
-      expect(about.trim).to.be.true;
-      expect(about.searchable).to.be.true;
-      expect(about.index).to.be.true;
+      expect(about).to.be.instanceof(SchemaTypes.String);
+      expect(about.options).to.exist;
+      expect(about.options).to.be.an('object');
+      expect(about.options.type).to.exist.and.be.a('function');
+      expect(about.options.type.name).to.be.equal('String');
+      expect(about.options.exportable).to.be.true;
+      expect(about.options.trim).to.be.true;
+      expect(about.options.searchable).to.be.true;
+      expect(about.options.fake).to.exist;
+      expect(about.options.index).to.be.true;
     });
 
     it('should have address field', () => {
-      const { address } = Jurisdiction.schema.tree;
-      const { instance } = Jurisdiction.schema.paths.address;
+      const address = Jurisdiction.path('address');
 
-      expect(instance).to.be.equal('String');
       expect(address).to.exist;
-      expect(address).to.be.an('object');
-      expect(address.type).to.be.a('function');
-      expect(address.type.name).to.be.equal('String');
-      expect(address.trim).to.be.true;
-      expect(address.index).to.be.true;
-      expect(address.searchable).to.be.true;
+      expect(address).to.be.instanceof(SchemaTypes.String);
+      expect(address.options).to.exist;
+      expect(address.options).to.be.an('object');
+      expect(address.options.type).to.exist;
+      expect(address.options.trim).to.be.true;
+      expect(address.options.index).to.be.true;
+      expect(address.options.searchable).to.be.true;
+      expect(address.options.exportable).to.be.true;
+      expect(address.options.fake).to.exist;
     });
 
     describe('location', () => {
       it('should be an embedded subdocument', () => {
-        const { location } = Jurisdiction.schema.tree;
-        const { instance } = Jurisdiction.schema.paths.location;
-        const { tree } = Jurisdiction.schema.paths.location.schema;
+        const location = Jurisdiction.path('location');
+        const type = Jurisdiction.path('location.type');
+        const coordinates = Jurisdiction.path('location.coordinates');
 
-        expect(instance).to.be.equal('Embedded');
         expect(location).to.exist;
-        expect(location).to.be.an('object');
-        expect(tree).to.exist;
-        expect(tree.type).to.exist;
-        expect(tree.coordinates).to.exist;
+        expect(type).to.be.instanceof(SchemaTypes.String);
+        expect(coordinates).to.be.instanceof(SchemaTypes.Array);
       });
 
-      it.skip('should have GeoJSON type field', () => {
-        const { schema } = Jurisdiction.schema.paths.location;
-        const { type } = schema.tree;
-        const { instance } = schema.paths.type;
+      it('should have GeoJSON type field', () => {
+        const location = Jurisdiction.path('location');
+        const type = Jurisdiction.path('location.type');
 
-        expect(instance).to.be.equal('String');
-        expect(type).to.exist;
-        expect(type).to.be.an('object');
-        expect(type.type).to.be.a('function');
-        expect(type.type.name).to.be.equal('String');
-        expect(type.default).to.exist;
+        expect(location).to.exist;
+        expect(type).to.be.instanceof(SchemaTypes.String);
+        expect(type.options).to.exist;
+        expect(type.options).to.be.an('object');
+        expect(type.options.type).to.exist.and.be.a('function');
+        expect(type.options.default).to.exist.and.be.equal('Point');
+        expect(type.options.set).to.exist.and.be.a('function');
       });
 
-      it.skip('should have GeoJSON coordinates field', () => {
-        const { schema } = Jurisdiction.schema.paths.location;
-        const { coordinates } = schema.tree;
-        const { instance } = schema.paths.coordinates;
+      it('should have GeoJSON coordinates field', () => {
+        const location = Jurisdiction.path('location');
+        const coordinates = Jurisdiction.path('location.coordinates');
 
-        expect(instance).to.be.equal('Array');
-        expect(coordinates).to.exist;
-        expect(coordinates).to.be.an('object');
-        expect(coordinates.type[0]).to.be.a('function');
-        expect(coordinates.type[0].name).to.be.equal('Number');
+        expect(location).to.exist;
+        expect(coordinates).to.be.instanceof(SchemaTypes.Array);
+        expect(coordinates.options).to.exist;
+        expect(coordinates.options).to.be.an('object');
+        expect(coordinates.options.type).to.exist.and.be.a('function');
+        expect(coordinates.options.default).to.be.undefined;
       });
     });
 
     describe('boundaries', () => {
       it('should be an embedded subdocument', () => {
-        const { boundaries } = Jurisdiction.schema.tree;
-        const { instance } = Jurisdiction.schema.paths.boundaries;
-        const { tree } = Jurisdiction.schema.paths.boundaries.schema;
+        const boundaries = Jurisdiction.path('boundaries');
+        const type = Jurisdiction.path('boundaries.type');
+        const coordinates = Jurisdiction.path('boundaries.coordinates');
 
-        expect(instance).to.be.equal('Embedded');
         expect(boundaries).to.exist;
-        expect(boundaries).to.be.an('object');
-        expect(tree).to.exist;
-        expect(tree.type).to.exist;
-        expect(tree.coordinates).to.exist;
+        expect(type).to.be.instanceof(SchemaTypes.String);
+        expect(coordinates).to.be.instanceof(SchemaTypes.Array);
       });
 
-      it.skip('should have GeoJSON type field', () => {
-        const { schema } = Jurisdiction.schema.paths.boundaries;
-        const { type } = schema.tree;
-        const { instance } = schema.paths.type;
+      it('should have GeoJSON type field', () => {
+        const boundaries = Jurisdiction.path('boundaries');
+        const type = Jurisdiction.path('boundaries.type');
 
-        expect(instance).to.be.equal('String');
-        expect(type).to.exist;
-        expect(type).to.be.an('object');
-        expect(type.type).to.be.a('function');
-        expect(type.type.name).to.be.equal('String');
-        expect(type.default).to.exist;
+        expect(boundaries).to.exist;
+        expect(type).to.be.instanceof(SchemaTypes.String);
+        expect(type.options).to.exist;
+        expect(type.options).to.be.an('object');
+        expect(type.options.type).to.exist.and.be.a('function');
+        expect(type.options.default).to.exist.and.be.equal('MultiPolygon');
+        expect(type.options.set).to.exist.and.be.a('function');
       });
 
-      it.skip('should have GeoJSON coordinates field', () => {
-        const { schema } = Jurisdiction.schema.paths.boundaries;
-        const { coordinates } = schema.tree;
-        const { instance } = schema.paths.coordinates;
+      it('should have GeoJSON coordinates field', () => {
+        const boundaries = Jurisdiction.path('boundaries');
+        const coordinates = Jurisdiction.path('boundaries.coordinates');
 
-        expect(instance).to.be.equal('Array');
-        expect(coordinates).to.exist;
-        expect(coordinates).to.be.an('object');
-        expect(coordinates.type[0]).to.be.an('array');
+        expect(boundaries).to.exist;
+        expect(coordinates).to.be.instanceof(SchemaTypes.Array);
+        expect(coordinates.options).to.exist;
+        expect(coordinates.options).to.be.an('object');
+        expect(coordinates.options.type).to.exist.and.be.a('function');
+        expect(coordinates.options.default).to.be.undefined;
       });
     });
 
     it('should have color field', () => {
-      const { color } = Jurisdiction.schema.tree;
-      const { instance } = Jurisdiction.schema.paths.color;
+      const color = Jurisdiction.path('color');
 
-      expect(instance).to.be.equal('String');
       expect(color).to.exist;
-      expect(color).to.be.an('object');
-      expect(color.type).to.be.a('function');
-      expect(color.type.name).to.be.equal('String');
-      expect(color.trim).to.be.true;
-      expect(color.default).to.be.exist;
+      expect(color).to.be.instanceof(SchemaTypes.String);
+      expect(color.options).to.exist;
+      expect(color.options).to.be.an('object');
+      expect(color.options.type).to.exist;
+      expect(color.options.trim).to.be.true;
+      expect(color.options.uppercase).to.be.true;
+      expect(color.options.exportable).to.be.true;
+      expect(color.options.default).to.exist;
+      expect(color.options.fake).to.exist;
     });
   });
 });
