@@ -21,13 +21,23 @@
  *
  */
 
-/* dependencies */
 import { pkg } from '@lykmapipo/common';
+import { apiVersion as httpApiVersion } from '@lykmapipo/env';
+import { start } from '@lykmapipo/express-rest-actions';
 import Jurisdiction from './jurisdiction.model';
-import router from './http.router';
+import jurisdictionRouter from './jurisdiction.http.router';
 
-/* declarations */
-const info = pkg(
+/**
+ * @name info
+ * @description package information
+ * @type {Object}
+ *
+ * @author lally elias <lallyelias87@gmail.com>
+ * @author rijkerd <richardaggrey7@gmail.com>
+ * @since 1.0.0
+ * @version 0.1.0
+ */
+export const info = pkg(
   `${__dirname}/package.json`,
   'name',
   'description',
@@ -40,8 +50,40 @@ const info = pkg(
   'contributors'
 );
 
-/* export router api version */
-const apiVersion = router.version;
+/**
+ * @name Jurisdiction
+ * @description Jurisdiction model
+ * @type {mongoose.Model}
+ *
+ * @author lally elias <lallyelias87@gmail.com>
+ * @author rijkerd <richardaggrey7@gmail.com>
+ * @since 0.1.0
+ * @version 0.1.0
+ */
+export { Jurisdiction };
 
-/* export */
-export { apiVersion, info, Jurisdiction, router };
+/**
+ * @name jurisdictionRouter
+ * @description jurisdiction http router
+ * @type {express.Router}
+ *
+ * @author lally elias <lallyelias87@gmail.com>
+ * @author rijkerd <richardaggrey7@gmail.com>
+ * @since 0.1.0
+ * @version 0.1.0
+ */
+export { jurisdictionRouter };
+
+/**
+ * @name apiVersion
+ * @description http router api version
+ * @type {String}
+ *
+ * @author lally elias <lallyelias87@gmail.com>
+ * @author rijkerd <richardaggrey7@gmail.com>
+ * @since 0.1.0
+ * @version 0.1.0
+ */
+export const apiVersion = httpApiVersion();
+
+export { start };
