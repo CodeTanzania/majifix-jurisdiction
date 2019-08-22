@@ -21,7 +21,6 @@
  *
  */
 
-/* dependencies */
 import { pkg } from '@lykmapipo/common';
 import { apiVersion as httpApiVersion } from '@lykmapipo/env';
 import { start } from '@lykmapipo/express-rest-actions';
@@ -53,7 +52,7 @@ export const info = pkg(
 
 /**
  * @name Jurisdiction
- * @description Predefine model
+ * @description Jurisdiction model
  * @type {mongoose.Model}
  *
  * @author lally elias <lallyelias87@gmail.com>

@@ -1,4 +1,3 @@
-/* dependencies */
 import _ from 'lodash';
 import { clear, create, expect } from '@lykmapipo/mongoose-test-helpers';
 import { Jurisdiction } from '../../src/index';
