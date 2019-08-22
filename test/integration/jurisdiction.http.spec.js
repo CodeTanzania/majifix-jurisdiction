@@ -11,6 +11,8 @@ describe('Jurisdiction Rest API', () => {
   const options = {
     pathSingle: '/jurisdictions/:id',
     pathList: '/jurisdictions/',
+    pathSchema: '/jurisdictions/schema/',
+    pathExport: '/jurisdictions/export/',
   };
 
   before(() => clearHttp());
@@ -120,6 +122,21 @@ describe('Jurisdiction Rest API', () => {
         expect(deleted.name).to.be.equal(jurisdiction.name);
         done(error, body);
       });
+  });
+
+  it('should handle GET /jurisdictions/schema', done => {
+    const { testGetSchema } = testRouter(options, jurisdictionRouter);
+    testGetSchema().expect(200, done);
+  });
+
+  it('should handle GET /jurisdiction/export', done => {
+    const { testGetExport } = testRouter(options, jurisdictionRouter);
+    testGetExport()
+      .expect('Content-Type', 'text/csv; charset=utf-8')
+      .expect(({ headers }) => {
+        expect(headers['content-disposition']).to.exist;
+      })
+      .expect(200, done);
   });
 
   after(() => clearHttp());
