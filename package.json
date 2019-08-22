@@ -110,7 +110,7 @@
     "mongoose-rest-actions": ">=0.28.8"
   },
   "peerDependencies": {
-    "mongoose": ">=5.6.9"
+    "mongoose": ">=5.6.10"
   },
   "config": {
     "commitizen": {
