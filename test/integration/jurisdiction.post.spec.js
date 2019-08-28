@@ -1,5 +1,5 @@
 import { clear, expect } from '@lykmapipo/mongoose-test-helpers';
-import { Jurisdiction } from '../../src/index';
+import { Jurisdiction } from '../../src';
 
 describe('Jurisdiction Static post', () => {
   before(done => clear(done));

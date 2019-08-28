@@ -3,7 +3,7 @@ import {
   testRouter,
 } from '@lykmapipo/express-test-helpers';
 import { clear as clearDb, expect } from '@lykmapipo/mongoose-test-helpers';
-import { Jurisdiction, jurisdictionRouter } from '../../src/index';
+import { Jurisdiction, jurisdictionRouter } from '../../src';
 
 describe('Jurisdiction Rest API', () => {
   const jurisdiction = Jurisdiction.fake();

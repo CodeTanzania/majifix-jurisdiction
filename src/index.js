@@ -13,11 +13,8 @@
  * @version 0.1.0
  * @example
  *
- * const { app } = require('majifix-jurisdiction');
- *
- * ...
- *
- * app.start();
+ * const { Jurisdiction, start } = require('@codetanzania/majifix-jurisdiction');
+ * start(error => { ... });
  *
  */
 

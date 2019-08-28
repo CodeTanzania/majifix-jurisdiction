@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { clear, expect } from '@lykmapipo/mongoose-test-helpers';
-import { Jurisdiction } from '../../src/index';
+import { Jurisdiction } from '../../src';
 
 describe('Jurisdiction getById', () => {
   before(done => clear(done));

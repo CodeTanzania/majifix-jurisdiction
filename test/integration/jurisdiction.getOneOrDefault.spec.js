@@ -1,5 +1,5 @@
 import { expect, clear } from '@lykmapipo/mongoose-test-helpers';
-import { Jurisdiction } from '../../src/index';
+import { Jurisdiction } from '../../src';
 
 describe('Jurisdiction getOneOrDefault', () => {
   before(done => clear(done));
