@@ -392,6 +392,33 @@ const JurisdictionSchema = createSchema(
      * }
      */
     boundaries: MultiPolygon,
+
+    /**
+     * @name default
+     * @description Tells whether a jurisdiction is the default.
+     *
+     * @type {object}
+     * @property {object} type - schema(data) type
+     * @property {boolean} index - ensure database index
+     * @property {boolean} exportable - allow field to be exported
+     * @property {boolean} default - default value set when none provided
+     * @property {object|boolean} fake - fake data generator options
+     *
+     * @author lally elias <lallyelias87@gmail.com>
+     * @since 0.1.0
+     * @version 0.1.0
+     * @instance
+     * @example
+     * false
+     *
+     */
+    default: {
+      type: Boolean,
+      index: true,
+      exportable: true,
+      default: false,
+      fake: true,
+    },
   },
   SCHEMA_OPTIONS,
   actions,
