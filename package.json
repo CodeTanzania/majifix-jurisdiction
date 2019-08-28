@@ -5,20 +5,23 @@
   "main": "lib/index.js",
   "module": "es/index.js",
   "scripts": {
-    "clean": "rimraf lib dist es umd",
+    "clean": "rimraf lib dist es umd logs",
     "prebuild": "npm test && npm run clean",
     "build": "rollup -c",
-    "lint": "eslint --fix --ext .js src/ test/ rollup.config.js",
+    "lint": "eslint --fix --ext .js src/ test/ rollup.config.js examples/",
     "pretest": "npm run lint",
-    "test": "NODE_ENV=test mocha --exit --require @babel/register test/**/*.spec.js",
+    "test": "NODE_ENV=test nyc --reporter=html --reporter=text mocha --exit --timeout=8000 --require @babel/register test/**/*.spec.js",
+    "test:unit": "NODE_ENV=test npm run pretest && NODE_ENV=test mocha --exit --timeout=8000 --require @babel/register test/unit/**/*.spec.js",
+    "test:integration": "NODE_ENV=test npm run pretest && NODE_ENV=test mocha --exit --timeout=8000 --require @babel/register test/integration/**/*.spec.js",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
     "docs": "doxdox 'lib/**/*.js' -p package.json -l markdown -o DOCUMENTATION.md",
-    "start": "BASE_PATH=./examples node ./examples/app.js",
-    "seed": "BASE_PATH=./examples node ./examples/seed.js",
     "cmt": "git add -A && git-cz",
-    "dev": "npm run start",
-    "commit": "git-cz",
-    "commit:all": "git add -A && git-cz",
-    "changelog": "changelog"
+    "changelog": "changelog",
+    "chore:deps": "ncu -u && npm install --save",
+    "lint:config": "eslint --print-config rollup.config.js",
+    "dev": "npm run seed && npm run start",
+    "start": "NODE_ENV=development BASE_PATH=./examples node ./examples/app.js",
+    "seed": "NODE_ENV=development BASE_PATH=./examples node ./examples/seed.js"
   },
   "repository": {
     "type": "git",
@@ -90,11 +93,7 @@
     "nyc": "^14.1.1",
     "prettier": "1.18.2",
     "rimraf": "3.0.0",
-    "rollup": "1.20.3",
-    "sinon": "7.4.1",
-    "sinon-chai": "3.3.0",
-    "sinon-mongoose": "2.3.0",
-    "supertest": "4.0.2"
+    "rollup": "1.20.3"
   },
   "dependencies": {
     "@codetanzania/majifix-common": ">=0.17.0",
