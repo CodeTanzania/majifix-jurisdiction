@@ -1,8 +1,15 @@
 # majifix-jurisdiction
 
 [![Build Status](https://travis-ci.org/CodeTanzania/majifix-jurisdiction.svg?branch=develop)](https://travis-ci.org/CodeTanzania/majifix-jurisdiction)
-[![Dependencies Status](https://david-dm.org/CodeTanzania/majifix-jurisdiction/status.svg?style=flat-square)](https://david-dm.org/CodeTanzania/majifix-jurisdiction)
+[![Dependencies Status](https://david-dm.org/CodeTanzania/majifix-jurisdiction.svg)](https://david-dm.org/CodeTanzania/majifix-jurisdiction)
+[![Coverage Status](https://coveralls.io/repos/github/CodeTanzania/majifix-jurisdiction/badge.svg?branch=develop)](https://coveralls.io/github/CodeTanzania/majifix-jurisdiction?branch=develop)
+[![GitHub License](https://img.shields.io/github/license/CodeTanzania/majifix-jurisdiction)](https://github.com/CodeTanzania/majifix-jurisdiction/blob/develop/LICENSE)
 [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/CodeTanzania/majifix-jurisdiction/tree/develop)
+
+[![Commitizen Friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
+[![Code Style](https://badgen.net/badge/code%20style/airbnb/ff5a5f?icon=airbnb)](https://github.com/airbnb/javascript)
+[![npm version](https://img.shields.io/npm/v/@codetanzania/majifix-jurisdiction)](https://www.npmjs.com/package/@codetanzania/majifix-jurisdiction)
 
 A representation of an entity (e.g municipal, local government etc) responsible for addressing citizen(or customer) service request(issue).
 
@@ -72,7 +79,7 @@ It will be nice, if you open an issue first so that we can know what is going on
 
 The MIT License (MIT)
 
-Copyright (c) 2018 CodeTanzania & Contributors
+Copyright (c) CodeTanzania & Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
