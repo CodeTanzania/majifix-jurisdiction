@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { waterfall } from 'async';
-import { idOf, randomColor } from '@lykmapipo/common';
+import { idOf, randomColor, compact, mergeObjects } from '@lykmapipo/common';
 import { createSchema, model, ObjectId } from '@lykmapipo/mongoose-common';
 import actions from 'mongoose-rest-actions';
 import exportable from '@lykmapipo/mongoose-exportable';
@@ -584,6 +584,89 @@ JurisdictionSchema.statics.OPTION_SELECT = OPTION_SELECT;
 JurisdictionSchema.statics.OPTION_AUTOPOPULATE = OPTION_AUTOPOPULATE;
 
 /**
+ * @name findDefault
+ * @function findDefault
+ * @description find default jurisdiction
+ * @param {Function} done a callback to invoke on success or failure
+ * @returns {Jurisdiction} default jurisdiction
+ * @since 0.1.0
+ * @version 1.0.0
+ * @static
+ */
+JurisdictionSchema.statics.findDefault = done => {
+  // refs
+  const Jurisdiction = model(MODEL_NAME_JURISDICTION);
+
+  // obtain default jurisdiction
+  return Jurisdiction.getOneOrDefault({}, done);
+};
+
+/**
+ * @name prepareSeedCriteria
+ * @function prepareSeedCriteria
+ * @description define seed data criteria
+ * @param {object} seed jurisdiction to be seeded
+ * @returns {object} packed criteria for seeding
+ *
+ * @author lally elias <lallyelias87@gmail.com>
+ * @since 1.6.0
+ * @version 0.1.0
+ * @static
+ */
+JurisdictionSchema.statics.prepareSeedCriteria = seed => {
+  const criteria = idOf(seed)
+    ? _.pick(seed, '_id')
+    : _.pick(seed, ..._.keys(INDEX_UNIQUE));
+  return criteria;
+};
+
+/**
+ * @name getOneOrDefault
+ * @function getOneOrDefault
+ * @description Find existing jurisdiction or default based on given criteria
+ * @param {object} criteria valid query criteria
+ * @param {Function} done callback to invoke on success or error
+ * @returns {object|Error} found jurisdiction or error
+ *
+ * @author lally elias <lallyelias87@gmail.com>
+ * @since 1.5.0
+ * @version 0.1.0
+ * @static
+ * @example
+ *
+ * const criteria = { _id: '...'};
+ * Jurisdiction.getOneOrDefault(criteria, (error, found) => { ... });
+ *
+ */
+JurisdictionSchema.statics.getOneOrDefault = (criteria, done) => {
+  // normalize criteria
+  const { _id, ...filters } = mergeObjects(criteria);
+
+  const allowDefault = true;
+  const allowId = !_.isEmpty(_id);
+  const allowFilters = !_.isEmpty(filters);
+
+  const byDefault = mergeObjects({ default: true });
+  const byId = mergeObjects({ _id });
+  const byFilters = mergeObjects(filters);
+
+  const or = compact([
+    allowId ? byId : undefined,
+    allowFilters ? byFilters : undefined,
+    allowDefault ? byDefault : undefined,
+  ]);
+  const filter = { $or: or };
+
+  // refs
+  const Jurisdiction = model(MODEL_NAME_JURISDICTION);
+
+  // query
+  return Jurisdiction.findOne(filter)
+    .orFail()
+    .exec(done);
+};
+
+/**
  * @name findNearBy
  * @description find jurisdiction near a specified coordinates
  * @param {object} options valid criteria
@@ -639,25 +722,6 @@ JurisdictionSchema.statics.findNearBy = function findNearBy(options, done) {
   const ensureIndexes = next => Jurisdiction.ensureIndexes(() => next());
   const queryNearBy = next => Jurisdiction.find({ boundaries: criteria }, next);
   return waterfall([ensureIndexes, queryNearBy], done);
-};
-
-/**
- * @name prepareSeedCriteria
- * @function prepareSeedCriteria
- * @description define seed data criteria
- * @param {object} seed jurisdiction to be seeded
- * @returns {object} packed criteria for seeding
- *
- * @author lally elias <lallyelias87@gmail.com>
- * @since 1.6.0
- * @version 0.1.0
- * @static
- */
-JurisdictionSchema.statics.prepareSeedCriteria = seed => {
-  const criteria = idOf(seed)
-    ? _.pick(seed, '_id')
-    : _.pick(seed, ..._.keys(INDEX_UNIQUE));
-  return criteria;
 };
 
 /* export jurisdiction model */
