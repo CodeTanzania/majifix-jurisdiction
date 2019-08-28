@@ -1,3 +1,74 @@
+#### 1.8.0 (2019-08-28)
+
+##### Chores
+
+- **deps:**
+  - force latest version & audit fix ([2562c8a4](https://github.com/CodeTanzania/majifix-jurisdiction/commit/2562c8a4b5638304cb9d2a985a0a8adce8100e41))
+  - force latest version & audit fix ([c400b7f3](https://github.com/CodeTanzania/majifix-jurisdiction/commit/c400b7f3f05a5d91f08f820464d719038904f05b))
+  - update dependency rollup to v1.20.3 ([86a69bea](https://github.com/CodeTanzania/majifix-jurisdiction/commit/86a69beaca5c3299c5dcd932a9074a52cce27a70))
+  - update dependency lint-staged to v9.2.5 ([5d43d119](https://github.com/CodeTanzania/majifix-jurisdiction/commit/5d43d11902b75edb53d285448e79a5dd40c9b49c))
+  - update dependency mongoose to v5.6.11 ([6ce95265](https://github.com/CodeTanzania/majifix-jurisdiction/commit/6ce95265fd06c003426772319b61b5693360eb98))
+  - update dependency lint-staged to v9.2.4 ([7ade7610](https://github.com/CodeTanzania/majifix-jurisdiction/commit/7ade7610d8249f79b65185a43ee75b9f28b49190))
+  - update dependency rollup to v1.20.2 ([560cb010](https://github.com/CodeTanzania/majifix-jurisdiction/commit/560cb010feb0a989bee9496f36fb9258e294152e))
+  - update dependency eslint to v6.2.2 ([89a70843](https://github.com/CodeTanzania/majifix-jurisdiction/commit/89a708432d22ddc9d7dfbc2f5079a17dc1579cd1))
+  - update dependency rollup to v1.20.1 ([05d269cb](https://github.com/CodeTanzania/majifix-jurisdiction/commit/05d269cba0f03e8b57f2f5184f7425eba5492846))
+  - update dependency eslint-plugin-mocha to v6.1.0 ([b8fdf933](https://github.com/CodeTanzania/majifix-jurisdiction/commit/b8fdf933ec6ec9ff9a8f9a810c1127c0d5c58ecd))
+  - force latest version & audit fix ([69ee37a1](https://github.com/CodeTanzania/majifix-jurisdiction/commit/69ee37a1874ca220aa6ea7b917255f557243363f))
+  - update dependency rollup to v1.20.0 ([d2742958](https://github.com/CodeTanzania/majifix-jurisdiction/commit/d27429581f66de1576f5aebf8e32378d590078cb))
+  - add express-test-helpers module ([b8525da0](https://github.com/CodeTanzania/majifix-jurisdiction/commit/b8525da0c0acecc5c653950dcab2a4785e6fc7b1))
+  - update dependency mongoose to v5.6.10 ([3d51cd2f](https://github.com/CodeTanzania/majifix-jurisdiction/commit/3d51cd2fc0e2100f65f4d7cf454fd536b9091df7))
+  - update dependency eslint to v6.2.1 ([affc7539](https://github.com/CodeTanzania/majifix-jurisdiction/commit/affc75398e41413a2c758183c6c8abdedd8f9b1f))
+- **configs:**
+  - update eslint configs ([9ce1a4da](https://github.com/CodeTanzania/majifix-jurisdiction/commit/9ce1a4da3e442440464fa5b33f1100e061c8b7f7))
+  - update prettier configs ([8c3a1699](https://github.com/CodeTanzania/majifix-jurisdiction/commit/8c3a169903a7d08ade7bd7498db02faf8d2aba82))
+  - update npm files ([6117a124](https://github.com/CodeTanzania/majifix-jurisdiction/commit/6117a1247b659fc45ff0ef85e15bfe90bce83f38))
+  - update git files ([ce9bd6e7](https://github.com/CodeTanzania/majifix-jurisdiction/commit/ce9bd6e718d825a067c28cf3c11cf615da221798))
+  - update editor configs ([54cde8ae](https://github.com/CodeTanzania/majifix-jurisdiction/commit/54cde8ae828ab2b01f5364bd944af771837b3e73))
+- **ci:** update travis configs ([84a63b83](https://github.com/CodeTanzania/majifix-jurisdiction/commit/84a63b835d836a2eb97e28085c0a5e7a9dbb52fc))
+- fix merge conflict ([de099c39](https://github.com/CodeTanzania/majifix-jurisdiction/commit/de099c39ebe961823a97d2feaaf144be0a8126c1))
+- **router:**
+  - rename with jurisdiction prefix ([7787cf70](https://github.com/CodeTanzania/majifix-jurisdiction/commit/7787cf704abb8f96c22d160605ba73cbe19da78d))
+  - rename jurisdiction router ([dff9d3c0](https://github.com/CodeTanzania/majifix-jurisdiction/commit/dff9d3c098e4b035b531f0c65b88ad3b8f50467b))
+- **integration:** rename http test file ([cd92685f](https://github.com/CodeTanzania/majifix-jurisdiction/commit/cd92685f52692f68f6769753dd1c9902237428aa))
+
+##### Documentation Changes
+
+- improve usage docs ([8ec80480](https://github.com/CodeTanzania/majifix-jurisdiction/commit/8ec80480763173fd797480a70004e795d6b97eb2))
+- improve requirements version ([7ab3c4a9](https://github.com/CodeTanzania/majifix-jurisdiction/commit/7ab3c4a9740583e888eb461b06e5221faa216426))
+- improve contributing guide ([233167d1](https://github.com/CodeTanzania/majifix-jurisdiction/commit/233167d17f47da0d4ff4e6a4b9c87d8580480455))
+- add status badge & license ([90c86e92](https://github.com/CodeTanzania/majifix-jurisdiction/commit/90c86e9276f7ded128e96164afbf6de136e90627))
+- update contributor guide and code of conduct ([49d0fba7](https://github.com/CodeTanzania/majifix-jurisdiction/commit/49d0fba7397e38cfec6d73aaefa40a8ad67ebde8))
+- **changelog:** generate latest release notes ([a06b83aa](https://github.com/CodeTanzania/majifix-jurisdiction/commit/a06b83aa2e1e4c8c51aa70dd5ff9a8fa40a09cfd))
+
+##### New Features
+
+- **model:**
+  - add getOneOrDefault helper ([0755c751](https://github.com/CodeTanzania/majifix-jurisdiction/commit/0755c751cebf82ed08f1b2c7a8248fc04ab3265a))
+  - add default flag ([1148705d](https://github.com/CodeTanzania/majifix-jurisdiction/commit/1148705db9b971ccb8df019460d82c206f3d31ed))
+
+##### Refactors
+
+- **examples:** improve sample seed & app ([c55239ac](https://github.com/CodeTanzania/majifix-jurisdiction/commit/c55239acddaefebc8158661081fed45738f1c93a))
+- ensure index improve & example jsdoc ([0be3e30f](https://github.com/CodeTanzania/majifix-jurisdiction/commit/0be3e30f89fe03eb14bc0e1226af3a123dabad10))
+- **model:** simplify findNearBy with arrows ([6aed5a04](https://github.com/CodeTanzania/majifix-jurisdiction/commit/6aed5a042b32cd87e7ffe9c03c74959bdfc736a5))
+- **router:** extract apidoc ([a3b2a1cc](https://github.com/CodeTanzania/majifix-jurisdiction/commit/a3b2a1ccba01a097ae0ef5040a6b8b800d950974))
+- **src:** implement to export jurisdictionRouter ([60443b1d](https://github.com/CodeTanzania/majifix-jurisdiction/commit/60443b1d6c817e6c3bdae5dcfa0841203543bb78))
+
+##### Code Style Changes
+
+- **lint:** fix errors & warningS ([3173cfb7](https://github.com/CodeTanzania/majifix-jurisdiction/commit/3173cfb748dcdfd7163a30df87c0ea096d89be55))
+- rename and remove of comments ([927970c1](https://github.com/CodeTanzania/majifix-jurisdiction/commit/927970c1318bb1d1ab925636723900737a4aec72))
+
+##### Tests
+
+- **integration:**
+  - add schema and export tests ([c9a1eb8f](https://github.com/CodeTanzania/majifix-jurisdiction/commit/c9a1eb8fd42206c0f24f6713317a3cebe650eca1))
+  - improve test structure ([852fffad](https://github.com/CodeTanzania/majifix-jurisdiction/commit/852fffad4b170497657dcf6fb3473118162fb4d8))
+
+#### 1.7.2 (2019-08-20)
+
+#### 1.7.1 (2019-08-20)
+
 #### 1.7.0 (2019-08-15)
 
 ##### Chores

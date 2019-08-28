@@ -257,34 +257,6 @@
  *  }
  */
 
-/* dependencies */
-import { getString } from '@lykmapipo/env';
-import {
-  getFor,
-  schemaFor,
-  downloadFor,
-  getByIdFor,
-  postFor,
-  patchFor,
-  putFor,
-  deleteFor,
-  Router,
-} from '@lykmapipo/express-rest-actions';
-import Jurisdiction from './jurisdiction.model';
-
-/* constants */
-const API_VERSION = getString('API_VERSION', '1.0.0');
-const PATH_SINGLE = '/jurisdictions/:id';
-const PATH_LIST = '/jurisdictions';
-const PATH_EXPORT = '/jurisdictions/export';
-const PATH_SCHEMA = '/jurisdictions/schema/';
-const PATH_CHILDREN = '/jurisdictions/:jurisdiction/jurisdictions';
-
-/* declarations */
-const router = new Router({
-  version: API_VERSION,
-});
-
 /**
  * @api {get} /jurisdictions List Jurisdictions
  * @apiVersion 1.0.0
@@ -301,30 +273,6 @@ const router = new Router({
  * @apiUse AuthorizationHeaderError
  * @apiUse AuthorizationHeaderErrorExample
  */
-router.get(
-  PATH_LIST,
-  getFor({
-    get: (options, done) => Jurisdiction.get(options, done),
-  })
-);
-
-/**
- * @api {get} /jurisdictions/schema Get Jurisdiction Schema
- * @apiVersion 1.0.0
- * @apiName GetJurisdictionSchema
- * @apiGroup Jurisdiction
- * @apiDescription Returns jurisdiction json schema definition
- * @apiUse RequestHeaders
- */
-router.get(
-  PATH_SCHEMA,
-  schemaFor({
-    getSchema: (query, done) => {
-      const jsonSchema = Jurisdiction.jsonSchema();
-      return done(null, jsonSchema);
-    },
-  })
-);
 
 /**
  * @api {get} /jurisdictions/export Export Jurisdictions
@@ -334,16 +282,6 @@ router.get(
  * @apiDescription Export jurisdictions as csv
  * @apiUse RequestHeaders
  */
-router.get(
-  PATH_EXPORT,
-  downloadFor({
-    download: (options, done) => {
-      const fileName = `jurisdictions_exports_${Date.now()}.csv`;
-      const readStream = Jurisdiction.exportCsv(options);
-      return done(null, { fileName, readStream });
-    },
-  })
-);
 
 /**
  * @api {post} /jurisdictions Create New Jurisdiction
@@ -361,12 +299,6 @@ router.get(
  * @apiUse AuthorizationHeaderError
  * @apiUse AuthorizationHeaderErrorExample
  */
-router.post(
-  PATH_LIST,
-  postFor({
-    post: (body, done) => Jurisdiction.post(body, done),
-  })
-);
 
 /**
  * @api {get} /jurisdictions/:id Get Existing Jurisdiction
@@ -383,12 +315,6 @@ router.post(
  * @apiUse AuthorizationHeaderError
  * @apiUse AuthorizationHeaderErrorExample
  */
-router.get(
-  PATH_SINGLE,
-  getByIdFor({
-    getById: (options, done) => Jurisdiction.getById(options, done),
-  })
-);
 
 /**
  * @api {patch} /jurisdictions/:id Patch Existing Jurisdiction
@@ -406,12 +332,6 @@ router.get(
  * @apiUse AuthorizationHeaderError
  * @apiUse AuthorizationHeaderErrorExample
  */
-router.patch(
-  PATH_SINGLE,
-  patchFor({
-    patch: (options, done) => Jurisdiction.patch(options, done),
-  })
-);
 
 /**
  * @api {put} /jurisdictions/:id Put Existing Jurisdiction
@@ -429,12 +349,6 @@ router.patch(
  * @apiUse AuthorizationHeaderError
  * @apiUse AuthorizationHeaderErrorExample
  */
-router.put(
-  PATH_SINGLE,
-  putFor({
-    put: (options, done) => Jurisdiction.put(options, done),
-  })
-);
 
 /**
  * @api {delete} /jurisdictions/:id Delete Existing Jurisdiction
@@ -452,13 +366,6 @@ router.put(
  * @apiUse AuthorizationHeaderError
  * @apiUse AuthorizationHeaderErrorExample
  */
-router.delete(
-  PATH_SINGLE,
-  deleteFor({
-    del: (options, done) => Jurisdiction.del(options, done),
-    soft: true,
-  })
-);
 
 /**
  * @api {get} /jurisdictions/:jurisdiction/jurisdictions List Sub-Jurisdictions
@@ -476,12 +383,3 @@ router.delete(
  * @apiUse AuthorizationHeaderError
  * @apiUse AuthorizationHeaderErrorExample
  */
-router.get(
-  PATH_CHILDREN,
-  getFor({
-    get: (options, done) => Jurisdiction.get(options, done),
-  })
-);
-
-/* expose router */
-export default router;

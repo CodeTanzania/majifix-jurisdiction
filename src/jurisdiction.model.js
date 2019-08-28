@@ -1,24 +1,6 @@
-/**
- * @module Jurisdiction
- * @name Jurisdiction
- * @description An entity (e.g municipal) responsible for addressing
- * service request(issue).
- *
- * It may be a self managed entity or division within another
- * entity(jurisdiction) in case there is hierarchy.
- *
- * @author lally elias <lallyelias87@gmail.com>
- * @author Benson Maruchu <benmaruchu@gmail.com>
- * @author Richard Aggrey <richardaggrey7@gmail.com>
- * @license MIT
- * @since 0.1.0
- * @version 1.0.0
- * @public
- */
-
 import _ from 'lodash';
 import { waterfall } from 'async';
-import { idOf, randomColor } from '@lykmapipo/common';
+import { idOf, randomColor, compact, mergeObjects } from '@lykmapipo/common';
 import { createSchema, model, ObjectId } from '@lykmapipo/mongoose-common';
 import actions from 'mongoose-rest-actions';
 import exportable from '@lykmapipo/mongoose-exportable';
@@ -53,11 +35,21 @@ const SCHEMA_OPTIONS = { collection: COLLECTION_NAME_JURISDICTION };
 const INDEX_UNIQUE = { jurisdiction: 1, code: 1, name: 1 };
 
 /**
- * @name JurisdictionSchema
- * @type {Schema}
+ * @module Jurisdiction
+ * @name Jurisdiction
+ * @description An entity (e.g municipal) responsible for addressing
+ * service request(issue).
+ *
+ * It may be a self managed entity or division within another
+ * entity(jurisdiction) in case there is hierarchy.
+ *
+ * @author lally elias <lallyelias87@gmail.com>
+ * @author Benson Maruchu <benmaruchu@gmail.com>
+ * @author Richard Aggrey <richardaggrey7@gmail.com>
+ * @license MIT
  * @since 0.1.0
  * @version 1.0.0
- * @private
+ * @public
  */
 const JurisdictionSchema = createSchema(
   {
@@ -400,6 +392,33 @@ const JurisdictionSchema = createSchema(
      * }
      */
     boundaries: MultiPolygon,
+
+    /**
+     * @name default
+     * @description Tells whether a jurisdiction is the default.
+     *
+     * @type {object}
+     * @property {object} type - schema(data) type
+     * @property {boolean} index - ensure database index
+     * @property {boolean} exportable - allow field to be exported
+     * @property {boolean} default - default value set when none provided
+     * @property {object|boolean} fake - fake data generator options
+     *
+     * @author lally elias <lallyelias87@gmail.com>
+     * @since 0.1.0
+     * @version 0.1.0
+     * @instance
+     * @example
+     * false
+     *
+     */
+    default: {
+      type: Boolean,
+      index: true,
+      exportable: true,
+      default: false,
+      fake: true,
+    },
   },
   SCHEMA_OPTIONS,
   actions,
@@ -412,9 +431,16 @@ const JurisdictionSchema = createSchema(
  *------------------------------------------------------------------------------
  */
 
-// ensure `unique` compound index on jurisdiction, code and name
-// to fix unique indexes on code and name in case they are used in more than
-// one jurisdiction with different administration
+/**
+ * @name index
+ * @description ensure unique compound index on jurisdiction code and name
+ * to force unique jurisdiction definition
+ *
+ * @author lally elias <lallyelias87@gmail.com>
+ * @since 0.1.0
+ * @version 0.1.0
+ * @private
+ */
 JurisdictionSchema.index(INDEX_UNIQUE, { unique: true });
 
 /*
@@ -426,13 +452,14 @@ JurisdictionSchema.index(INDEX_UNIQUE, { unique: true });
 /**
  * @name validate
  * @description jurisdiction schema pre validation hook
- * @param {function} done callback to invoke on success or error
+ * @param {Function} done callback to invoke on success or error
+ * @returns {object|Error} valid instance or error
  * @since 0.1.0
  * @version 1.0.0
  * @private
  */
 JurisdictionSchema.pre('validate', function preValidate(done) {
-  this.preValidate(done);
+  return this.preValidate(done);
 });
 
 /*
@@ -444,7 +471,8 @@ JurisdictionSchema.pre('validate', function preValidate(done) {
 /**
  * @name preValidate
  * @description jurisdiction schema pre validation hook logic
- * @param {function} done callback to invoke on success or error
+ * @param {Function} done callback to invoke on success or error
+ * @returns {object|Error} valid instance or error
  * @since 0.1.0
  * @version 1.0.0
  * @instance
@@ -468,17 +496,17 @@ JurisdictionSchema.methods.preValidate = function preValidate(done) {
     this.ensureLocation();
 
     // continue
-    done(null, this);
+    return done(null, this);
   } catch (error) {
     // catch and report errors
-    done(error);
+    return done(error);
   }
 };
 
 /**
  * @name ensureLocation
  * @description compute account location
- * @param {function} done callback to invoke on success or error
+ * @returns {object} valid geojson point
  * @since 0.1.0
  * @version 1.0.0
  * @instance
@@ -496,7 +524,8 @@ JurisdictionSchema.methods.ensureLocation = function ensureLocation() {
 /**
  * @name beforePost
  * @description pre save account logics
- * @param {function} done callback to invoke on success or error
+ * @param {Function} done callback to invoke on success or error
+ * @returns {object|Error} valid instance or error
  * @since 0.1.0
  * @version 1.0.0
  * @instance
@@ -507,17 +536,18 @@ JurisdictionSchema.methods.beforePost = function beforePost(done) {
     // ensure location
     this.ensureLocation();
 
-    done(null, this);
+    return done(null, this);
   } catch (error) {
     // catch and report error
-    done(error);
+    return done(error);
   }
 };
 
 /**
  * @name beforeDelete
  * @description pre delete jurisdiction logics
- * @param {function} done callback to invoke on success or error
+ * @param {Function} done callback to invoke on success or error
+ * @returns {object|Error} dependence free instance or error
  * @since 0.1.0
  * @version 1.0.0
  * @instance
@@ -554,19 +584,106 @@ JurisdictionSchema.statics.OPTION_SELECT = OPTION_SELECT;
 JurisdictionSchema.statics.OPTION_AUTOPOPULATE = OPTION_AUTOPOPULATE;
 
 /**
+ * @name findDefault
+ * @function findDefault
+ * @description find default jurisdiction
+ * @param {Function} done a callback to invoke on success or failure
+ * @returns {Jurisdiction} default jurisdiction
+ * @since 0.1.0
+ * @version 1.0.0
+ * @static
+ */
+JurisdictionSchema.statics.findDefault = done => {
+  // refs
+  const Jurisdiction = model(MODEL_NAME_JURISDICTION);
+
+  // obtain default jurisdiction
+  return Jurisdiction.getOneOrDefault({}, done);
+};
+
+/**
+ * @name prepareSeedCriteria
+ * @function prepareSeedCriteria
+ * @description define seed data criteria
+ * @param {object} seed jurisdiction to be seeded
+ * @returns {object} packed criteria for seeding
+ *
+ * @author lally elias <lallyelias87@gmail.com>
+ * @since 1.6.0
+ * @version 0.1.0
+ * @static
+ */
+JurisdictionSchema.statics.prepareSeedCriteria = seed => {
+  const criteria = idOf(seed)
+    ? _.pick(seed, '_id')
+    : _.pick(seed, ..._.keys(INDEX_UNIQUE));
+  return criteria;
+};
+
+/**
+ * @name getOneOrDefault
+ * @function getOneOrDefault
+ * @description Find existing jurisdiction or default based on given criteria
+ * @param {object} criteria valid query criteria
+ * @param {Function} done callback to invoke on success or error
+ * @returns {object|Error} found jurisdiction or error
+ *
+ * @author lally elias <lallyelias87@gmail.com>
+ * @since 1.5.0
+ * @version 0.1.0
+ * @static
+ * @example
+ *
+ * const criteria = { _id: '...'};
+ * Jurisdiction.getOneOrDefault(criteria, (error, found) => { ... });
+ *
+ */
+JurisdictionSchema.statics.getOneOrDefault = (criteria, done) => {
+  // normalize criteria
+  const { _id, ...filters } = mergeObjects(criteria);
+
+  const allowDefault = true;
+  const allowId = !_.isEmpty(_id);
+  const allowFilters = !_.isEmpty(filters);
+
+  const byDefault = mergeObjects({ default: true });
+  const byId = mergeObjects({ _id });
+  const byFilters = mergeObjects(filters);
+
+  const or = compact([
+    allowId ? byId : undefined,
+    allowFilters ? byFilters : undefined,
+    allowDefault ? byDefault : undefined,
+  ]);
+  const filter = { $or: or };
+
+  // refs
+  const Jurisdiction = model(MODEL_NAME_JURISDICTION);
+
+  // query
+  return Jurisdiction.findOne(filter)
+    .orFail()
+    .exec(done);
+};
+
+/**
  * @name findNearBy
  * @description find jurisdiction near a specified coordinates
+ * @param {object} options valid criteria
  * @param {number} options.minDistance min distance in meters
  * @param {number} options.maxDistance max distance in meters
  * @param {number[]} options.coordinates coordinates of the location
- * @param {function} done a callback to invoke on success or error
- * @return {Object[]} collection  of jurisdiction near by specified coordinates
+ * @param {Function} done a callback to invoke on success or error
+ * @returns {object[]} collection  of jurisdiction near by specified coordinates
  * @since 0.1.0
  * @version 1.0.0
  * @public
  * @static
  */
 JurisdictionSchema.statics.findNearBy = function findNearBy(options, done) {
+  // ref
+  const Jurisdiction = model(MODEL_NAME_JURISDICTION);
+
   // default criteria
   const criteria = {
     $nearSphere: {
@@ -602,44 +719,9 @@ JurisdictionSchema.statics.findNearBy = function findNearBy(options, done) {
   }
 
   // find jurisdiction(s) which is near by provided coordinates
-  waterfall(
-    [
-      function ensureIndexes(next) {
-        this.ensureIndexes(function ensureIndexesError(error) {
-          next(error, true);
-        });
-      }.bind(this),
-
-      function query(indexed, next) {
-        this.find(
-          {
-            boundaries: criteria,
-          },
-          next
-        );
-      }.bind(this),
-    ],
-    done
-  );
-};
-
-/**
- * @name prepareSeedCriteria
- * @function prepareSeedCriteria
- * @description define seed data criteria
- * @param {Object} seed jurisdiction to be seeded
- * @returns {Object} packed criteria for seeding
- *
- * @author lally elias <lallyelias87@gmail.com>
- * @since 1.6.0
- * @version 0.1.0
- * @static
- */
-JurisdictionSchema.statics.prepareSeedCriteria = seed => {
-  const criteria = idOf(seed)
-    ? _.pick(seed, '_id')
-    : _.pick(seed, ..._.keys(INDEX_UNIQUE));
-  return criteria;
+  const ensureIndexes = next => Jurisdiction.ensureIndexes(() => next());
+  const queryNearBy = next => Jurisdiction.find({ boundaries: criteria }, next);
+  return waterfall([ensureIndexes, queryNearBy], done);
 };
 
 /* export jurisdiction model */

@@ -1,48 +1,40 @@
-/* dependencies */
-import { expect } from 'chai';
-import { clear } from '@lykmapipo/mongoose-test-helpers';
+import { clear, expect } from '@lykmapipo/mongoose-test-helpers';
 import { Jurisdiction } from '../../src';
 
-describe('Jurisdiction', () => {
-  before(done => {
-    clear(Jurisdiction, done);
-  });
+describe('Jurisdiction Static post', () => {
+  before(done => clear(done));
 
-  describe('static post', () => {
-    let jurisdiction;
+  const jurisdiction = Jurisdiction.fake();
 
-    it('should be able to post', done => {
-      jurisdiction = Jurisdiction.fake();
-
-      Jurisdiction.post(jurisdiction, (error, created) => {
-        expect(error).to.not.exist;
-        expect(created).to.exist;
-        expect(created._id).to.eql(jurisdiction._id);
-        expect(created.name).to.eql(jurisdiction.name);
-        expect(created.code).to.eql(jurisdiction.code);
-        done(error, created);
-      });
+  it('should be able to post', done => {
+    Jurisdiction.post(jurisdiction, (error, created) => {
+      expect(error).to.not.exist;
+      expect(created).to.exist;
+      expect(created._id).to.eql(jurisdiction._id);
+      expect(created.name).to.eql(jurisdiction.name);
+      expect(created.code).to.eql(jurisdiction.code);
+      done(error, created);
     });
   });
 
-  describe('instance post', () => {
-    let jurisdiction;
+  after(done => clear(done));
+});
 
-    it('should be able to post', done => {
-      jurisdiction = Jurisdiction.fake();
+describe('Jurisdiction Instance post', () => {
+  before(done => clear(done));
 
-      jurisdiction.post((error, created) => {
-        expect(error).to.not.exist;
-        expect(created).to.exist;
-        expect(created._id).to.eql(jurisdiction._id);
-        expect(created.name).to.eql(jurisdiction.name);
-        expect(created.code).to.eql(jurisdiction.code);
-        done(error, created);
-      });
+  const jurisdiction = Jurisdiction.fake();
+
+  it('should be able to post', done => {
+    jurisdiction.post((error, created) => {
+      expect(error).to.not.exist;
+      expect(created).to.exist;
+      expect(created._id).to.eql(jurisdiction._id);
+      expect(created.name).to.eql(jurisdiction.name);
+      expect(created.code).to.eql(jurisdiction.code);
+      done(error, created);
     });
   });
 
-  after(done => {
-    clear(Jurisdiction, done);
-  });
+  after(done => clear(done));
 });
