@@ -30,7 +30,7 @@ import jurisdictionRouter from './jurisdiction.http.router';
 /**
  * @name info
  * @description package information
- * @type {Object}
+ * @type {object}
  *
  * @author lally elias <lallyelias87@gmail.com>
  * @author rijkerd <richardaggrey7@gmail.com>
@@ -53,7 +53,6 @@ export const info = pkg(
 /**
  * @name Jurisdiction
  * @description Jurisdiction model
- * @type {mongoose.Model}
  *
  * @author lally elias <lallyelias87@gmail.com>
  * @author rijkerd <richardaggrey7@gmail.com>
@@ -65,7 +64,6 @@ export { Jurisdiction };
 /**
  * @name jurisdictionRouter
  * @description jurisdiction http router
- * @type {express.Router}
  *
  * @author lally elias <lallyelias87@gmail.com>
  * @author rijkerd <richardaggrey7@gmail.com>
@@ -77,7 +75,7 @@ export { jurisdictionRouter };
 /**
  * @name apiVersion
  * @description http router api version
- * @type {String}
+ * @type {string}
  *
  * @author lally elias <lallyelias87@gmail.com>
  * @author rijkerd <richardaggrey7@gmail.com>

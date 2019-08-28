@@ -1,21 +1,3 @@
-/**
- * @module Jurisdiction
- * @name Jurisdiction
- * @description An entity (e.g municipal) responsible for addressing
- * service request(issue).
- *
- * It may be a self managed entity or division within another
- * entity(jurisdiction) in case there is hierarchy.
- *
- * @author lally elias <lallyelias87@gmail.com>
- * @author Benson Maruchu <benmaruchu@gmail.com>
- * @author Richard Aggrey <richardaggrey7@gmail.com>
- * @license MIT
- * @since 0.1.0
- * @version 1.0.0
- * @public
- */
-
 import _ from 'lodash';
 import { waterfall } from 'async';
 import { idOf, randomColor } from '@lykmapipo/common';
@@ -53,11 +35,21 @@ const SCHEMA_OPTIONS = { collection: COLLECTION_NAME_JURISDICTION };
 const INDEX_UNIQUE = { jurisdiction: 1, code: 1, name: 1 };
 
 /**
- * @name JurisdictionSchema
- * @type {Schema}
+ * @module Jurisdiction
+ * @name Jurisdiction
+ * @description An entity (e.g municipal) responsible for addressing
+ * service request(issue).
+ *
+ * It may be a self managed entity or division within another
+ * entity(jurisdiction) in case there is hierarchy.
+ *
+ * @author lally elias <lallyelias87@gmail.com>
+ * @author Benson Maruchu <benmaruchu@gmail.com>
+ * @author Richard Aggrey <richardaggrey7@gmail.com>
+ * @license MIT
  * @since 0.1.0
  * @version 1.0.0
- * @private
+ * @public
  */
 const JurisdictionSchema = createSchema(
   {
@@ -412,9 +404,16 @@ const JurisdictionSchema = createSchema(
  *------------------------------------------------------------------------------
  */
 
-// ensure `unique` compound index on jurisdiction, code and name
-// to fix unique indexes on code and name in case they are used in more than
-// one jurisdiction with different administration
+/**
+ * @name index
+ * @description ensure unique compound index on jurisdiction code and name
+ * to force unique jurisdiction definition
+ *
+ * @author lally elias <lallyelias87@gmail.com>
+ * @since 0.1.0
+ * @version 0.1.0
+ * @private
+ */
 JurisdictionSchema.index(INDEX_UNIQUE, { unique: true });
 
 /*
@@ -426,13 +425,14 @@ JurisdictionSchema.index(INDEX_UNIQUE, { unique: true });
 /**
  * @name validate
  * @description jurisdiction schema pre validation hook
- * @param {function} done callback to invoke on success or error
+ * @param {Function} done callback to invoke on success or error
+ * @returns {object|Error} valid instance or error
  * @since 0.1.0
  * @version 1.0.0
  * @private
  */
 JurisdictionSchema.pre('validate', function preValidate(done) {
-  this.preValidate(done);
+  return this.preValidate(done);
 });
 
 /*
@@ -444,7 +444,8 @@ JurisdictionSchema.pre('validate', function preValidate(done) {
 /**
  * @name preValidate
  * @description jurisdiction schema pre validation hook logic
- * @param {function} done callback to invoke on success or error
+ * @param {Function} done callback to invoke on success or error
+ * @returns {object|Error} valid instance or error
  * @since 0.1.0
  * @version 1.0.0
  * @instance
@@ -468,17 +469,17 @@ JurisdictionSchema.methods.preValidate = function preValidate(done) {
     this.ensureLocation();
 
     // continue
-    done(null, this);
+    return done(null, this);
   } catch (error) {
     // catch and report errors
-    done(error);
+    return done(error);
   }
 };
 
 /**
  * @name ensureLocation
  * @description compute account location
- * @param {function} done callback to invoke on success or error
+ * @returns {object} valid geojson point
  * @since 0.1.0
  * @version 1.0.0
  * @instance
@@ -496,7 +497,8 @@ JurisdictionSchema.methods.ensureLocation = function ensureLocation() {
 /**
  * @name beforePost
  * @description pre save account logics
- * @param {function} done callback to invoke on success or error
+ * @param {Function} done callback to invoke on success or error
+ * @returns {object|Error} valid instance or error
  * @since 0.1.0
  * @version 1.0.0
  * @instance
@@ -507,17 +509,18 @@ JurisdictionSchema.methods.beforePost = function beforePost(done) {
     // ensure location
     this.ensureLocation();
 
-    done(null, this);
+    return done(null, this);
   } catch (error) {
     // catch and report error
-    done(error);
+    return done(error);
   }
 };
 
 /**
  * @name beforeDelete
  * @description pre delete jurisdiction logics
- * @param {function} done callback to invoke on success or error
+ * @param {Function} done callback to invoke on success or error
+ * @returns {object|Error} dependence free instance or error
  * @since 0.1.0
  * @version 1.0.0
  * @instance
@@ -556,11 +559,12 @@ JurisdictionSchema.statics.OPTION_AUTOPOPULATE = OPTION_AUTOPOPULATE;
 /**
  * @name findNearBy
  * @description find jurisdiction near a specified coordinates
+ * @param {object} options valid criteria
  * @param {number} options.minDistance min distance in meters
  * @param {number} options.maxDistance max distance in meters
  * @param {number[]} options.coordinates coordinates of the location
- * @param {function} done a callback to invoke on success or error
- * @return {Object[]} collection  of jurisdiction near by specified coordinates
+ * @param {Function} done a callback to invoke on success or error
+ * @returns {object[]} collection  of jurisdiction near by specified coordinates
  * @since 0.1.0
  * @version 1.0.0
  * @public
@@ -602,7 +606,7 @@ JurisdictionSchema.statics.findNearBy = function findNearBy(options, done) {
   }
 
   // find jurisdiction(s) which is near by provided coordinates
-  waterfall(
+  return waterfall(
     [
       function ensureIndexes(next) {
         this.ensureIndexes(function ensureIndexesError(error) {
@@ -627,8 +631,8 @@ JurisdictionSchema.statics.findNearBy = function findNearBy(options, done) {
  * @name prepareSeedCriteria
  * @function prepareSeedCriteria
  * @description define seed data criteria
- * @param {Object} seed jurisdiction to be seeded
- * @returns {Object} packed criteria for seeding
+ * @param {object} seed jurisdiction to be seeded
+ * @returns {object} packed criteria for seeding
  *
  * @author lally elias <lallyelias87@gmail.com>
  * @since 1.6.0
