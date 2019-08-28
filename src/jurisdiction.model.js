@@ -571,6 +571,9 @@ JurisdictionSchema.statics.OPTION_AUTOPOPULATE = OPTION_AUTOPOPULATE;
  * @static
  */
 JurisdictionSchema.statics.findNearBy = function findNearBy(options, done) {
+  // ref
+  const Jurisdiction = model(MODEL_NAME_JURISDICTION);
+
   // default criteria
   const criteria = {
     $nearSphere: {
@@ -606,25 +609,9 @@ JurisdictionSchema.statics.findNearBy = function findNearBy(options, done) {
   }
 
   // find jurisdiction(s) which is near by provided coordinates
-  return waterfall(
-    [
-      function ensureIndexes(next) {
-        this.ensureIndexes(function ensureIndexesError(error) {
-          next(error, true);
-        });
-      }.bind(this),
-
-      function query(indexed, next) {
-        this.find(
-          {
-            boundaries: criteria,
-          },
-          next
-        );
-      }.bind(this),
-    ],
-    done
-  );
+  const ensureIndexes = next => Jurisdiction.ensureIndexes(() => next());
+  const queryNearBy = next => Jurisdiction.find({ boundaries: criteria }, next);
+  return waterfall([ensureIndexes, queryNearBy], done);
 };
 
 /**
