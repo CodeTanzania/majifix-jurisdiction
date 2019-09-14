@@ -93,7 +93,7 @@
     "nyc": "14.1.1",
     "prettier": "1.18.2",
     "rimraf": "3.0.0",
-    "rollup": "1.21.2"
+    "rollup": "1.21.3"
   },
   "dependencies": {
     "@codetanzania/majifix-common": ">=0.17.0",
