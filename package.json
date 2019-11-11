@@ -1,6 +1,6 @@
 {
   "name": "@codetanzania/majifix-jurisdiction",
-  "version": "1.8.0",
+  "version": "1.9.0",
   "description": "A representation of an entity (e.g municipal, local government etc) responsible for addressing citizen(or customer) service request(issue)",
   "main": "lib/index.js",
   "module": "es/index.js",
