@@ -127,6 +127,36 @@ describe('Jurisdiction', () => {
       expect(about.options.index).to.be.true;
     });
 
+    it('should have country field', () => {
+      const country = Jurisdiction.path('country');
+
+      expect(country).to.exist;
+      expect(country).to.be.instanceof(SchemaTypes.String);
+      expect(country.options).to.exist;
+      expect(country.options).to.be.an('object');
+      expect(country.options.type).to.exist;
+      expect(country.options.trim).to.be.true;
+      expect(country.options.index).to.be.true;
+      expect(country.options.searchable).to.be.true;
+      expect(country.options.exportable).to.be.true;
+      expect(country.options.fake).to.exist;
+    });
+
+    it('should have city field', () => {
+      const city = Jurisdiction.path('city');
+
+      expect(city).to.exist;
+      expect(city).to.be.instanceof(SchemaTypes.String);
+      expect(city.options).to.exist;
+      expect(city.options).to.be.an('object');
+      expect(city.options.type).to.exist;
+      expect(city.options.trim).to.be.true;
+      expect(city.options.index).to.be.true;
+      expect(city.options.searchable).to.be.true;
+      expect(city.options.exportable).to.be.true;
+      expect(city.options.fake).to.exist;
+    });
+
     it('should have address field', () => {
       const address = Jurisdiction.path('address');
 
