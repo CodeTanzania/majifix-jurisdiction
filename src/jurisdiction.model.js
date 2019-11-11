@@ -10,6 +10,7 @@ import {
   centroidOf,
   TYPE_MULTIPOLYGON,
 } from 'mongoose-geojson-schemas';
+import { DEFAULT_COUNTRY_NAME, DEFAULT_CITY_NAME } from '@lykmapipo/constants';
 import {
   POPULATION_MAX_DEPTH,
   MODEL_NAME_JURISDICTION,
@@ -26,7 +27,7 @@ import {
 } from '@codetanzania/majifix-common';
 
 /* constants */
-const OPTION_SELECT = { code: 1, name: 1, color: 1 };
+const OPTION_SELECT = { code: 1, name: 1, color: 1, city: 1, country: 1 };
 const OPTION_AUTOPOPULATE = {
   select: OPTION_SELECT,
   maxDepth: POPULATION_MAX_DEPTH,
@@ -290,6 +291,95 @@ const JurisdictionSchema = createSchema(
     },
 
     /**
+     * @name color
+     * @description A color code(in hexadecimal format) eg. #363636 used to
+     * differentiate jurisdictions visually.
+     *
+     * If not provided it will randomly generated, but it is not
+     * guarantee its visual appeal.
+     *
+     * @type {object}
+     * @property {object} type - schema(data) type
+     * @property {boolean} trim - force trimming
+     * @property {boolean} uppercase - force upper-casing
+     * @property {boolean} exportable - allow field to be exported
+     * @property {boolean} default - default value
+     * @property {object} fake - fake data generator options
+     *
+     * @since 0.1.0
+     * @version 1.0.0
+     * @instance
+     */
+    color: {
+      type: String,
+      trim: true,
+      uppercase: true,
+      exportable: true,
+      default: () => randomColor(),
+      fake: true,
+    },
+
+    /**
+     * @name country
+     * @description Human readable country name of jurisdiction.
+     *
+     * @type {object}
+     * @property {object} type - schema(data) type
+     * @property {boolean} trim - force trimming
+     * @property {boolean} exportable - allow field to be exported
+     * @property {boolean} searchable - allow for searching
+     * @property {boolean} default - default value
+     * @property {object} fake - fake data generator options
+     * @property {boolean} index - ensure database index
+     *
+     * @since 1.8.0
+     * @version 1.0.0
+     * @instance
+     */
+    country: {
+      type: String,
+      trim: true,
+      exportable: true,
+      searchable: true,
+      default: DEFAULT_COUNTRY_NAME,
+      fake: {
+        generator: 'address',
+        type: 'country',
+      },
+      index: true,
+    },
+
+    /**
+     * @name city
+     * @description Human readable city name of jurisdiction.
+     *
+     * @type {object}
+     * @property {object} type - schema(data) type
+     * @property {boolean} trim - force trimming
+     * @property {boolean} exportable - allow field to be exported
+     * @property {boolean} searchable - allow for searching
+     * @property {boolean} default - default value
+     * @property {object} fake - fake data generator options
+     * @property {boolean} index - ensure database index
+     *
+     * @since 1.8.0
+     * @version 1.0.0
+     * @instance
+     */
+    city: {
+      type: String,
+      trim: true,
+      exportable: true,
+      searchable: true,
+      default: DEFAULT_CITY_NAME,
+      fake: {
+        generator: 'address',
+        type: 'city',
+      },
+      index: true,
+    },
+
+    /**
      * @name address
      * @description Human readable physical address of jurisdiction office.
      *
@@ -317,35 +407,6 @@ const JurisdictionSchema = createSchema(
         type: 'streetAddress',
       },
       index: true,
-    },
-
-    /**
-     * @name color
-     * @description A color code(in hexadecimal format) eg. #363636 used to
-     * differentiate jurisdictions visually.
-     *
-     * If not provided it will randomly generated, but it is not
-     * guarantee its visual appeal.
-     *
-     * @type {object}
-     * @property {object} type - schema(data) type
-     * @property {boolean} trim - force trimming
-     * @property {boolean} uppercase - force upper-casing
-     * @property {boolean} exportable - allow field to be exported
-     * @property {boolean} default - default value
-     * @property {object} fake - fake data generator options
-     *
-     * @since 0.1.0
-     * @version 1.0.0
-     * @instance
-     */
-    color: {
-      type: String,
-      trim: true,
-      uppercase: true,
-      exportable: true,
-      default: () => randomColor(),
-      fake: true,
     },
 
     /**

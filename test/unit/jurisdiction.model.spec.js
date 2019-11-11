@@ -105,13 +105,15 @@ describe('Jurisdiction', () => {
         code: 1,
         name: 1,
         color: 1,
+        city: 1,
+        country: 1,
       });
     });
 
     it('should expose autopulate as options', () => {
       expect(Jurisdiction.OPTION_AUTOPOPULATE).to.exist;
       expect(Jurisdiction.OPTION_AUTOPOPULATE).to.be.eql({
-        select: { code: 1, name: 1, color: 1 },
+        select: { code: 1, name: 1, color: 1, city: 1, country: 1 },
         maxDepth: 1,
       });
     });
