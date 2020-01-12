@@ -64,7 +64,7 @@
     "@babel/cli": "7.8.0",
     "@babel/core": "7.8.0",
     "@babel/node": "7.8.0",
-    "@babel/preset-env": "7.8.0",
+    "@babel/preset-env": "7.8.2",
     "@babel/register": "7.8.0",
     "@benmaruchu/faker": "4.3.0",
     "@commitlint/cli": "8.2.0",
