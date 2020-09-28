@@ -548,9 +548,7 @@ JurisdictionSchema.methods.preValidate = function preValidate(done) {
 
     // set jurisdiction code
     if (_.isEmpty(this.code) && !_.isEmpty(this.name)) {
-      this.code = _.take(this.name, 1)
-        .join('')
-        .toUpperCase();
+      this.code = _.take(this.name, 1).join('').toUpperCase();
     }
 
     // ensure location
@@ -654,7 +652,7 @@ JurisdictionSchema.statics.OPTION_AUTOPOPULATE = OPTION_AUTOPOPULATE;
  * @version 1.0.0
  * @static
  */
-JurisdictionSchema.statics.findDefault = done => {
+JurisdictionSchema.statics.findDefault = (done) => {
   // refs
   const Jurisdiction = model(MODEL_NAME_JURISDICTION);
 
@@ -674,7 +672,7 @@ JurisdictionSchema.statics.findDefault = done => {
  * @version 0.1.0
  * @static
  */
-JurisdictionSchema.statics.prepareSeedCriteria = seed => {
+JurisdictionSchema.statics.prepareSeedCriteria = (seed) => {
   const criteria = idOf(seed)
     ? _.pick(seed, '_id')
     : _.pick(seed, ..._.keys(INDEX_UNIQUE));
@@ -722,9 +720,7 @@ JurisdictionSchema.statics.getOneOrDefault = (criteria, done) => {
   const Jurisdiction = model(MODEL_NAME_JURISDICTION);
 
   // query
-  return Jurisdiction.findOne(filter)
-    .orFail()
-    .exec(done);
+  return Jurisdiction.findOne(filter).orFail().exec(done);
 };
 
 /**
@@ -780,8 +776,9 @@ JurisdictionSchema.statics.findNearBy = function findNearBy(options, done) {
   }
 
   // find jurisdiction(s) which is near by provided coordinates
-  const ensureIndexes = next => Jurisdiction.ensureIndexes(() => next());
-  const queryNearBy = next => Jurisdiction.find({ boundaries: criteria }, next);
+  const ensureIndexes = (next) => Jurisdiction.ensureIndexes(() => next());
+  const queryNearBy = (next) =>
+    Jurisdiction.find({ boundaries: criteria }, next);
   return waterfall([ensureIndexes, queryNearBy], done);
 };
 

@@ -4,19 +4,19 @@ import { Jurisdiction } from '../../src';
 import boundaries from '../fixtures/multipolygon.json';
 
 describe('Jurisdiction Get', () => {
-  before(done => clear(done));
+  before((done) => clear(done));
 
   let jurisdictions;
 
-  before(done => {
-    jurisdictions = _.map(Jurisdiction.fake(32), jurisdiction => {
+  before((done) => {
+    jurisdictions = _.map(Jurisdiction.fake(32), (jurisdiction) => {
       jurisdiction.set('boundaries', boundaries);
       return jurisdiction;
     });
     create(jurisdictions, done);
   });
 
-  it('should be able to get without options', done => {
+  it('should be able to get without options', (done) => {
     Jurisdiction.get((error, results) => {
       expect(error).to.not.exist;
       expect(results).to.exist;
@@ -40,7 +40,7 @@ describe('Jurisdiction Get', () => {
     });
   });
 
-  it('should be able to get with options', done => {
+  it('should be able to get with options', (done) => {
     const options = { page: 1, limit: 20 };
     Jurisdiction.get(options, (error, results) => {
       expect(error).to.not.exist;
@@ -65,7 +65,7 @@ describe('Jurisdiction Get', () => {
     });
   });
 
-  it('should be able to search with options', done => {
+  it('should be able to search with options', (done) => {
     const options = { filter: { q: jurisdictions[0].code } };
     Jurisdiction.get(options, (error, results) => {
       expect(error).to.not.exist;
@@ -90,7 +90,7 @@ describe('Jurisdiction Get', () => {
     });
   });
 
-  it('should parse filter options', done => {
+  it('should parse filter options', (done) => {
     const options = { filter: { code: jurisdictions[0].code } };
     Jurisdiction.get(options, (error, results) => {
       expect(error).to.not.exist;
@@ -115,5 +115,5 @@ describe('Jurisdiction Get', () => {
     });
   });
 
-  after(done => clear(done));
+  after((done) => clear(done));
 });

@@ -2,18 +2,18 @@ import { clear, expect } from '@lykmapipo/mongoose-test-helpers';
 import { Jurisdiction } from '../../src';
 
 describe('Jurisdiction Static delete', () => {
-  before(done => clear(done));
+  before((done) => clear(done));
 
   let jurisdiction = Jurisdiction.fake();
 
-  before(done => {
+  before((done) => {
     jurisdiction.post((error, created) => {
       jurisdiction = created;
       done(error, created);
     });
   });
 
-  it('should be able to delete', done => {
+  it('should be able to delete', (done) => {
     Jurisdiction.del(jurisdiction._id, (error, deleted) => {
       expect(error).to.not.exist;
       expect(deleted).to.exist;
@@ -22,7 +22,7 @@ describe('Jurisdiction Static delete', () => {
     });
   });
 
-  it('should throw if not exists', done => {
+  it('should throw if not exists', (done) => {
     Jurisdiction.del(jurisdiction._id, (error, deleted) => {
       expect(error).to.exist;
       expect(error.name).to.exist;
@@ -34,22 +34,22 @@ describe('Jurisdiction Static delete', () => {
     });
   });
 
-  after(done => clear(done));
+  after((done) => clear(done));
 });
 
 describe('Jurisdiction Instance delete', () => {
-  before(done => clear(done));
+  before((done) => clear(done));
 
   let jurisdiction = Jurisdiction.fake();
 
-  before(done => {
+  before((done) => {
     jurisdiction.post((error, created) => {
       jurisdiction = created;
       done(error, created);
     });
   });
 
-  it('should be able to delete', done => {
+  it('should be able to delete', (done) => {
     jurisdiction.del((error, deleted) => {
       expect(error).to.not.exist;
       expect(deleted).to.exist;
@@ -58,7 +58,7 @@ describe('Jurisdiction Instance delete', () => {
     });
   });
 
-  it('should throw if not exists', done => {
+  it('should throw if not exists', (done) => {
     jurisdiction.del((error, deleted) => {
       expect(error).to.not.exist;
       expect(deleted).to.exist;
@@ -67,23 +67,23 @@ describe('Jurisdiction Instance delete', () => {
     });
   });
 
-  after(done => clear(done));
+  after((done) => clear(done));
 });
 
 describe('Jurisdiction Dependancy check', () => {
-  before(done => clear(done));
+  before((done) => clear(done));
 
   let parent = Jurisdiction.fake();
   let child = Jurisdiction.fake();
 
-  before(done => {
+  before((done) => {
     parent.post((error, created) => {
       parent = created;
       done(error, created);
     });
   });
 
-  before(done => {
+  before((done) => {
     child.jurisdiction = parent;
     child.post((error, created) => {
       child = created;
@@ -91,8 +91,8 @@ describe('Jurisdiction Dependancy check', () => {
     });
   });
 
-  it('should restrict parent deletion', done => {
-    parent.del(error => {
+  it('should restrict parent deletion', (done) => {
+    parent.del((error) => {
       expect(error).to.exist;
       expect(error.message).to.contain('Fail to Delete');
       expect(error.status).to.be.equal(400);
@@ -100,5 +100,5 @@ describe('Jurisdiction Dependancy check', () => {
     });
   });
 
-  after(done => clear(done));
+  after((done) => clear(done));
 });

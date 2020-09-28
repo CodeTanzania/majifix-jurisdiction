@@ -27,7 +27,7 @@ const startHttpServer = () => {
 };
 
 // connect and start http server
-connect(error => {
+connect((error) => {
   if (error) {
     throw error;
   }

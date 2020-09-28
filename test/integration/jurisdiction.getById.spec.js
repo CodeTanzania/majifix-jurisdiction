@@ -3,18 +3,18 @@ import { clear, expect } from '@lykmapipo/mongoose-test-helpers';
 import { Jurisdiction } from '../../src';
 
 describe('Jurisdiction getById', () => {
-  before(done => clear(done));
+  before((done) => clear(done));
 
   let jurisdiction = Jurisdiction.fake();
 
-  before(done => {
+  before((done) => {
     jurisdiction.post((error, created) => {
       jurisdiction = created;
       done(error, created);
     });
   });
 
-  it('should be able to get an instance', done => {
+  it('should be able to get an instance', (done) => {
     Jurisdiction.getById(jurisdiction._id, (error, found) => {
       expect(error).to.not.exist;
       expect(found).to.exist;
@@ -23,7 +23,7 @@ describe('Jurisdiction getById', () => {
     });
   });
 
-  it('should be able to get with options', done => {
+  it('should be able to get with options', (done) => {
     const options = {
       _id: jurisdiction._id,
       select: 'code',
@@ -50,7 +50,7 @@ describe('Jurisdiction getById', () => {
           'createdAt',
           'updatedAt',
         ],
-        field => {
+        (field) => {
           expect(fields).to.not.include(field);
         }
       );
@@ -59,7 +59,7 @@ describe('Jurisdiction getById', () => {
     });
   });
 
-  it('should throw if not exists', done => {
+  it('should throw if not exists', (done) => {
     const fake = Jurisdiction.fake();
 
     Jurisdiction.getById(fake._id, (error, found) => {
@@ -73,5 +73,5 @@ describe('Jurisdiction getById', () => {
     });
   });
 
-  after(done => clear(done));
+  after((done) => clear(done));
 });

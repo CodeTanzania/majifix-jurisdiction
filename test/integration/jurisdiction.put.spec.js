@@ -2,18 +2,18 @@ import { clear, expect } from '@lykmapipo/mongoose-test-helpers';
 import { Jurisdiction } from '../../src';
 
 describe('Jurisdiction Static put', () => {
-  before(done => clear(done));
+  before((done) => clear(done));
 
   let jurisdiction = Jurisdiction.fake();
 
-  before(done => {
+  before((done) => {
     jurisdiction.post((error, created) => {
       jurisdiction = created;
       done(error, created);
     });
   });
 
-  it('should be able to put', done => {
+  it('should be able to put', (done) => {
     jurisdiction = jurisdiction.fakeOnly('name');
 
     Jurisdiction.put(
@@ -29,7 +29,7 @@ describe('Jurisdiction Static put', () => {
     );
   });
 
-  it('should throw if not exists', done => {
+  it('should throw if not exists', (done) => {
     const fake = Jurisdiction.fake();
 
     const { _id, ...updates } = fake;
@@ -45,22 +45,22 @@ describe('Jurisdiction Static put', () => {
     });
   });
 
-  after(done => clear(done));
+  after((done) => clear(done));
 });
 
 describe('Jurisdiction Instance put', () => {
-  before(done => clear(done));
+  before((done) => clear(done));
 
   let jurisdiction = Jurisdiction.fake();
 
-  before(done => {
+  before((done) => {
     jurisdiction.post((error, created) => {
       jurisdiction = created;
       done(error, created);
     });
   });
 
-  it('should be able to put', done => {
+  it('should be able to put', (done) => {
     jurisdiction = jurisdiction.fakeOnly('name');
 
     jurisdiction.put((error, updated) => {
@@ -72,7 +72,7 @@ describe('Jurisdiction Instance put', () => {
     });
   });
 
-  it('should throw if not exists', done => {
+  it('should throw if not exists', (done) => {
     jurisdiction.put((error, updated) => {
       expect(error).to.not.exist;
       expect(updated).to.exist;
@@ -81,5 +81,5 @@ describe('Jurisdiction Instance put', () => {
     });
   });
 
-  after(done => clear(done));
+  after((done) => clear(done));
 });

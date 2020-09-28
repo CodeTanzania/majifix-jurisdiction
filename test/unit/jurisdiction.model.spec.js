@@ -34,7 +34,7 @@ describe('Jurisdiction', () => {
       expect(jurisdiction.preValidate.name).to.be.equal('preValidate');
     });
 
-    it('should be able to ensure code and color', done => {
+    it('should be able to ensure code and color', (done) => {
       // fake
       const jurisdiction = Jurisdiction.fake();
 
@@ -70,7 +70,7 @@ describe('Jurisdiction', () => {
         ensureLocation.restore();
       });
 
-      it('should be able to ensure location from boundaries', done => {
+      it('should be able to ensure location from boundaries', (done) => {
         jurisdiction.beforePost((error, updated) => {
           // assert jurisdiction
 

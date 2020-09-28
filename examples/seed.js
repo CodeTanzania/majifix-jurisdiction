@@ -18,9 +18,9 @@ const log = (stage, error, results) => {
   }
 };
 
-const clearSeed = next => clear(Jurisdiction, () => next());
+const clearSeed = (next) => clear(Jurisdiction, () => next());
 
-const seedJurisdiction = next => {
+const seedJurisdiction = (next) => {
   const jurisdictions = Jurisdiction.fake(50);
   Jurisdiction.create(jurisdictions, next);
 };
@@ -40,7 +40,7 @@ const seed = () => {
 };
 
 // connect and seed
-connect(error => {
+connect((error) => {
   if (error) {
     throw error;
   }

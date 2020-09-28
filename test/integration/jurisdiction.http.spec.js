@@ -17,9 +17,9 @@ describe('Jurisdiction Rest API', () => {
 
   before(() => clearHttp());
 
-  before(done => clearDb(done));
+  before((done) => clearDb(done));
 
-  it('should handle HTTP POST on /jurisdictions', done => {
+  it('should handle HTTP POST on /jurisdictions', (done) => {
     const { testPost } = testRouter(options, jurisdictionRouter);
     testPost({ ...jurisdiction.toObject() })
       .expect(201)
@@ -35,7 +35,7 @@ describe('Jurisdiction Rest API', () => {
       });
   });
 
-  it('should handle HTTP GET on /jurisdictions', done => {
+  it('should handle HTTP GET on /jurisdictions', (done) => {
     const { testGet } = testRouter(options, jurisdictionRouter);
     testGet({ jurisdiction })
       .expect(200)
@@ -54,7 +54,7 @@ describe('Jurisdiction Rest API', () => {
       });
   });
 
-  it('should handle HTTP GET on /jurisdictions/id:', done => {
+  it('should handle HTTP GET on /jurisdictions/id:', (done) => {
     const { testGet } = testRouter(options, jurisdictionRouter);
     const params = { id: jurisdiction._id.toString() };
     testGet(params)
@@ -71,7 +71,7 @@ describe('Jurisdiction Rest API', () => {
       });
   });
 
-  it('should handle HTTP PATCH on /jurisdictions/id:', done => {
+  it('should handle HTTP PATCH on /jurisdictions/id:', (done) => {
     const { testPatch } = testRouter(options, jurisdictionRouter);
     const { name } = jurisdiction.fakeOnly('name');
     const params = { id: jurisdiction._id.toString() };
@@ -89,7 +89,7 @@ describe('Jurisdiction Rest API', () => {
       });
   });
 
-  it('should handle HTTP PUT on /jurisdictions/id:', done => {
+  it('should handle HTTP PUT on /jurisdictions/id:', (done) => {
     const { testPut } = testRouter(options, jurisdictionRouter);
     const { name } = jurisdiction.fakeOnly('name');
     const params = { id: jurisdiction._id.toString() };
@@ -107,7 +107,7 @@ describe('Jurisdiction Rest API', () => {
       });
   });
 
-  it('should handle HTTP DELETE on /jurisdictions/:id', done => {
+  it('should handle HTTP DELETE on /jurisdictions/:id', (done) => {
     const { testDelete } = testRouter(options, jurisdictionRouter);
     const params = { id: jurisdiction._id.toString() };
     testDelete(params)
@@ -124,12 +124,12 @@ describe('Jurisdiction Rest API', () => {
       });
   });
 
-  it('should handle GET /jurisdictions/schema', done => {
+  it('should handle GET /jurisdictions/schema', (done) => {
     const { testGetSchema } = testRouter(options, jurisdictionRouter);
     testGetSchema().expect(200, done);
   });
 
-  it('should handle GET /jurisdiction/export', done => {
+  it('should handle GET /jurisdiction/export', (done) => {
     const { testGetExport } = testRouter(options, jurisdictionRouter);
     testGetExport()
       .expect('Content-Type', 'text/csv; charset=utf-8')
@@ -141,5 +141,5 @@ describe('Jurisdiction Rest API', () => {
 
   after(() => clearHttp());
 
-  after(done => clearDb(done));
+  after((done) => clearDb(done));
 });
