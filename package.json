@@ -61,11 +61,11 @@
     "url": "https://majifix-jurisdiction.herokuapp.com/v1/jurisdictions"
   },
   "devDependencies": {
-    "@babel/cli": "7.11.6",
-    "@babel/core": "7.11.6",
+    "@babel/cli": "7.12.0",
+    "@babel/core": "7.12.0",
     "@babel/node": "7.10.5",
-    "@babel/preset-env": "7.11.5",
-    "@babel/register": "7.11.5",
+    "@babel/preset-env": "7.12.0",
+    "@babel/register": "7.12.0",
     "@benmaruchu/faker": "4.3.0",
     "@commitlint/cli": "8.3.5",
     "@commitlint/config-conventional": "8.3.4",
