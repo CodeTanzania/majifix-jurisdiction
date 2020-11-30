@@ -89,7 +89,7 @@
     "lint-staged": "10.5.2",
     "lodash.template": "4.5.0",
     "mocha": "7.2.0",
-    "mongoose": "5.10.19",
+    "mongoose": "5.11.0",
     "nyc": "15.1.0",
     "prettier": "2.2.1",
     "rimraf": "3.0.2",
