@@ -97,7 +97,7 @@
   },
   "dependencies": {
     "@codetanzania/majifix-common": "0.20.0",
-    "@lykmapipo/common": ">=0.28.9",
+    "@lykmapipo/common": "0.43.1",
     "@lykmapipo/constants": ">=0.3.23",
     "@lykmapipo/env": ">=0.14.10",
     "@lykmapipo/express-common": ">=0.17.14",
