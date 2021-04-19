@@ -99,7 +99,7 @@
     "@codetanzania/majifix-common": "0.20.0",
     "@lykmapipo/common": ">=0.28.9",
     "@lykmapipo/constants": ">=0.3.23",
-    "@lykmapipo/env": ">=0.14.10",
+    "@lykmapipo/env": "0.17.31",
     "@lykmapipo/express-common": ">=0.17.14",
     "@lykmapipo/express-rest-actions": ">=0.8.2",
     "@lykmapipo/express-test-helpers": "^0.9.0",
