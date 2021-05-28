@@ -64,7 +64,7 @@
     "@babel/cli": "7.14.3",
     "@babel/core": "7.14.3",
     "@babel/node": "7.14.2",
-    "@babel/preset-env": "7.14.2",
+    "@babel/preset-env": "7.14.4",
     "@babel/register": "7.13.16",
     "@benmaruchu/faker": "4.3.0",
     "@commitlint/cli": "11.0.0",
