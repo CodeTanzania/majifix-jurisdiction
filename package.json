@@ -82,7 +82,7 @@
     "eslint-plugin-import": "2.23.4",
     "eslint-plugin-jsdoc": "24.0.6",
     "eslint-plugin-mocha": "8.2.0",
-    "eslint-plugin-prettier": "3.4.0",
+    "eslint-plugin-prettier": "3.4.1",
     "generate-changelog": "1.8.0",
     "handlebars": "4.7.7",
     "husky": "4.3.8",
